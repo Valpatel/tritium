@@ -168,6 +168,29 @@ communication channel. When primary transports fail, the mesh falls back
 automatically. The feedback loop doesn't care about the medium — only that it
 closes.
 
+## The Mesh Replicates Itself
+
+Every node is a **seed vault**. An ESP32 with a 256GB SD card carries firmware
+images, model weights, config profiles, documentation — even the codebase
+itself. When it encounters a new node (a bare Jetson, a fresh Raspberry Pi),
+it can seed that node with everything it needs to bootstrap and join the mesh.
+
+```mermaid
+graph LR
+    ESP["ESP32<br/>+ 256GB SD<br/>(seed vault)"]
+    -->|"BLE / WiFi / USB<br/>slow is fine"| JET["New Jetson<br/>(bare metal)"]
+    -->|"boots up<br/>joins mesh"| MESH["Tritium Mesh<br/>(one more neuron)"]
+
+    style ESP fill:#0d1117,stroke:#00f0ff,color:#00f0ff
+    style JET fill:#0d1117,stroke:#fcee0a,color:#fcee0a
+    style MESH fill:#0d1117,stroke:#05ffa1,color:#05ffa1
+```
+
+Slow over Bluetooth? Doesn't matter. The data gets there. The node boots. The
+mesh grows. Even a tiny microcontroller that can't run a vision model still
+**carries** that model for a node that can. This is biological — spores, seeds,
+DNA. Every node carries the genome of the system.
+
 ## TAK Compatible
 
 Every entity in the mesh — edge devices, robots, drones, detected targets —
@@ -202,6 +225,8 @@ the profiles, the routes, the policies — and the system self-organizes.
 - **Distributed by default.** No single point of failure. Nodes work independently when disconnected.
 - **Software defined.** Same hardware, different behavior. Change the config, change the device.
 - **Heterogeneous.** ESP32, STM32, Raspberry Pi, Jetson, phone, desktop — if it speaks heartbeat, it's a node.
+- **Self-replicating.** Every node carries the genome — firmware, configs, models, code. New nodes bootstrap from any existing node. The mesh grows itself.
+- **AGPL-3.0.** The license *is* the philosophy. The code must remain open. If you improve it, you share it. The mesh spreads, and so does the source.
 - **Observable.** Every node reports health. Every command is logged. Every firmware is attested.
 - **No cloud.** Everything runs on your hardware, on your network. No subscriptions. No telemetry phoning home.
 
