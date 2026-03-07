@@ -170,26 +170,82 @@ closes.
 
 ## The Mesh Replicates Itself
 
-Every node is a **seed vault**. An ESP32 with a 256GB SD card carries firmware
-images, model weights, config profiles, documentation — even the codebase
-itself. When it encounters a new node (a bare Jetson, a fresh Raspberry Pi),
-it can seed that node with everything it needs to bootstrap and join the mesh.
+What a node can **compute** and what it can **carry** are different things.
+A tiny ESP32 can't run a vision model, but with a SD card it becomes a
+library that can't read its own books — and that's fine. When it meets a
+Jetson that *can* read them, it hands them over. The mesh distributes not
+just data, but the ability to grow.
+
+```mermaid
+graph TB
+    subgraph Storage["Storage Tiers"]
+        direction LR
+        T1["Minimal<br/>16-24MB flash<br/>Own firmware +<br/>config only"]
+        T2["Light<br/>1-4GB flash/SD<br/>Firmware for<br/>its family"]
+        T3["Vault<br/>32-256GB SD<br/>Multi-family firmware,<br/>models, code, docs"]
+        T4["Full<br/>SSD/NVMe<br/>Everything.<br/>Complete mirror."]
+    end
+
+    subgraph Roles["Replication Role"]
+        direction LR
+        R1["Leaf<br/>Receives updates<br/>Carries itself"]
+        R2["Relay<br/>Passes firmware<br/>to its neighbors"]
+        R3["Seed Vault<br/>Bootstraps new nodes<br/>from any family"]
+        R4["Mirror<br/>Full ecosystem copy<br/>Seeds anything"]
+    end
+
+    T1 --- R1
+    T2 --- R2
+    T3 --- R3
+    T4 --- R4
+
+    style Storage fill:#0d1117,stroke:#00f0ff,color:#00f0ff
+    style Roles fill:#0d1117,stroke:#05ffa1,color:#05ffa1
+```
+
+| Tier | Storage | What It Carries | Example |
+|------|---------|----------------|---------|
+| **Minimal** | 16-24MB flash | Its own firmware + config | Bare ESP32 sensor node |
+| **Light** | 1-4GB flash or SD | Firmware for its hardware family | ESP32 with small SD |
+| **Vault** | 32-256GB SD | Multi-family firmware, model weights, configs, docs | ESP32 + big SD card |
+| **Full mirror** | SSD / NVMe | Complete ecosystem: all firmware, all models, source code, docs | Jetson, RPi, server |
+
+A **vault node** doesn't need to be powerful. It just needs storage. A
+solar-powered ESP32 with a 128GB SD card buried in a field carries
+firmware for every hardware family, model weights it will never run, and
+the complete source code. When a new Jetson shows up on the mesh — even
+over slow Bluetooth — the vault can seed it with everything: OS, models,
+configs, the works. The Jetson boots, joins the mesh, and starts running
+inference within minutes.
 
 ```mermaid
 graph LR
-    ESP["ESP32<br/>+ 256GB SD<br/>(seed vault)"]
-    -->|"BLE / WiFi / USB<br/>slow is fine"| JET["New Jetson<br/>(bare metal)"]
-    -->|"boots up<br/>joins mesh"| MESH["Tritium Mesh<br/>(one more neuron)"]
+    V["ESP32 Vault<br/>128GB SD<br/>solar powered<br/>can't run models"]
+    -->|"BLE (slow)<br/>or WiFi<br/>or USB"| J["New Jetson<br/>bare metal<br/>has GPU, no data"]
+    -->|"boots Tritium<br/>loads models<br/>joins mesh"| M["Mesh grows<br/>+1 GPU node<br/>running inference"]
 
-    style ESP fill:#0d1117,stroke:#00f0ff,color:#00f0ff
-    style JET fill:#0d1117,stroke:#fcee0a,color:#fcee0a
-    style MESH fill:#0d1117,stroke:#05ffa1,color:#05ffa1
+    V2["Server Mirror<br/>2TB SSD<br/>full ecosystem"]
+    -->|"Ethernet<br/>fast seed"| R["New RPi Cluster<br/>5 bare boards"]
+    -->|"all 5 boot<br/>join mesh"| M
+
+    style V fill:#0d1117,stroke:#fcee0a,color:#fcee0a
+    style J fill:#0d1117,stroke:#00f0ff,color:#00f0ff
+    style M fill:#0d1117,stroke:#05ffa1,color:#05ffa1
+    style V2 fill:#0d1117,stroke:#ff2a6d,color:#ff2a6d
+    style R fill:#0d1117,stroke:#00f0ff,color:#00f0ff
 ```
 
-Slow over Bluetooth? Doesn't matter. The data gets there. The node boots. The
-mesh grows. Even a tiny microcontroller that can't run a vision model still
-**carries** that model for a node that can. This is biological — spores, seeds,
-DNA. Every node carries the genome of the system.
+The replication is **opportunistic and incremental**. Nodes don't need to
+carry everything — they carry what fits and share what they can. A minimal
+node receives its own firmware updates. A vault seeds entire new deployments.
+A full mirror replicates the whole ecosystem. The mesh decides what goes
+where based on available storage, bandwidth, and what's needed.
+
+This is biological. Spores, seeds, DNA. Not every cell carries the same
+organelles, but the genome propagates. And because Tritium is **AGPL-3.0**,
+the source code replicates too — not just technically through the mesh, but
+legally through the license. Improve the code, share the code. The mesh
+grows. The source grows with it.
 
 ## TAK Compatible
 
