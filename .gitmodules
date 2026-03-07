@@ -1,0 +1,9 @@
+[submodule "tritium-sc"]
+	path = tritium-sc
+	url = git@github.com:Valpatel/tritium-sc.git
+[submodule "tritium-edge"]
+	path = tritium-edge
+	url = git@github.com:Valpatel/tritium-edge.git
+[submodule "tritium-lib"]
+	path = tritium-lib
+	url = git@github.com:Valpatel/tritium-lib.git
