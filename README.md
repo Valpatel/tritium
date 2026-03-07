@@ -241,6 +241,28 @@ node receives its own firmware updates. A vault seeds entire new deployments.
 A full mirror replicates the whole ecosystem. The mesh decides what goes
 where based on available storage, bandwidth, and what's needed.
 
+Nodes with spare storage and bandwidth can also act as **blind couriers** —
+storing encrypted data for the mesh without being able to read it. A desktop
+with 2TB free and a fast connection holds encrypted model weights, firmware
+archives, or sensor logs for the fleet. It can't decrypt them. It doesn't
+need to. When another node needs that data, it pulls it and decrypts locally.
+If the courier needs its space back, it evicts the oldest chunks and the mesh
+re-replicates them elsewhere.
+
+```mermaid
+graph LR
+    SRC["Source Node<br/>encrypts data"]
+    -->|"encrypted chunks"| COURIER["Blind Courier<br/>2TB free, fast pipe<br/>stores but can't read"]
+    -->|"on request"| DEST["Destination Node<br/>pulls + decrypts"]
+
+    COURIER -->|"space needed?"| EVICT["Evict oldest<br/>mesh re-replicates"]
+
+    style SRC fill:#0d1117,stroke:#00f0ff,color:#00f0ff
+    style COURIER fill:#0d1117,stroke:#fcee0a,color:#fcee0a
+    style DEST fill:#0d1117,stroke:#05ffa1,color:#05ffa1
+    style EVICT fill:#0d1117,stroke:#ff2a6d,color:#ff2a6d
+```
+
 This is biological. Spores, seeds, DNA. Not every cell carries the same
 organelles, but the genome propagates. And because Tritium is **AGPL-3.0**,
 the source code replicates too — not just technically through the mesh, but
