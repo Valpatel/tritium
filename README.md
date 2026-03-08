@@ -154,6 +154,9 @@ graph TD
 | Capability | Description |
 |-----------|-------------|
 | **Remote Diagnostics** | Health snapshots every 30s — memory, power, temperature, per-slave I2C, WiFi, camera, touch, NTP. Anomaly detection flags memory leaks, battery drain, sensor failures. Fleet-wide aggregation with heap trend analysis. NVS crash tracking for post-mortem analysis. Persistent event ring buffer on LittleFS. |
+| **Heap Trend Analysis** | Per-device memory tracking over time. Detects slow leaks by computing delta-per-hour across snapshots. Flags suspected leaks when heap shrinks faster than threshold (default 5KB/hr). |
+| **Fleet Topology** | Multi-transport network graph (WiFi, ESP-NOW, BLE, LoRa, MQTT). BFS reachability, connected component detection, average path length, and connectivity reporting. Identifies network partitions and isolated nodes. |
+| **Event Correlation** | Cross-node anomaly detection: synchronized reboots (power/firmware), cascading WiFi failures (infrastructure), fleet-wide I2C errors (environmental/electrical). Distinguishes infrastructure issues from individual node faults. |
 | **Acoustic Modem** | FSK data-over-audio using ESP32 I2S speaker/mic. Covert or backup channel when RF is unavailable. |
 | **ESP-NOW Mesh** | Multi-hop flooding mesh with dedup, neighbor discovery, and route quality metrics. Works without WiFi AP. |
 | **Offline GIS** | OSM slippy map tiles stored on SD card. MBTiles import. LRU tile cache in PSRAM. Street maps and satellite imagery without internet. |
@@ -161,6 +164,26 @@ graph TD
 | **TAK Integration** | MIL-STD-2045 Cursor-on-Target XML. Every node visible in ATAK, WinTAK, WebTAK. UDP multicast + TCP streaming. |
 | **7-Path OTA** | WiFi push/pull, BLE, serial, SD card, mesh relay, USB, HTTP. Dual partition with automatic rollback. |
 | **Fleet Provisioning** | Discover, commission, bulk-configure. Web UI, serial, SD card, and BLE commissioning paths. |
+
+## Diagnostic Pipeline
+
+```mermaid
+graph LR
+    FW["ESP32 Firmware<br/>Health snapshots<br/>Event ring buffer<br/>Anomaly detection"]
+    -->|"heartbeat<br/>+ diag log"| FS["Fleet Server<br/>Heap trend analysis<br/>Fleet anomaly correlation<br/>Topology mapping"]
+    -->|"REST + WS"| SC["tritium-sc Dashboard<br/>Fleet health panel<br/>Alert routing<br/>Historical trends"]
+
+    style FW fill:#0d1117,stroke:#00f0ff,color:#00f0ff
+    style FS fill:#0d1117,stroke:#fcee0a,color:#fcee0a
+    style SC fill:#0d1117,stroke:#ff2a6d,color:#ff2a6d
+```
+
+Each ESP32 node samples hardware health every 30 seconds and logs diagnostic events
+to a persistent ring buffer. The fleet server aggregates snapshots across all nodes,
+runs heap trend analysis to detect memory leaks, correlates events across the fleet
+(synchronized reboots, cascading WiFi failures, environmental faults), and builds
+a multi-transport topology graph. The tritium-sc command center displays fleet health
+in real-time and routes alerts via webhooks.
 
 ## Communication Stack
 
