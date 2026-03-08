@@ -78,8 +78,9 @@ graph TB
 > *"Life finds a way."* — And so will Tritium.
 
 **Communicates through everything.** WiFi, BLE, LoRa, ESP-NOW, Zigbee, 4G —
-and improvised channels too. A speaker and a microphone are a modem. A
-flashing LED and a camera are a data link. If a device has an output and
+and improvised channels too. A speaker and a microphone become an
+[acoustic modem](https://github.com/Valpatel/tritium-edge/blob/dev/docs/ACOUSTIC_MODEM.md).
+A flashing LED and a camera are a data link. If a device has an output and
 another has a matching sensor, that's a transport. The mesh finds a way.
 
 **Self-replicating.** What a node can compute and what it can carry are
@@ -109,6 +110,76 @@ subscriptions. No telemetry phoning home.
 **AGPL-3.0.** The license *is* the philosophy. The code must remain open. The
 mesh spreads, and so does the source.
 
+## Capabilities
+
+```mermaid
+graph TD
+    subgraph Sense["Sense"]
+        CAM["Camera<br/>OV5640"]
+        BLE["BLE Scanner"]
+        IMU["IMU<br/>QMI8658"]
+        MIC["Microphone<br/>ES8311"]
+        GPS["GPS / NTP"]
+    end
+
+    subgraph Communicate["Communicate"]
+        WIFI["WiFi"]
+        ESPNOW["ESP-NOW Mesh"]
+        LORA["LoRa"]
+        ACOUSTIC["Acoustic Modem"]
+        MQTT["MQTT"]
+    end
+
+    subgraph Act["Act"]
+        DISPLAY["Display<br/>AMOLED / LCD"]
+        SPEAKER["Speaker"]
+        OTA["OTA Updates"]
+        CMD["Remote Commands"]
+    end
+
+    subgraph Manage["Manage"]
+        DIAG["Remote Diagnostics"]
+        FLEET["Fleet Server"]
+        GIS["Offline GIS Maps"]
+        SEED["Self-Seeding"]
+        TAK["TAK / CoT"]
+    end
+
+    style Sense fill:#0d1117,stroke:#00f0ff,color:#00f0ff
+    style Communicate fill:#0d1117,stroke:#fcee0a,color:#fcee0a
+    style Act fill:#0d1117,stroke:#05ffa1,color:#05ffa1
+    style Manage fill:#0d1117,stroke:#ff2a6d,color:#ff2a6d
+```
+
+| Capability | Description |
+|-----------|-------------|
+| **Remote Diagnostics** | Health snapshots every 30s — memory, power, temperature, I2C, WiFi. Anomaly detection flags memory leaks, battery drain, sensor failures. Fleet-wide aggregation. |
+| **Acoustic Modem** | FSK data-over-audio using ESP32 I2S speaker/mic. Covert or backup channel when RF is unavailable. |
+| **ESP-NOW Mesh** | Multi-hop flooding mesh with dedup, neighbor discovery, and route quality metrics. Works without WiFi AP. |
+| **Offline GIS** | OSM slippy map tiles stored on SD card. MBTiles import. LRU tile cache in PSRAM. Street maps and satellite imagery without internet. |
+| **Self-Seeding** | Nodes carry firmware + configs + models on SD card. New nodes bootstrap from any peer over any transport. SHA-256 verified. |
+| **TAK Integration** | MIL-STD-2045 Cursor-on-Target XML. Every node visible in ATAK, WinTAK, WebTAK. UDP multicast + TCP streaming. |
+| **7-Path OTA** | WiFi push/pull, BLE, serial, SD card, mesh relay, USB, HTTP. Dual partition with automatic rollback. |
+| **Fleet Provisioning** | Discover, commission, bulk-configure. Web UI, serial, SD card, and BLE commissioning paths. |
+
+## Communication Stack
+
+Tritium nodes negotiate the best available transport automatically:
+
+| Layer | Transport | Range | Bandwidth | Use Case |
+|-------|-----------|-------|-----------|----------|
+| **WiFi** | 802.11 b/g/n | ~50m | High | Primary data, OTA, web UI |
+| **ESP-NOW** | 802.11 LR | ~200m | 250 Kbps | Mesh relay, no AP needed |
+| **BLE** | BLE 5.0 | ~30m | 2 Mbps | Presence detection, commissioning |
+| **LoRa** | SX1262/76 | ~10km | 0.3-50 Kbps | Long range, low power telemetry |
+| **MQTT** | TCP/IP | WAN | High | Server bridge, cloud-optional |
+| **Acoustic** | FSK audio | ~10m | ~100 bps | Covert/backup when RF denied |
+
+When a transport fails, the mesh routes through whatever remains. ESP-NOW
+mesh provides multi-hop relay without infrastructure. The acoustic modem
+is the transport of last resort — if a device has a speaker and another
+has a microphone, data flows.
+
 ## Quick Start
 
 ```bash
@@ -126,12 +197,17 @@ Each sub-repo has detailed documentation in its `docs/` folder:
 
 | Topic | Where |
 |-------|-------|
-| System architecture | [tritium-edge/docs/ARCHITECTURE.md](https://github.com/Valpatel/tritium-edge/blob/main/docs/ARCHITECTURE.md) |
-| Device protocol | [tritium-edge/docs/DEVICE-PROTOCOL.md](https://github.com/Valpatel/tritium-edge/blob/main/docs/DEVICE-PROTOCOL.md) |
-| Multi-tenant design | [tritium-edge/docs/MULTI-TENANT.md](https://github.com/Valpatel/tritium-edge/blob/main/docs/MULTI-TENANT.md) |
-| Hardware abstraction | [tritium-edge/docs/HARDWARE-ABSTRACTION.md](https://github.com/Valpatel/tritium-edge/blob/main/docs/HARDWARE-ABSTRACTION.md) |
-| Plugin system | [tritium-edge/docs/PLUGIN-SYSTEM.md](https://github.com/Valpatel/tritium-edge/blob/main/docs/PLUGIN-SYSTEM.md) |
+| System architecture | [tritium-edge/docs/ARCHITECTURE.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/ARCHITECTURE.md) |
+| Device protocol | [tritium-edge/docs/DEVICE-PROTOCOL.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/DEVICE-PROTOCOL.md) |
+| Multi-tenant design | [tritium-edge/docs/MULTI-TENANT.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/MULTI-TENANT.md) |
+| Hardware abstraction | [tritium-edge/docs/HARDWARE-ABSTRACTION.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/HARDWARE-ABSTRACTION.md) |
+| Acoustic modem | [tritium-edge/docs/ACOUSTIC_MODEM.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/ACOUSTIC_MODEM.md) |
+| Meshtastic integration | [tritium-edge/docs/MESHTASTIC_INTEGRATION.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/MESHTASTIC_INTEGRATION.md) |
+| GIS + web server | [tritium-edge/docs/GIS_WEBSERVER_INTEGRATION.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/GIS_WEBSERVER_INTEGRATION.md) |
+| ESP32 ecosystem | [tritium-edge/docs/ESP32_LIBRARY_ECOSYSTEM.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/ESP32_LIBRARY_ECOSYSTEM.md) |
+| Plugin system | [tritium-edge/docs/PLUGIN-SYSTEM.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/PLUGIN-SYSTEM.md) |
 | Shared library | [tritium-lib/README.md](https://github.com/Valpatel/tritium-lib) |
+| Simulation & TAK | [tritium-sc/docs/TAK.md](https://github.com/Valpatel/tritium-sc/blob/dev/docs/TAK.md) |
 
 ---
 
