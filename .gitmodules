@@ -1,10 +1,13 @@
 [submodule "tritium-sc"]
 	path = tritium-sc
 	url = git@github.com:Valpatel/tritium-sc.git
+	branch = dev
 [submodule "tritium-edge"]
 	path = tritium-edge
 	url = git@github.com:Valpatel/tritium-edge.git
 	ignore = dirty
+	branch = dev
 [submodule "tritium-lib"]
 	path = tritium-lib
 	url = git@github.com:Valpatel/tritium-lib.git
+	branch = dev
