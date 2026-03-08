@@ -104,8 +104,9 @@ graph LR
 **TAK compatible.** Every entity generates MIL-STD-2045 CoT XML. The entire
 fleet is visible in ATAK, WinTAK, and WebTAK.
 
-**No cloud.** Everything runs on your hardware, on your network. No
-subscriptions. No telemetry phoning home.
+**Local-first.** Everything runs on your hardware, on your network. No
+subscriptions. No telemetry phoning home. Optional MQTT bridge to cloud
+services when you choose — but the mesh operates fully offline by default.
 
 **AGPL-3.0.** The license *is* the philosophy. The code must remain open. The
 mesh spreads, and so does the source.
@@ -162,6 +163,9 @@ graph TD
 | **Offline GIS** | OSM slippy map tiles stored on SD card. MBTiles import. LRU tile cache in PSRAM. Street maps and satellite imagery without internet. |
 | **Self-Seeding** | Nodes carry firmware + configs + models on SD card. New nodes bootstrap from any peer over any transport. SHA-256 verified. |
 | **TAK Integration** | MIL-STD-2045 Cursor-on-Target XML. Every node visible in ATAK, WinTAK, WebTAK. UDP multicast + TCP streaming. |
+| **BLE Trilateration** | Cross-node RSSI aggregation, log-distance path loss model, weighted centroid positioning with angular spread confidence scoring. Locate BLE tags across the mesh. |
+| **Fleet Telemetry** | Per-device time series (heap, RSSI, uptime, temperature). Fleet-wide stats, 2σ outlier detection, rate-of-change tracking for leak detection. Sparkline charts in admin portal. |
+| **Config Sync** | Desired vs reported config with drift detection. Severity classification (minor/moderate/critical). Profile inheritance for fleet-wide config templates. Push config from admin UI. |
 | **7-Path OTA** | WiFi push/pull, BLE, serial, SD card, mesh relay, USB, HTTP. Dual partition with automatic rollback. |
 | **Fleet Provisioning** | Discover, commission, bulk-configure. Web UI, serial, SD card, and BLE commissioning paths. |
 
@@ -209,10 +213,48 @@ has a microphone, data flows.
 git clone --recurse-submodules git@github.com:Valpatel/tritium.git
 cd tritium
 
-cd tritium-sc && ./start.sh              # The Brain → http://localhost:8000
-cd ../tritium-edge/server && ./start.sh  # The Nervous System → http://localhost:8080
-# Both bridge automatically via MQTT
+# Start everything
+./start.sh              # Edge Server (:8080) + SC (:5000) + MQTT check
+
+# Or start individually
+./start.sh edge         # Edge server only → http://localhost:8080
+./start.sh sc           # SC only → http://localhost:5000
+./start.sh stop         # Stop all services
+
+# Flash an ESP32 node
+cd tritium-edge
+make flash BOARD=touch-lcd-349 APP=fleet   # Starfield + WiFi + heartbeat + web
+# Node auto-connects to fleet server, visible at http://localhost:8080
 ```
+
+## Implementation Status
+
+| Feature | Status | Details |
+|---------|--------|---------|
+| ESP32 display HAL (esp_lcd) | **Deployed** | 6 boards, 55+ FPS, PSRAM + DMA |
+| WiFi fleet heartbeat | **Deployed** | Auto-connect, NVS persistence, AP fallback |
+| Fleet server + admin portal | **Deployed** | 8+ devices managed, cyberpunk SPA, 133 tests, 14 routers, 59 API routes, audit log |
+| ESP-NOW mesh | **Deployed** | Multi-hop flooding, neighbor discovery, relay topology |
+| BLE passive scanning | **Deployed** | NimBLE, known device tracking, fleet-wide presence aggregation |
+| BLE trilateration | **Deployed** | Cross-node RSSI → distance, Kalman filter, weighted centroid positioning, confidence scoring |
+| Remote diagnostics | **Deployed** | Health snapshots, anomaly detection, I2C bus scan |
+| Correlation engine | **Deployed** | Confidence-scored reboot/WiFi/heap/motion cascade detection |
+| Fleet topology | **Deployed** | Multi-transport graph (WiFi, ESP-NOW, BLE), BFS analysis, partition detection |
+| Fleet telemetry | **Deployed** | Per-device time series, fleet-wide aggregation, outlier detection, sparkline charts |
+| Config sync | **Deployed** | Desired vs reported diff, severity classification, profile inheritance |
+| MQTT bridge | **Deployed** | ESP32 → Fleet Server → Mosquitto → SC |
+| Web server on ESP32 | **Deployed** | 14 pages, dark cyberpunk UI, sparklines, signal bars, offline GIS maps |
+| OTA (WiFi + serial + SD) | **Deployed** | Dual partition, SHA-256 attestation, rollback |
+| Device groups | **Deployed** | Logical grouping, fleet-wide commands, group-scoped config profiles |
+| IMU sensor fusion | **Deployed** | QMI8658 accel/gyro, motion detection, heartbeat + web API, fleet dashboard |
+| SC ↔ Edge bridge | **Deployed** | FleetBridge REST proxy — devices, mesh, audit, OTA, profiles, config, analytics (40 routes) |
+| Acoustic modem | **Implemented** | FSK + Goertzel codec, preamble sync, CRC-16, serial commands wired |
+| LoRa radio | **Implemented** | RadioLib SX1262 driver, TX/RX, CRC, interrupt-driven — needs hardware test |
+| Offline GIS maps | **Implemented** | SD card tile server, PSRAM LRU cache, Leaflet.js dark map — needs SD tiles |
+| TAK/CoT XML | **Implemented** | CoT generator, auto-tick, serial commands — needs ATAK field test |
+| LVGL touch UI | **Deployed** | WiFi setup + UI demo apps on esp_lcd, LVGL 9.2 with PSRAM double buffer |
+| Self-seeding P2P | **Designed** | SD card seed packaging works, P2P mesh distribution planned |
+| Multi-family (STM32, nRF52) | **Planned** | Architecture supports, ESP32-S3 is first family |
 
 ## Go Deeper
 
@@ -237,7 +279,7 @@ Each sub-repo has detailed documentation in its `docs/` folder:
 
 <div align="center">
 
-*No cloud. No subscriptions. No single point. The network is the computer.*
+*Local-first. No subscriptions. No single point. The network is the computer.*
 
 *Created by Matthew Valancy / Copyright 2026 Valpatel Software LLC / AGPL-3.0*
 
