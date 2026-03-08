@@ -70,7 +70,7 @@ graph TB
 | Pillar | What It Does |
 |--------|-------------|
 | [**tritium-sc**](https://github.com/Valpatel/tritium-sc) | Battlespace management, Commander Amy, vision pipelines, target tracking, TAK bridge, simulation |
-| [**tritium-edge**](https://github.com/Valpatel/tritium-edge) | Software Defined IoT — manages fleets of ESP32, STM32, ARM Linux devices. OTA, config sync, heartbeat |
+| [**tritium-edge**](https://github.com/Valpatel/tritium-edge) | Software Defined IoT — manages fleets of ESP32, STM32, ARM Linux devices. OTA, config sync, heartbeat. Fleet server: 214 tests, 14 routers, 59+ API routes |
 | [**tritium-lib**](https://github.com/Valpatel/tritium-lib) | Shared contract — data models, MQTT topics, JWT auth, event bus, CoT XML codec |
 
 ## Core Principles
@@ -231,9 +231,9 @@ make flash BOARD=touch-lcd-349 APP=fleet   # Starfield + WiFi + heartbeat + web
 
 | Feature | Status | Details |
 |---------|--------|---------|
-| ESP32 display HAL (esp_lcd) | **Deployed** | 6 boards, 55+ FPS, PSRAM + DMA |
+| ESP32 display HAL (esp_lcd) | **Deployed** | 6 boards, 55+ FPS, PSRAM + DMA. 3.49 + 4.3C-BOX running sensor node firmware, connected to fleet |
 | WiFi fleet heartbeat | **Deployed** | Auto-connect, NVS persistence, AP fallback |
-| Fleet server + admin portal | **Deployed** | 8+ devices managed, cyberpunk SPA, 133 tests, 14 routers, 59 API routes, audit log |
+| Fleet server + admin portal | **Deployed** | 8+ devices managed, cyberpunk SPA, 214 tests, 14 routers, 59+ API routes, audit log |
 | ESP-NOW mesh | **Deployed** | Multi-hop flooding, neighbor discovery, relay topology |
 | BLE passive scanning | **Deployed** | NimBLE, known device tracking, fleet-wide presence aggregation |
 | BLE trilateration | **Deployed** | Cross-node RSSI → distance, Kalman filter, weighted centroid positioning, confidence scoring |
@@ -241,18 +241,20 @@ make flash BOARD=touch-lcd-349 APP=fleet   # Starfield + WiFi + heartbeat + web
 | Correlation engine | **Deployed** | Confidence-scored reboot/WiFi/heap/motion cascade detection |
 | Fleet topology | **Deployed** | Multi-transport graph (WiFi, ESP-NOW, BLE), BFS analysis, partition detection |
 | Fleet telemetry | **Deployed** | Per-device time series, fleet-wide aggregation, outlier detection, sparkline charts |
-| Config sync | **Deployed** | Desired vs reported diff, severity classification, profile inheritance |
+| Config sync | **Deployed** | Desired vs reported diff, severity classification, profile inheritance, batch operations |
 | MQTT bridge | **Deployed** | ESP32 → Fleet Server → Mosquitto → SC |
-| Web server on ESP32 | **Deployed** | 14 pages, dark cyberpunk UI, sparklines, signal bars, offline GIS maps |
-| OTA (WiFi + serial + SD) | **Deployed** | Dual partition, SHA-256 attestation, rollback |
-| Device groups | **Deployed** | Logical grouping, fleet-wide commands, group-scoped config profiles |
+| Web server on ESP32 | **Deployed** | 14 pages, dark cyberpunk UI, sparklines, signal bars, offline GIS maps, SD card file serving, AGPL-3.0 source compliance page |
+| OTA (WiFi + serial + SD) | **Deployed** | Dual partition, SHA-256 attestation, rollback with deployment history tracking |
+| Device groups | **Deployed** | Logical grouping, fleet-wide commands, group-scoped config profiles, batch operations (reboot all, fleet commands) |
 | IMU sensor fusion | **Deployed** | QMI8658 accel/gyro, motion detection, heartbeat + web API, fleet dashboard |
+| Device command loop | **Deployed** | Queue → deliver → ack round-trip, watchdog integration (ESP-IDF 5.x) |
+| Admin portal UX | **Deployed** | Stacking toast notifications, WebSocket health alerts, real-time event streaming |
 | SC ↔ Edge bridge | **Deployed** | FleetBridge REST proxy — devices, mesh, audit, OTA, profiles, config, analytics (40 routes) |
 | Acoustic modem | **Implemented** | FSK + Goertzel codec, preamble sync, CRC-16, serial commands wired |
 | LoRa radio | **Implemented** | RadioLib SX1262 driver, TX/RX, CRC, interrupt-driven — needs hardware test |
-| Offline GIS maps | **Implemented** | SD card tile server, PSRAM LRU cache, Leaflet.js dark map — needs SD tiles |
+| Offline GIS maps | **Implemented** | SD card tile server, PSRAM LRU cache, Leaflet.js dark map. 4.3C-BOX SD card working (1GB, SDMMC 1-bit, web-accessible files) |
 | TAK/CoT XML | **Implemented** | CoT generator, auto-tick, serial commands — needs ATAK field test |
-| LVGL touch UI | **Deployed** | WiFi setup + UI demo apps on esp_lcd, LVGL 9.2 with PSRAM double buffer |
+| LVGL touch UI | **Deployed** | WiFi setup + UI demo apps confirmed working on esp_lcd, LVGL 9.2 with PSRAM double buffer |
 | Self-seeding P2P | **Designed** | SD card seed packaging works, P2P mesh distribution planned |
 | Multi-family (STM32, nRF52) | **Planned** | Architecture supports, ESP32-S3 is first family |
 
