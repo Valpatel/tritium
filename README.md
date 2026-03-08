@@ -205,6 +205,7 @@ Each sub-repo has detailed documentation in its `docs/` folder:
 | Meshtastic integration | [tritium-edge/docs/MESHTASTIC_INTEGRATION.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/MESHTASTIC_INTEGRATION.md) |
 | GIS + web server | [tritium-edge/docs/GIS_WEBSERVER_INTEGRATION.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/GIS_WEBSERVER_INTEGRATION.md) |
 | ESP32 ecosystem | [tritium-edge/docs/ESP32_LIBRARY_ECOSYSTEM.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/ESP32_LIBRARY_ECOSYSTEM.md) |
+| Device commissioning | [tritium-edge/docs/COMMISSIONING.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/COMMISSIONING.md) |
 | Plugin system | [tritium-edge/docs/PLUGIN-SYSTEM.md](https://github.com/Valpatel/tritium-edge/blob/dev/docs/PLUGIN-SYSTEM.md) |
 | Shared library | [tritium-lib/README.md](https://github.com/Valpatel/tritium-lib) |
 | Simulation & TAK | [tritium-sc/docs/TAK.md](https://github.com/Valpatel/tritium-sc/blob/dev/docs/TAK.md) |
