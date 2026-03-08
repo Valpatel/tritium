@@ -4,6 +4,7 @@
 [submodule "tritium-edge"]
 	path = tritium-edge
 	url = git@github.com:Valpatel/tritium-edge.git
+	ignore = dirty
 [submodule "tritium-lib"]
 	path = tritium-lib
 	url = git@github.com:Valpatel/tritium-lib.git
