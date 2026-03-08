@@ -153,7 +153,7 @@ graph TD
 
 | Capability | Description |
 |-----------|-------------|
-| **Remote Diagnostics** | Health snapshots every 30s — memory, power, temperature, I2C, WiFi. Anomaly detection flags memory leaks, battery drain, sensor failures. Fleet-wide aggregation. |
+| **Remote Diagnostics** | Health snapshots every 30s — memory, power, temperature, per-slave I2C, WiFi, camera, touch, NTP. Anomaly detection flags memory leaks, battery drain, sensor failures. Fleet-wide aggregation with heap trend analysis. NVS crash tracking for post-mortem analysis. Persistent event ring buffer on LittleFS. |
 | **Acoustic Modem** | FSK data-over-audio using ESP32 I2S speaker/mic. Covert or backup channel when RF is unavailable. |
 | **ESP-NOW Mesh** | Multi-hop flooding mesh with dedup, neighbor discovery, and route quality metrics. Works without WiFi AP. |
 | **Offline GIS** | OSM slippy map tiles stored on SD card. MBTiles import. LRU tile cache in PSRAM. Street maps and satellite imagery without internet. |
