@@ -7,87 +7,56 @@
    ╚═╝   ╚═╝  ╚═╝╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝     ╚═╝
 ```
 
-<div align="center">
+# Tritium
 
-# A Distributed Cybernetic Operating System
+A distributed cybernetic operating system for IoT fleets.
 
-**Observe. Think. Act.**
+## What It Does
 
-Every device is a node. Every node perceives. The mesh thinks together.
+- **Runs on real hardware.** A custom real-time OS for six Waveshare ESP32-S3 boards with touch displays, BLE, WiFi, LoRa, and mesh networking.
+- **Manages your fleet.** A server that handles device provisioning, over-the-air firmware updates, and live monitoring of every node.
+- **Command Center.** A tactical dashboard with a map view, an AI commander, and a plugin system you can extend.
+- **Shared foundation.** A common library for data models, events, MQTT messaging, and authentication -- used by every component.
 
-</div>
+Everything runs on your own hardware. No cloud accounts, no subscriptions, fully offline capable.
 
----
+## The Three Pieces
 
-## What Is Tritium?
+This repo is the parent. The actual code lives in three submodules:
 
-Tritium turns heterogeneous hardware — cameras, sensors, radios, robots — into
-a **distributed mesh** that senses, reasons, and acts as one. Nodes communicate
-through whatever channel is available (WiFi, BLE, ESP-NOW, LoRa, even acoustic)
-and self-organize without central infrastructure.
+- [**tritium-edge**](https://github.com/Valpatel/tritium-edge) -- The IoT side: ESP32-S3 firmware (Tritium-OS) and the fleet management server.
+- [**tritium-sc**](https://github.com/Valpatel/tritium-sc) -- The Command Center: web dashboard, AI commander, vision pipelines, plugin system.
+- [**tritium-lib**](https://github.com/Valpatel/tritium-lib) -- The shared library: data models, MQTT topics, JWT auth, event bus.
 
-**Local-first.** Everything runs on your hardware. No subscriptions, no
-telemetry. Optional cloud bridge when you choose — but the mesh operates fully
-offline.
-
-**TAK compatible.** Every entity generates MIL-STD-2045 CoT XML, visible in
-ATAK, WinTAK, and WebTAK.
-
-**AGPL-3.0.** The code stays open. The mesh spreads, and so does the source.
-
-## Repository Structure
-
-This is the top-level repo. Tritium is split into three submodules:
-
-| Submodule | Purpose |
-|-----------|---------|
-| [**tritium-edge**](https://github.com/Valpatel/tritium-edge) | Software Defined IoT — ESP32-S3 firmware (Tritium-OS), fleet server, device management, OTA |
-| [**tritium-sc**](https://github.com/Valpatel/tritium-sc) | Command Center — battlespace management, Commander Amy, vision pipelines, TAK bridge |
-| [**tritium-lib**](https://github.com/Valpatel/tritium-lib) | Shared library — data models, MQTT topics, JWT auth, event bus, CoT codec |
-
-Each submodule has its own README and `docs/` folder with detailed documentation.
+Each submodule has its own README with full details.
 
 ## Quick Start
 
 ```bash
+# Clone everything (including submodules)
 git clone --recurse-submodules git@github.com:Valpatel/tritium.git
 cd tritium
 
-# Start services
-./start.sh              # Edge Server (:8080) + SC (:5000) + MQTT check
-./start.sh edge         # Edge server only
-./start.sh sc           # SC only
-./start.sh stop         # Stop all services
+# Start the servers
+./start.sh              # Edge server (:8080) + Command Center (:5000)
 
-# Flash an ESP32 node
+# Flash a board (from the edge submodule)
 cd tritium-edge
-make flash BOARD=touch-lcd-349   # Default starfield app
-# Node auto-connects to fleet server at http://localhost:8080
+make flash BOARD=touch-lcd-349
 ```
 
-## Submodule Branches
+The board will auto-connect to the fleet server at `http://localhost:8080`.
 
-All submodules track `dev` by default. Use the branch management script to
-switch all submodules at once:
+## Where To Go Next
 
-```bash
-./switch-branches.sh        # Switch all to dev (default)
-./switch-branches.sh main   # Switch all to main (production)
-```
-
-## Documentation
-
-Detailed docs live in each submodule:
-
-- **Firmware & hardware** → `tritium-edge/docs/` and `tritium-edge/CLAUDE.md`
-- **Fleet server API** → `tritium-edge/server/`
-- **Command Center** → `tritium-sc/docs/`
-- **Shared models & protocols** → `tritium-lib/README.md`
+- **Hardware and firmware** -- [tritium-edge README](https://github.com/Valpatel/tritium-edge)
+- **Command Center** -- [tritium-sc README](https://github.com/Valpatel/tritium-sc)
+- **Shared library** -- [tritium-lib README](https://github.com/Valpatel/tritium-lib)
 
 ---
 
 <div align="center">
 
-*Created by Matthew Valancy / Copyright 2026 Valpatel Software LLC / AGPL-3.0*
+Copyright 2026 Valpatel Software LLC -- Licensed under AGPL-3.0
 
 </div>

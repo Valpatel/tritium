@@ -67,7 +67,7 @@ with `hal_ble_serial` or `hal_ble_ota` enabled.
 ### Root Cause
 
 NimBLE library expects ESP-IDF Bluetooth headers that aren't properly exposed
-in the Arduino framework build path for ESP32-S3.
+in the ESP-IDF build path for ESP32-S3.
 
 ### Impact
 
