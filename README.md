@@ -38,7 +38,7 @@ git clone --recurse-submodules git@github.com:Valpatel/tritium.git
 cd tritium
 
 # Start the servers
-./start.sh              # Edge server (:8080) + Command Center (:5000)
+./start.sh              # Edge server (:8080) + Command Center (:8000)
 
 # Flash a board (from the edge submodule)
 cd tritium-edge

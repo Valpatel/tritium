@@ -12,7 +12,7 @@
 #   ./start.sh all          # Edge + SC + MQTT broker check
 #   ./start.sh stop         # Stop all services
 #
-# The edge server runs on :8080, SC runs on :5000.
+# The edge server runs on :8080, SC runs on :8000.
 # Both bridge automatically via MQTT (Mosquitto on :1884).
 
 set -euo pipefail
@@ -50,17 +50,17 @@ start_edge() {
 }
 
 start_sc() {
-    log "Starting Tritium-SC server (:5000)..."
-    if fuser 5000/tcp &>/dev/null; then
-        ok "SC already running on :5000"
+    log "Starting Tritium-SC server (:8000)..."
+    if fuser 8000/tcp &>/dev/null; then
+        ok "SC already running on :8000"
         return
     fi
     cd "$SCRIPT_DIR/tritium-sc"
     if [ -x "start.sh" ]; then
         ./start.sh &
         sleep 3
-        if fuser 5000/tcp &>/dev/null; then
-            ok "SC started: http://localhost:5000/"
+        if fuser 8000/tcp &>/dev/null; then
+            ok "SC started: http://localhost:8000/"
         else
             err "SC failed to start — check logs"
             return 1
@@ -90,7 +90,7 @@ check_mqtt() {
 stop_all() {
     log "Stopping Tritium services..."
     fuser -k 8080/tcp 2>/dev/null && ok "Edge server stopped" || true
-    fuser -k 5000/tcp 2>/dev/null && ok "SC stopped" || true
+    fuser -k 8000/tcp 2>/dev/null && ok "SC stopped" || true
 }
 
 MODE="${1:-all}"
@@ -109,7 +109,7 @@ case "$MODE" in
         echo ""
         ok "All services started."
         ok "  Edge:  http://localhost:8080/"
-        ok "  SC:    http://localhost:5000/"
+        ok "  SC:    http://localhost:8000/"
         ;;
     stop)
         stop_all
