@@ -6,11 +6,22 @@
 - Copyright: Created by Matthew Valancy / Copyright 2026 Valpatel Software LLC / AGPL-3.0
 
 ## Architecture
-Three git submodules, all track `dev` branch:
-- **tritium-lib** — Shared Python layer (models, stores, auth, events, MQTT topics)
-- **tritium-edge** — ESP32-S3 firmware (Tritium-OS) + fleet server (FastAPI)
-- **tritium-sc** — Command Center (FastAPI + vanilla JS, AI commander Amy, plugin system)
-- Integration: MQTT broker, REST heartbeats, WebSocket realtime
+
+Three git submodules, all track `dev` branch. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for diagrams and data flow.
+
+### Component Map
+
+| Component | Location | Language | Port | CLAUDE.md | Purpose |
+|-----------|----------|----------|------|-----------|---------|
+| **Edge Firmware** | `tritium-edge/` | C++17 | — | [CLAUDE.md](tritium-edge/CLAUDE.md) | Tritium-OS on ESP32-S3 (6 boards, 40+ HALs) |
+| **Fleet Server** | `tritium-edge/server/` | Python | 8080 | — | Provisioning, OTA, monitoring |
+| **Command Center** | `tritium-sc/` | Python + JS | 8000 | [CLAUDE.md](tritium-sc/CLAUDE.md) | Tactical dashboard, AI commander Amy, plugins |
+| **Shared Library** | `tritium-lib/` | Python (+ C++, JS future) | — | [CLAUDE.md](tritium-lib/CLAUDE.md) | Common code: models, MQTT topics, auth, events, test utils, themes |
+
+### Integration
+- MQTT broker for device telemetry, commands, and chat
+- REST heartbeats for device registration and config sync
+- WebSocket for real-time UI updates and Amy event streaming
 
 ## Autonomous Iteration — The Prime Directive
 
@@ -36,7 +47,7 @@ When a feature spans submodules (e.g., edge MQTT → SC plugin → lib models):
 Use parallel agents for independent work:
 - **Edge agent**: firmware features, build in `tritium-edge/esp32-hardware/`
 - **SC agent**: dashboard features, plugins, tests in `tritium-sc/`
-- **Lib agent**: shared models, stores, MQTT topics in `tritium-lib/`
+- **Lib agent**: shared code — models, stores, MQTT topics, test utils, themes in `tritium-lib/`
 - **Research agent**: find datasets, investigate APIs, explore solutions
 
 ## Build & Test Commands

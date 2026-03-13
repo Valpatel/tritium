@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(cd *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(pip install *)",
+      "Bash(pytest *)",
+      "Bash(pio *)",
+      "Bash(make *)",
+      "Bash(./start.sh*)",
+      "Bash(./test.sh*)",
+      "Bash(./scripts/*)",
+      "Bash(python3 *)",
+      "Bash(.venv/bin/python3 *)"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(sudo *)"
+    ]
+  }
+}
