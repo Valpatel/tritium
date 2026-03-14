@@ -14,6 +14,25 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 24: Advanced Correlation & Behavior
+
+### Shared Library
+- Behavior models: `BehaviorPattern`, `BehaviorAnomaly`, `TargetRoutine`,
+  `CorrelationScore`, `PositionSample`, anomaly severity classification
+- Correlation scoring function with temporal, spatial, and co-movement weighting
+- 16 behavior model tests passing
+
+### Command Center (SC)
+- Behavior API at `/api/behavior/` with pattern, anomaly, correlate, and stats endpoints
+- Target correlation scoring for sensor fusion (should_fuse threshold)
+- 11 behavior router tests passing
+
+**Verification:**
+- tritium-lib: 16/16 behavior tests pass (1249 total)
+- tritium-sc: 11/11 behavior tests pass
+
+---
+
 ## 2026-03-14 — Wave 23: Geospatial Intelligence
 
 ### Shared Library
