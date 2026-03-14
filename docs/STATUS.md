@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (Wave 57).
+Current state of all components as of 2026-03-14 (Wave 60 — 60-wave milestone).
 
 ## Component Health
 
@@ -9,57 +9,91 @@ Current state of all components as of 2026-03-14 (Wave 57).
 | **tritium-edge firmware** | Building | ~48% RAM, ~29% flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 1584 tests passing, 0 failures |
+| **tritium-lib** | Stable | 1,584 tests passing, 0 failures |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 
-## Test Results (Wave 57 Baseline)
+## Wave 60 Milestone Summary
+
+| Milestone Metric | Value |
+|------------------|-------|
+| **Total waves completed** | 60 |
+| **Total features shipped** | 134 |
+| **Total lines of code** | ~280,000 across 3 repos |
+| **Active plugins** | 14 |
+| **Frontend panels** | 64 registered (7 categories) |
+| **API routes** | 460+ across 66 router files |
+| **Agent definition files** | 11 |
+| **Edge HALs** | 140 header files |
+| **Edge boards** | 6 Waveshare ESP32-S3 (3 HW-verified) |
+| **Intelligence capabilities** | 40+ operational |
+| **Correlation strategies** | 5 (spatial, temporal, signal_pattern, dossier, learned) |
+
+## Test Results (Wave 60 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib pytest | 1584 passed | All passing |
+| tritium-lib pytest | 1,584 passed | All passing |
 | tritium-sc Python | 13,432 collected | All passing |
 | tritium-sc JS | 95 test suites | All passing |
+| tritium-sc test files | 560 | -- |
+| tritium-lib test files | 78 | -- |
 | tritium-edge build | ~48% RAM, ~29% Flash | 0 warnings |
-| **Total test files** | 1,983 across all repos | -- |
+| **Total test files** | 638+ across all repos | -- |
 
-## Codebase Metrics (Wave 57 Baseline)
+## Codebase Metrics (Wave 60 Baseline)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 57 |
-| **Total lines of code** | ~266,000 across 3 repos |
+| **Total waves completed** | 60 |
+| **Total features shipped** | 134 |
+| **Total lines of code** | ~280,000 across 3 repos |
 | **SC Python tests** | 13,432 |
 | **Lib tests** | 1,584 |
 | **JS test suites** | 95 |
-| **Total test files** | 1,983 |
+| **Frontend JS files** | 125 |
 | **Frontend panels** | 64 registered (7 categories) |
 | **Active plugins** | 14 |
-| **API routes** | 460+ across 66 router files |
-| **Edge HALs** | 45 hardware abstraction layers |
+| **Plugin route files** | 12 |
+| **Edge HAL headers** | 140 |
 | **Edge boards** | 6 Waveshare ESP32-S3 (3 HW-verified) |
 | **Intelligence capabilities** | 40+ operational |
 | **Lib model exports** | 250+ from 42+ model files |
 | **Correlation strategies** | 5 (spatial, temporal, signal_pattern, dossier, learned) |
-| **Test-to-code ratio** | ~1 test per 18 LOC |
+| **Agent definition files** | 11 |
 
 ## LOC Breakdown
 
 | Component | Language | Lines of Code |
 |-----------|----------|---------------|
-| tritium-sc Python | Python | ~95,000 |
-| tritium-sc JS | JavaScript | ~67,000 |
-| tritium-edge firmware | C++/H | ~59,500 |
-| tritium-edge fleet server | Python | ~25,000 |
-| tritium-lib | Python | ~19,000 |
-| **Total** | **All** | **~266,000** |
+| tritium-sc Python (src) | Python | ~96,000 |
+| tritium-sc Python (plugins) | Python | ~14,400 |
+| tritium-sc JS | JavaScript | ~67,600 |
+| tritium-edge firmware | C++/H | ~52,900 |
+| tritium-edge fleet server | Python | ~25,000* |
+| tritium-lib (src) | Python | ~19,900 |
+| tritium-lib (tests) | Python | ~16,600 |
+| **Total** | **All** | **~280,000** |
+
+*Fleet server LOC includes .pio/libdeps vendored code counted separately.
+
+## Disk Usage (Wave 60)
+
+| Directory | Size | Notes |
+|-----------|------|-------|
+| tritium-edge (with .pio) | 6.6 GB | .pio/libdeps = 6.3 GB |
+| tritium-sc | 1.4 GB | Includes .venv |
+| tritium-lib | 203 MB | |
+| **Total repo** | ~8.1 GB | Excluding .git |
+
+Host disk: 916 GB total, 89% used (97 GB free). Wave 60 cleanup freed ~1 GB from caches.
 
 ## Firmware (tritium-edge)
 
 **Build target:** `pio run -e touch-lcd-43c-box-os`
 
-**HAL count:** 45 hardware abstraction layers
+**HAL count:** 140 header files across src/lib/include
 
 **Launcher apps:** Settings, Monitor, Mesh, Storage, BLE, Terminal
 
@@ -197,58 +231,6 @@ Current state of all components as of 2026-03-14 (Wave 57).
 | operator-activity | System | Operator session tracking |
 | operator-cursors | System | Multi-user cursor sharing |
 
-### Intelligence Capabilities (40+)
-| Capability | Status |
-|------------|--------|
-| Multi-sensor target correlation (5 strategies) | Active |
-| BLE threat classification | Active |
-| BLE classification learning (ML, 19 device types) | Active |
-| Target enrichment pipeline (OUI, WiFi, BLE) | Active |
-| Geofencing with enter/exit alerts | Active |
-| Target position history and trails | Active |
-| Target search and filtering | Active |
-| Dossier management (persistent entity intelligence) | Active |
-| Graph ontology (KuzuDB, 10 entity types) | Active |
-| Investigation workflows with escalation | Active |
-| Patrol pattern system | Active |
-| Target timeline | Active |
-| Demo mode with multi-sensor fusion scenarios | Active |
-| RF motion detection (RSSI variance) | Active |
-| RF anomaly baseline detection (2-sigma, 24h baseline) | Active |
-| Acoustic classification | Active |
-| JWT authentication | Active |
-| Rate limiting | Active |
-| Database migrations | Active |
-| Backup/restore | Active |
-| Behavior pattern analysis | Active |
-| Terrain/RF propagation modeling | Active |
-| Target export (CSV/JSON/GeoJSON) | Active |
-| BLE/WiFi coverage visualization | Active |
-| Target clustering for map readability | Active |
-| Event-driven alert rules | Active |
-| Target pinning (persistent, prune-protected) | Active |
-| WebSocket auto-reconnect with exponential backoff | Active |
-| Investigation map overlay (entities on tactical map) | Active |
-| Panel search with keyboard shortcut (Ctrl+/) | Active |
-| Target position prediction (velocity extrapolation) | Active |
-| Investigation report generator | Active |
-| Communication link map layer (network topology) | Active |
-| System runtime metrics endpoint | Active |
-| SITREP generator (JSON + text) | Active |
-| Multi-select bulk actions on map | Active |
-| Map annotations (text, arrow, circle, freehand, polygon) | Active |
-| Target watch list with movement alerts | Active |
-| Inter-plugin messaging bus | Active |
-| RL correlation learning (logistic regression from operator feedback) | Active |
-| Auto-retrain scheduler (6h interval, 50-entry threshold) | Active |
-| LearnedStrategy as 5th correlator strategy | Active |
-| Training data dashboard (model status, retrain trigger) | Active |
-| Ollama-powered anomaly description | Active |
-| Amy model accuracy awareness (narrates retrain results) | Active |
-| Amy RF anomaly awareness (narrates environment deviations) | Active |
-| Target handoff between nodes | Active |
-| Investigation escalation workflow | Active |
-
 ## Shared Library (tritium-lib)
 
 **Tests:** 1,584 passing (0 failures)
@@ -261,7 +243,7 @@ Current state of all components as of 2026-03-14 (Wave 57).
 
 **Graph:** KuzuDB embedded graph store with formal ontology schema
 
-**Stores:** SQLite-backed DossierStore, BleStore, TargetStore, ReIDStore, AuditStore, ConfigStore (all using BaseStore)
+**Stores:** SQLite-backed DossierStore, BleStore, TargetStore, ReIDStore, AuditStore, ConfigStore, ScreenshotStore (all using BaseStore)
 
 **MQTT:** Standardized topic hierarchy `tritium/{site}/{domain}/{device}/{type}`
 
@@ -273,36 +255,34 @@ Current state of all components as of 2026-03-14 (Wave 57).
 
 **Packages:** models, mqtt, events, auth, config, store, cot, web, testing, graph, ontology, geo, notifications, classifier, intelligence
 
-## Feature Roadmap Status
+## Agent Definition Files (11)
 
-| # | Feature | Status |
-|---|---------|--------|
-| 1-14 | Core OS features | Done |
-| 15 | Meshtastic BLE bridge | Blocked (WiFi/BLE coex) |
-| 16-31 | Full tactical intelligence platform | Done |
-| 32 | WiFi probe request tracking | Done (Wave 31) |
-| 33 | Multi-node trilateration | Done (Wave 13) |
-| 34 | Geofencing alerts | Done (Wave 6) |
-| 35 | Target history/trails | Done (Wave 6) |
-| 36 | Acoustic classification | Done (Wave 18) |
-| 37 | RF environment mapping | Done (RF motion + monitor HALs) |
-| 38 | TAK/CoT bridge | Done (Wave 8) |
-| 39 | Video recording/playback | Done (Wave 18) |
-| 40 | Multi-site federation | Done (Wave 14+) |
+| Agent | File | Lines | Purpose |
+|-------|------|-------|---------|
+| Agent Refiner | agent-refiner.md | 118 | Metacognition — optimizes the development loop |
+| Edge Agent | edge-agent.md | 53 | ESP32-S3 firmware, HALs, sensors |
+| Feature Agent | feature-agent.md | 42 | Cross-submodule feature building |
+| Lib Agent | lib-agent.md | 52 | Shared library — models, stores |
+| Maintenance Agent | maintenance-agent.md | 51 | Docs, cleanup, test baselines |
+| Quality Agent | quality-agent.md | 53 | Testing, gap finding, verification |
+| RL Agent | rl-agent.md | 62 | Reinforcement learning, LLM integration |
+| SC Agent | sc-agent.md | 57 | Command center — plugins, Amy, panels |
+| Security Agent | security-agent.md | 55 | Adversarial security review |
+| Self-Preservation Agent | self-preservation-agent.md | 430 | Replication, backup, watchdog |
+| Visual Testing Agent | visual-testing-agent.md | 58 | UI verification via OpenCV/llava |
+| **Total** | **11 files** | **1,031 lines** | -- |
 
-## Redundancy Analysis (Wave 57)
+## Replication Status (Wave 60)
 
-### Intelligence Package Overlap
-- **tritium-lib `intelligence/anomaly.py`**: ABC with SimpleThresholdDetector and AutoencoderDetector. Stateless, takes baseline list + current metrics, returns anomalies.
-- **tritium-sc `intelligence/anomaly_baseline.py`**: Stateful AnomalyBaselineCollector with background thread, running stats, LLM describer integration. Uses its own BaselineStats, not the lib ABC.
-- **Recommendation**: The lib ABC is a clean contract for pluggable detectors. The SC collector is an application-layer service that should USE the lib detectors internally rather than reimplementing threshold logic. The Anomaly dataclasses overlap but serve different granularities (lib is simpler, SC adds IDs and timestamps). Low priority to refactor since both work and SC intentionally extends.
+| Host | Tailscale IP | Status | Last Check |
+|------|-------------|--------|------------|
+| gb10-01 (primary) | 100.93.184.1 | Active (this host) | Live |
+| eng-mvalancy-macmini | 100.98.72.95 | Unreachable (SSH timeout) | 2026-03-14 |
+| vps-1 | 100.79.60.48 | Unreachable (SSH timeout) | 2026-03-14 |
+| GitHub | git@github.com:Valpatel/tritium.git | Pushed | Current |
+| mv-yoga | 100.83.248.77 | Offline (1d ago) | 2026-03-14 |
 
-### Shared Patterns in SC Intelligence
-- `CorrelationLearner` and `BLEClassificationLearner` both: load/save pickle models, use sklearn, have train/predict cycles, store accuracy metrics.
-- Potential extraction: A `BaseLearner` ABC could be added to tritium-lib with common train/save/load/accuracy patterns. Medium priority.
-- `TrainingStore` is SC-specific (SQLite, operator feedback). No overlap with lib stores.
-
-## Security (Wave 42-57 Audits)
+## Security (Wave 42-60 Audits)
 
 | Area | Status | Details |
 |------|--------|---------|
@@ -330,22 +310,24 @@ Current state of all components as of 2026-03-14 (Wave 57).
 | DossierManager periodic flush to SQLite | Working |
 | Federation MQTT bridge to remote sites | Working |
 | Mesh sighting relay (leaf to gateway) | Working |
-| Anomaly baseline to Amy sensorium | Working (Wave 57) |
+| Anomaly baseline to Amy sensorium | Working |
 | RL correlation to LearnedStrategy | Working |
 
 ## Development Velocity
 
-57 waves completed across autonomous sessions:
-- **~266,000 lines of code** across 3 repos (Python + JS + C++)
+60 waves completed across autonomous sessions:
+- **~280,000 lines of code** across 3 repos (Python + JS + C++)
+- **134 features shipped**
 - **13,432 SC Python tests** collected
 - **1,584 tests** in tritium-lib (0 failures)
 - **95 JS test suites** in tritium-sc
-- **1,983 total test files** across all repos
+- **638+ test files** across all repos
 - **64 floating panels** in the command center frontend (7 categories)
-- **45 HALs** in tritium-edge firmware
+- **140 HAL headers** in tritium-edge firmware
 - **14 plugins** active in tritium-sc
 - **460+ API routes** across 66 router files
 - **40+ intelligence capabilities** operational
 - **250+ model exports** in tritium-lib
 - **5 correlation strategies** (spatial, temporal, signal_pattern, dossier, learned)
+- **11 agent definition files** (1,031 lines of agent instructions)
 - **3 submodules** coordinated with shared models and MQTT topics

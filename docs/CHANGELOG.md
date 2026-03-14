@@ -2,6 +2,30 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 60 (2026-03-14): 60-Wave Milestone + Maintenance + Disk Cleanup
+
+### Parent Repo
+| Change | Verification |
+|--------|-------------|
+| CLAUDE.md feature roadmap trimmed — 134 completed features moved to docs/FEATURES_COMPLETED.md | Verified |
+| CLAUDE.md now shows last 10 + next 10 features only (reduced context ~3KB) | Verified |
+| docs/FEATURES_COMPLETED.md created — full archive of all 134 shipped features | Verified |
+| docs/STATUS.md updated with Wave 60 milestone snapshot | Verified |
+| All 11 agent files audited with current counts | Verified |
+
+### Infrastructure
+| Change | Verification |
+|--------|-------------|
+| Disk cleanup: 936 __pycache__ dirs deleted | Verified |
+| Disk cleanup: .pytest_cache dirs deleted | Verified |
+| Disk cleanup: .pyc compiled files deleted | Verified |
+| Disk cleanup: tritium-sc/tests/.test-results/ cleared (665 MB) | Verified |
+| Disk cleanup: .pio .o object files cleaned | Verified |
+| Self-preservation: eng-mvalancy-macmini unreachable (SSH timeout via Tailscale) | Checked |
+| Self-preservation: vps-1 unreachable (SSH timeout via Tailscale) | Checked |
+| Self-preservation: GitHub primary backup confirmed pushed | Verified |
+| Disk after cleanup: 89% (97 GB free on 916 GB) | Verified |
+
 ## Wave 59 (2026-03-14): Screenshot Sharing + Correlation Lines + BLE Burst Mode
 
 ### tritium-lib

@@ -230,151 +230,38 @@ cd tritium-sc && ./start.sh
 
 ## Feature Roadmap
 
-### Completed (Waves 1-57, 130+ features)
-1. SQLite sighting logger
-2. P2P mesh chat (ESP-NOW)
-3. MQTT SC bridge (heartbeat, sighting, chat, commands)
-4. Terminal app (on-device + web)
-5. OUI/MAC manufacturer lookup
-6. BLE device type classifier (15 types)
-7. Mesh chat → MQTT bridge
-8. Sighting/BLE stats in MQTT heartbeat
-9. GIS/map tile viewer (MBTiles on SD)
-10. Power management (auto-profiles)
-11. Lock screen (PIN entry)
-12. WebSocket support
-13. Web settings page
-14. Event-driven toasts
-15. Meshtastic plugin (LoRa bridge, GPS tracking, send/waypoint)
-16. Camera feeds plugin (multi-source: synthetic/RTSP/MJPEG/MQTT/USB)
-17. BLE → TargetTracker → tactical map (RSSI confidence, trilateration)
-18. Mesh radio rendering on tactical map
-19. Asset placement panel (drag cameras/sensors onto map)
-20. Fleet dashboard plugin (device registry, battery, sighting counts)
-21. Synthetic data generators (BLE, Meshtastic, camera)
-22. Demo mode (full pipeline exercise with synthetic data)
-23. WebSocket broadcast for BLE/mesh targets
-24. Camera feed panel (live MJPEG grid)
-25. YOLO detector plugin (modular detection pipeline)
-26. Target correlator (fuse camera + BLE into unified targets)
-27. BLE threat classifier (known/unknown/new/suspicious)
-28. Amy sensorium BLE/mesh awareness
-29. WiFi SSID classifier (corporate/hotspot/IoT/mesh)
-30. MQTT sighting subscription in edge tracker
-31. ROS2 camera node example
-32. Geofencing alerts (Wave 6)
-33. Target history/trails (Wave 6)
-34. TAK/CoT bridge (Wave 8)
-35. Graph ontology + investigations (Wave 9)
-36. Automation engine (Wave 9)
-37. Multi-node trilateration (Wave 13)
-38. RF motion detection (Wave 13)
-39. Multi-site federation (Wave 14+)
-40. Radio scheduler HAL (Wave 16)
-41. JWT authentication (Wave 16)
-42. Rate limiting + DB migrations + backup (Wave 17)
-43. Acoustic classification (Wave 18)
-44. Video recording/playback (Wave 18)
-45. Drone/UAV models (Wave 18)
-46. LPR + AIS/ADS-B transponder plugins (Wave 21)
-47. Security audit (Wave 22)
-48. Terrain analysis + RF propagation (Wave 23)
-49. Behavior analysis + correlation scoring (Wave 24)
-50. Store consolidation (BaseStore) (Wave 25)
-51. WebSocket batching + target clustering (Wave 26)
-52. Event schemas (41 typed events) (Wave 26)
-53. BLE RSSI history + trend detection (Wave 26)
-54. Audit middleware + security hardening (Wave 27)
-55. Map measurement tool + fleet sparklines (Wave 28)
-56. MAC randomization detection (Wave 28)
-57. BLE/WiFi coverage layers + target detail modal (Wave 29)
-58. Target export (CSV/JSON/GeoJSON) (Wave 29)
-59. Mesh sighting relay (Wave 29)
-60. Alert rules + event-driven alert generation (Wave 29)
-61. WiFi probe request tracking (Wave 31)
-62. Config sync HAL (Wave 32)
-63. Notification preferences + rules (Wave 30)
-64. Heatmap visualization (Wave 30)
-65. Graph explorer panel (Wave 30)
-66. Target timeline panel (Wave 30)
-67. Quick-start panel (Wave 33)
-68. System health panel (Wave 33)
-69. Device manager panel + remote OTA (Wave 34)
-70. Testing dashboard panel (Wave 34)
-71. Mission management panel (Wave 35)
-72. Target comparison panel (Wave 35)
-73. Multi-camera panel (Wave 35)
-74. Target merge workflow (Wave 35)
-75. Amy conversation panel (Wave 37)
-76. Export scheduler panel (Wave 37)
-77. Bookmarks panel (Wave 37)
-78. RF monitor HAL (Wave 38)
-79. WiFi probe HAL (Wave 38)
-80. Power saver HAL (Wave 38)
-81. Panel search with Ctrl+/ shortcut (Wave 39)
-82. Heatmap timeline + notification bell (Wave 39)
-83. Map annotations + target watch list (Wave 40)
-84. Plugin messaging bus (Wave 40)
-85. Compass rose overlay (Wave 40)
-86. Ops dashboard panel (Wave 41)
-87. Map dark mode toggle (Wave 41)
-88. Dossier target grouping on map (Wave 41)
-89. Input validation + WebSocket auth/heartbeat (Wave 42)
-90. Shared panel-utils.js (_esc, _timeAgo, _badge, _statusDot, _fetchJson) (Wave 44)
-91. Categorized panel menu (7 categories) (Wave 44)
-92. Setup wizard (first-launch configuration) (Wave 44)
-93. SITREP generator (JSON + text tactical report) (Wave 43)
-94. Multi-select + bulk actions on map (Wave 43)
-95. Target history export (CSV/JSON/GeoJSON) (Wave 43)
-96. Print-friendly CSS (Wave 43)
-97. LED status indicator HAL (Wave 44)
-98. Communication channel models (Wave 44)
-99. Activity feed panel (live target events) (Wave 45)
-100. MQTT inspector panel (message debugger) (Wave 45)
-101. Map screenshot with classification banner (Wave 45)
-102. Responsive layout (tablet/phone breakpoints) (Wave 45)
-103. Multi-vendor BLE ad parsing (Samsung, Google, Microsoft, Fitbit) (Wave 45)
-104. Tactical scenario models (Wave 45)
-105. API input validation hardening (6 routers) (Wave 47)
-106. System metrics endpoint (Wave 47)
-107. Panel registration fix (58 panels registered) (Wave 47)
-108. Target position prediction (velocity extrapolation) (Wave 48)
-109. Communication link map layer (network topology) (Wave 48)
-110. Amy voice synthesis (Piper TTS via API) (Wave 48)
-111. Investigation report generator (Wave 48)
-112. ESP-NOW peer quality tracking (Wave 48)
-113. Network topology models (NetworkNode, PeerQuality) (Wave 48)
+**134 features completed across 59 waves.** Full list: [docs/FEATURES_COMPLETED.md](docs/FEATURES_COMPLETED.md)
 
-114. Multi-user sessions + cursor sharing (Wave 50)
-115. Map sharing + keyboard macros + grid overlay (Wave 50)
-116. System inventory endpoint (Wave 55)
-117. RL correlation learner (logistic regression from operator feedback) (Wave 52)
-118. LearnedStrategy as 5th correlator strategy (Wave 52)
-119. Auto-retrain scheduler + training dashboard (Wave 52)
-120. RL E2E test + missing router fix (Wave 55)
-121. BLE classification learner (ML, 19 device types) (Wave 56)
-122. Anomaly baseline collector (2-sigma RF environment detection) (Wave 56)
-123. Target handoff between nodes (Wave 56)
-124. Investigation escalation workflow (Wave 56)
+### Recent (Waves 55-59)
 125. BLE fingerprint hash for dedup (Wave 54)
 126. Ollama LLM HAL stub (Wave 54)
 127. Power consumption tracking (Wave 54)
 128. Amy anomaly awareness (RF deviation narration) (Wave 57)
+129. Screenshot sharing API + map share dialog (Wave 59)
+130. Target correlation lines on tactical map (Wave 59)
+131. Plugin dependency visualization (Wave 59)
+132. BLE scanner burst mode (Wave 59)
+133. 3D placement panel + spatial visualization (Wave 58)
+134. OTA management panel + firmware upload (Wave 58)
 
 ### Next Up
-129. **Multi-site RL model sharing** — federate learned correlation models across sites
-130. **Edge device ML inference** — deploy trained classifiers to ESP32-S3 (TinyML)
-131. **Acoustic ML classification** — ML-based sound classification pipeline
-132. **Visual similarity learning** — embeddings for camera-based re-identification
-133. **Graph-enhanced correlation** — use graph relationships to improve target fusion
-134. **Voice control** — speech-to-command for hands-free operation
+135. **Multi-site RL model sharing** — federate learned correlation models across sites
+136. **Edge device ML inference** — deploy trained classifiers to ESP32-S3 (TinyML)
+137. **Acoustic ML classification** — ML-based sound classification pipeline
+138. **Visual similarity learning** — embeddings for camera-based re-identification
+139. **Graph-enhanced correlation** — use graph relationships to improve target fusion
+140. **Voice control** — speech-to-command for hands-free operation
+141. **Passive WiFi fingerprinting** — correlate probe requests with BLE for device identity
+142. **Swarm coordination** — multi-robot autonomous patrol with conflict resolution
+143. **Edge-to-edge target handoff** — seamless tracking across node boundaries
+144. **Predictive threat scoring** — ML-based threat probability from behavior patterns
 
-## Test Baselines (Wave 57)
+## Test Baselines (Wave 60)
 - **tritium-lib**: 1,584 tests passing
 - **tritium-sc**: 13,432 Python tests collected, 95 JS test suites
 - **tritium-edge**: ~48% RAM, ~29% Flash, 0 warnings
 - **Total test files**: 1,983 across all repos
-- **Total LOC**: ~266,000
+- **Total LOC**: ~280,000
 
 ## Known Blockers
 - **NimBLE esp_bt.h not found** — BLE scanner runs stubs, WiFi/mesh alternatives work fine

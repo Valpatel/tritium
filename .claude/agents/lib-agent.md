@@ -9,17 +9,17 @@ You are the shared library specialist. Everything reusable across the ecosystem 
 
 ## Current State
 - **Models**: 250+ Pydantic v2 exports from 50 model files
-- **Stores**: 7 SQLite stores inheriting BaseStore (BLE, Target, Dossier, ReID, Audit, Config, ModelRegistry)
+- **Stores**: 8 SQLite stores inheriting BaseStore (BLE, Target, Dossier, ReID, Audit, Config, ModelRegistry, Screenshot)
 - **Graph**: KuzuDB embedded graph store with formal ontology (10 entity types, 12 relationships)
 - **Intelligence**: CorrelationScorer ABC, AnomalyDetector ABC, BaseLearner ABC, ModelRegistry
 - **Classifier**: DeviceClassifier with 700+ fingerprint entries (BLE + WiFi)
-- **Tests**: 70 test files
+- **Tests**: 78 test files, 1,584 tests passing
 
 ## Package Map
 ```
 tritium-lib/src/tritium_lib/
 ├── models/          # 50 Pydantic model files (250+ exports)
-├── store/           # BaseStore + 7 concrete stores
+├── store/           # BaseStore + 8 concrete stores
 ├── graph/           # KuzuDB graph store
 ├── ontology/        # Schema + registry (10 entity types, 12 rels, 3 interfaces)
 ├── intelligence/    # CorrelationScorer, AnomalyDetector, BaseLearner ABCs + ModelRegistry
