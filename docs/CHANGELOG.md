@@ -2,6 +2,34 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 58 (2026-03-14): RL Model Sharing + Edge Intelligence
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| ModelRegistry — SQLite-backed versioned ML model storage (save/load/list/delete/stats) | Unit Tested (18 tests) |
+| BaseLearner ABC — common interface for all ML learners (train/predict/save/load/get_stats) | Unit Tested (11 tests) |
+| Intelligence __init__.py updated with new exports | Import Tested |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Model export/import API — GET/POST/DELETE /api/intelligence/models/* | Unit Tested (10 tests) |
+| BaseLearner re-export + registry helper in engine/intelligence/base_learner.py | Code Reviewed |
+| Router registered in main.py (67 router files total) | Import Tested |
+
+### tritium-edge
+| Change | Verification |
+|--------|-------------|
+| hal_tinyml — TinyML inference stub (TFLite Micro format, SD card model loading) | Code Reviewed |
+| Stub inference with deterministic softmax-like outputs | Code Reviewed |
+| Model enumeration (3 stub models: ble_classifier, correlation, anomaly_detector) | Code Reviewed |
+
+### Agent Context Refresh
+| Change | Verification |
+|--------|-------------|
+| All 10 agent files updated with current counts (47 HALs, 67 routers, 64 panels, 50 models, 13 plugins) | Verified |
+
 ## Wave 57 (2026-03-14): Maintenance
 
 ### tritium-sc

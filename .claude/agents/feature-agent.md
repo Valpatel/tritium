@@ -35,6 +35,8 @@ Track, identify, and engage every target — cars, phones, watches, computers, p
 
 ## Key Files
 - Plugin pattern: `plugins/edge_tracker/plugin.py` (PluginInterface)
-- Frontend panel pattern: `src/frontend/js/command/panels/` (PanelDef export)
-- Lib model pattern: `src/tritium_lib/models/` (Pydantic v2 BaseModel)
-- Store pattern: `src/tritium_lib/store/` (BaseStore inheritance)
+- Frontend panel pattern: `src/frontend/js/command/panels/` (PanelDef export, 64 panels)
+- Lib model pattern: `src/tritium_lib/models/` (Pydantic v2 BaseModel, 50 files)
+- Store pattern: `src/tritium_lib/store/` (BaseStore inheritance, 7 stores)
+- Intelligence pattern: `src/tritium_lib/intelligence/base_learner.py` (BaseLearner ABC)
+- Router pattern: `src/app/routers/` (67 router files)

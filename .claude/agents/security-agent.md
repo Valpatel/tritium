@@ -15,7 +15,7 @@ You are the adversary. Try to break the system. Find vulnerabilities before atta
 
 ## What to Attack
 
-### Input Validation
+### Input Validation (67 router files, 470+ routes)
 - Every API endpoint that accepts text: can you inject HTML? SQL? Path traversal?
 - Every numeric param: what happens with negative numbers? MAX_INT? Float overflow?
 - Every file upload: path traversal in filenames? ZIP bombs? Oversized payloads?

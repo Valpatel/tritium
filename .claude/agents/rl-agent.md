@@ -37,9 +37,14 @@ Small models: qwen2.5:3b, phi3:mini, llava:7b
 - `tritium-sc/src/engine/intelligence/correlation_learner.py` — trains logistic regression on correlation outcomes
 - `tritium-sc/src/engine/intelligence/ble_classification_learner.py` — random forest on BLE features
 - `tritium-sc/src/engine/intelligence/anomaly_baseline.py` — RF environment baseline + deviation detection
+- `tritium-sc/src/engine/intelligence/base_learner.py` — SC-side BaseLearner re-export + registry helpers
+- `tritium-sc/src/app/routers/models.py` — Model export/import API for federation sharing
 - `tritium-lib/src/tritium_lib/intelligence/scorer.py` — CorrelationScorer ABC
 - `tritium-lib/src/tritium_lib/intelligence/anomaly.py` — AnomalyDetector ABC
+- `tritium-lib/src/tritium_lib/intelligence/base_learner.py` — BaseLearner ABC (train/predict/save/load)
+- `tritium-lib/src/tritium_lib/intelligence/model_registry.py` — SQLite-backed versioned model storage
 - `tritium-sc/src/engine/inference/fleet.py` — OllamaFleet discovery
+- `tritium-edge/lib/hal_tinyml/` — TinyML inference stub for edge-deployed models
 
 ## Where LLMs Help
 - Amy's cognition (already uses Ollama)
