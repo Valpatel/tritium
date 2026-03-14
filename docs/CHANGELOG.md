@@ -14,6 +14,25 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 38: Multi-Camera, Target Merge, Amy Monologue, Power Saver, Sensor Config
+
+### Shared Library (tritium-lib)
+- Added `models/sensor_config.py` — SensorPlacement, SensorArray, SensorType, MountingType, SensorStatus (Unit Tested, 19 tests)
+- Standardized sensor description across edge and SC: position, height, FOV, rotation, coverage radius, mounting type
+
+### Command Center (tritium-sc)
+- Multi-Camera View panel — 2x2/3x3 grid of camera feeds with per-camera detection overlays, click-to-expand (Build Verified)
+- Target Merge Workflow panel — side-by-side comparison, preview merge, confirm merge to combine dossiers (Build Verified)
+- Amy Conversation panel — full inner monologue stream, cognitive layer activity bars, tactical Q&A (Build Verified)
+- Data Export Scheduler panel — configure hourly/daily/weekly automatic exports of targets, dossiers, reports (Build Verified)
+- CSS styles for all four new panels
+
+### Edge Firmware (tritium-edge)
+- `hal_power_saver` — automatic power-saving when battery <20%: reduces scan intervals, dims display to 10%, resumes on charging (Build Verified)
+- Three power states: NORMAL, POWER_SAVE, CRITICAL (<10%), with hysteresis to prevent oscillation
+
+---
+
 ## 2026-03-14 — Wave 36: Maintenance — Docs, Quality, Features
 
 ### Shared Library (tritium-lib)
