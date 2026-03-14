@@ -1,26 +1,26 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-13 (post Wave 10).
+Current state of all components as of 2026-03-14 (post Wave 19, entering Wave 20 maintenance).
 
 ## Component Health
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| **tritium-edge firmware** | Building | 44.7% RAM, 28.5% flash (well within budget) |
+| **tritium-edge firmware** | Building | 47.4% RAM, 28.9% flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 955 tests passing, 975 collected (20 skipped) |
+| **tritium-lib** | Stable | 1049+ tests passing |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds |
-| **BLE scanner** | Disabled | WiFi/BLE coexistence conflict |
+| **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 
-## Test Results (Wave 10 Final)
+## Test Results (Wave 19 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib pytest | 955 passed, 20 skipped | All passing |
-| tritium-sc fast (tiers 1-3+8) | 81 tiers | All passing |
-| tritium-edge build | 44.7% RAM, 28.5% Flash | 0 warnings |
+| tritium-lib pytest | 1049 passed, 29 skipped | All passing |
+| tritium-sc fast (tiers 1-3+8) | 96+ tiers | All passing |
+| tritium-edge build | 47.4% RAM, 28.9% Flash | 0 warnings |
 
 ## Firmware (tritium-edge)
 
@@ -40,10 +40,12 @@ Current state of all components as of 2026-03-13 (post Wave 10).
 
 **Supported boards:** 6 Waveshare ESP32-S3 (3 hardware-verified, 1 pin-verified, 2 need verification)
 
+**Wave 16 additions:** Radio scheduler HAL (BLE/WiFi time-division), Camera MQTT publisher HAL
+
 ### Known Blockers
 
 - **NimBLE esp_bt.h not found** — blocks BLE serial + BLE OTA. WiFi/mesh/SD alternatives work.
-- **BLE/WiFi coexistence** — can't run BLE scanner alongside WiFi. BLE scanner uses stubs.
+- **BLE/WiFi coexistence** — can't run BLE scanner alongside WiFi. Radio scheduler HAL ready for testing.
 - **RGB parallel display glitches** — 43C-BOX cosmetic issue when USB connected.
 
 ## Command Center (tritium-sc)
@@ -61,7 +63,11 @@ Current state of all components as of 2026-03-13 (post Wave 10).
 
 **Test suite:** 7 tiers (syntax, unit, JS, infrastructure, integration, visual quality, visual E2E)
 
-### Plugins (10 active)
+**Wave 17 additions:** Rate limiting, database migrations, backup/restore API, Docker production config
+
+**Wave 18 additions:** Acoustic classification plugin, video recording API
+
+### Plugins (14 active)
 | Plugin | Purpose |
 |--------|---------|
 | edge_tracker | Edge device fleet tracking via MQTT |
@@ -74,6 +80,10 @@ Current state of all components as of 2026-03-13 (post Wave 10).
 | automation | If-then rule engine |
 | graphlings | NPC behavior system |
 | npc_thoughts | NPC inner monologue |
+| threat_feeds | Known-bad indicator matching |
+| rf_motion | Passive RF-based motion detection |
+| acoustic | Sound classification (gunshot, voice, vehicle) |
+| federation | Multi-site Tritium federation via MQTT |
 
 ### Intelligence Capabilities
 | Capability | Status |
@@ -90,18 +100,26 @@ Current state of all components as of 2026-03-13 (post Wave 10).
 | Patrol pattern system | Active |
 | Target timeline | Active |
 | Demo mode with multi-sensor fusion scenarios | Active |
+| RF motion detection (RSSI variance) | Active |
+| Acoustic classification | Active |
+| JWT authentication | Active |
+| Rate limiting | Active |
+| Database migrations | Active |
+| Backup/restore | Active |
 
 ## Shared Library (tritium-lib)
 
-**Models:** 116+ Pydantic models covering device, firmware, mesh, BLE, CoT, alerts, topology, diagnostics, transport, sensor, acoustic, seed, provision, correlation, timeseries, trilateration, dossier, ontology
+**Models:** 116+ Pydantic models covering device, firmware, mesh, BLE, CoT, alerts, topology, diagnostics, transport, sensor, acoustic, seed, provision, correlation, timeseries, trilateration, dossier, ontology, federation, drone/UAV, radio scheduler, camera MQTT
 
 **Graph:** KuzuDB embedded graph store with formal ontology schema
 
-**Stores:** SQLite-backed DossierStore, target store
+**Stores:** SQLite-backed DossierStore, BleStore, TargetStore, ReIDStore, AuditStore
 
 **MQTT:** Standardized topic hierarchy `tritium/{site}/{domain}/{device}/{type}`
 
-**Packages:** models, mqtt, events, auth, config, store, cot, web, testing, graph, ontology
+**Geo:** Coordinate transforms, camera projection, haversine distance (shared with SC)
+
+**Packages:** models, mqtt, events, auth, config, store, cot, web, testing, graph, ontology, geo, notifications, classifier
 
 ## Feature Roadmap Status
 
@@ -109,11 +127,16 @@ Current state of all components as of 2026-03-13 (post Wave 10).
 |---|---------|--------|
 | 1-14 | Core OS features | Done |
 | 15 | Meshtastic BLE bridge | Blocked (WiFi/BLE coex) |
-| 16 | Camera MQTT pipeline | Done (SC side) |
-| 17 | Voice control | Planned |
-| 18 | Sensor dashboard app | Planned |
-| 19 | Tritium Package Manager | Planned |
-| 20 | Automation engine | Done |
+| 16-31 | Full tactical intelligence platform | Done |
+| 32 | WiFi probe request tracking | Planned |
+| 33 | Multi-node trilateration | Done (Wave 13) |
+| 34 | Geofencing alerts | Done (Wave 6) |
+| 35 | Target history/trails | Done (Wave 6) |
+| 36 | Acoustic classification | Done (Wave 18) |
+| 37 | RF environment mapping | Partial (RF motion done) |
+| 38 | TAK/CoT bridge | Done (Wave 8) |
+| 39 | Video recording/playback | Done (Wave 18) |
+| 40 | Multi-site federation | Done (Wave 14+) |
 
 ## Integration Points
 
@@ -129,11 +152,14 @@ Current state of all components as of 2026-03-13 (post Wave 10).
 | TAK/CoT bridge to ATAK | Working |
 | Geofence alerts via EventBus | Working |
 | DossierManager periodic flush to SQLite | Working |
+| Federation MQTT bridge to remote sites | Working |
 
 ## Development Velocity
 
-10 waves completed in a single autonomous session:
-- **122+ new tests** added to tritium-lib (833 to 955)
-- **10 plugins** active in tritium-sc
-- **12 intelligence capabilities** operational
+19 waves completed across autonomous sessions:
+- **1049+ tests** in tritium-lib
+- **96+ test tiers** in tritium-sc
+- **14 plugins** active in tritium-sc
+- **18 intelligence capabilities** operational
 - **3 submodules** coordinated with shared models and MQTT topics
+- **Wave 20** maintenance pass: redundancy audit, dead code removal, store consolidation

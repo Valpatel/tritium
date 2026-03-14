@@ -14,6 +14,36 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 20: Maintenance & Cleanup
+
+### Command Center (SC)
+- Added `EventDrainPlugin` base class to eliminate ~30 lines of boilerplate per plugin
+  (event queue subscribe/drain/unsubscribe lifecycle now handled by base class)
+- Migrated fleet_dashboard and threat_feeds plugins to use `EventDrainPlugin`
+- Replaced `engine.tactical.geo` with thin re-export from `tritium_lib.geo`
+  (with fallback stub if lib not installed)
+- Removed 8 unused imports across engine and routers (dead code cleanup)
+
+### Documentation
+- Updated `docs/STATUS.md` with current state (19 waves, 14 plugins, 18 capabilities)
+- Updated `docs/CHANGELOG.md` with Waves 17-19 entries and test baselines
+
+**Verification:** Syntax checked, imports validated
+
+---
+
+## 2026-03-14 — Wave 19: Federation & Multi-Site
+
+### Command Center (SC)
+- Federation plugin for multi-site Tritium installations via MQTT bridge
+- Site discovery, target sharing, dossier sync, alert forwarding
+- Federation models in tritium-lib (FederatedSite, FederationMessage, SharedTarget)
+- Submodule updates across all repos
+
+**Verification:** Unit Tested
+
+---
+
 ## 2026-03-14 — Wave 18: Advanced Sensing
 
 ### Command Center (SC)
@@ -301,11 +331,11 @@ Ten waves of autonomous development transformed Tritium from a firmware OS with 
 
 ## Test Baselines
 
-| Suite | Start (Wave 1) | Final (Wave 13) | Status |
-|-------|----------------|-----------------|--------|
-| tritium-lib pytest | 833 passed | 1024 passed, 20 skipped | All passing |
-| tritium-sc fast (tiers 1-3+8) | 81 tiers | 96 tiers | All passing |
-| tritium-edge build | 45.9% RAM, 28.8% Flash | 44.7% RAM, 28.5% Flash | 0 warnings |
+| Suite | Start (Wave 1) | Current (Wave 19) | Status |
+|-------|----------------|-------------------|--------|
+| tritium-lib pytest | 833 passed | 1049 passed, 29 skipped | All passing |
+| tritium-sc fast (tiers 1-3+8) | 81 tiers | 96+ tiers | All passing |
+| tritium-edge build | 45.9% RAM, 28.8% Flash | 47.4% RAM, 28.9% Flash | 0 warnings |
 
 ---
 
