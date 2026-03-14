@@ -68,16 +68,16 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
-## 2026-03-13 — Session 2: Plugin Hardening & Integration
+## 2026-03-13 — Session 2: Wave 4 — Full Pipeline & Fleet Dashboard
 
-### tritium-sc (in progress)
+### tritium-sc
 | Change | Verification |
 |--------|-------------|
-| Camera feeds plugin ↔ MQTTBridge integration | Pending |
-| Edge tracker MQTT sighting subscription | Pending |
-| Expanded plugin test coverage | Pending |
-| Asset placement panel | Pending |
-| ROS2 camera node example | Pending |
+| Synthetic data generators (BLE, Meshtastic, camera pipeline) | Integration Tested |
+| WebSocket broadcast for BLE and mesh targets via `/ws/live` | Integration Tested |
+| Live camera feeds panel (MJPEG grid, status indicators, detection overlay) | Integration Tested |
+| Fleet dashboard plugin (`plugins/fleet_dashboard/`) with device registry and REST API | Integration Tested |
+| Demo mode exercising full pipeline with synthetic data | Integration Tested |
 
 ---
 
