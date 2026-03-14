@@ -14,6 +14,46 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 31: Target Filtering, Command Palette, WiFi Probes, API Versioning
+
+### Shared Library (tritium-lib)
+- Added `store/config_store.py` — ConfigStore for system-level key-value configuration (Unit Tested)
+  - Namespaced key-value store backed by SQLite WAL
+  - JSON serialization support for complex values
+  - Batch writes, namespace operations, count queries
+  - 16 tests passing
+
+### Command Center (tritium-sc)
+- Target filter overlay on tactical map (Build Verified)
+  - Filter visible targets by source (BLE/WiFi/Camera/Mesh/RF/Sim)
+  - Filter by alliance (Friendly/Hostile/Unknown)
+  - Filter by asset type (Person/Vehicle/Drone/Rover/etc.)
+  - Client-side filtering integrated into map renderer
+- API versioning with /api/version endpoint (Unit Tested)
+  - GET /api/version returns API version info and supported namespaces
+  - GET /api/v1/version establishes v1 namespace
+  - 3 tests passing
+- Command palette with Ctrl+K or / shortcut (Build Verified)
+  - VS Code-style fuzzy searchable command palette
+  - All actions: panel toggles, map layers, map modes, game controls, demo mode
+  - Arrow keys + Enter navigation, escape to close
+- Target comparison panel for side-by-side analysis (Build Verified)
+  - Select 2+ targets, compare all properties
+  - Highlights differences between targets
+  - Calculates similarity score for merge candidates
+  - Distance calculation between compared targets
+
+### Edge Firmware (tritium-edge)
+- WiFi probe request capture HAL (Build Verified)
+  - ESP32 promiscuous mode passively captures WiFi probes
+  - Extracts device MAC and probed SSIDs for fingerprinting
+  - Detects MAC randomization (locally administered bit)
+  - Tracks RSSI range, probe count, multiple SSIDs per device
+  - Service adapter publishes wifi_probe sightings via MQTT
+  - Optional channel hopping for broader coverage
+
+---
+
 ## 2026-03-14 — Wave 30: Maintenance — Docs, Redundancy Audit, Features
 
 ### Shared Library (tritium-lib)
