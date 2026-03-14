@@ -14,6 +14,21 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 15 Validation
+
+### Wave 15: Complete the Stack — VALIDATED
+- Edge OTA push via MQTT, frontend audit (automation rules, patrol drawing, geofence tools)
+- Map visualization (trails, FOV cones, fused targets, RF motion rendering)
+- Simulation realism (fake BLE/WiFi sightings during battle)
+- Lib quality audit (stores, error handling, missing tests)
+
+**Verification:**
+- tritium-lib: 1049 passed, 29 skipped
+- tritium-sc: 96 test tiers passed, 0 failed
+- tritium-edge: BUILD SUCCESS — 47.4% RAM, 28.9% Flash
+
+---
+
 ## 2026-03-13 — 10 Waves of Autonomous Development
 
 ### Summary
