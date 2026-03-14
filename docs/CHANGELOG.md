@@ -14,6 +14,41 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 33: Maintenance — Docs, Redundancy, Features
+
+### Shared Library (tritium-lib)
+- Added `models/mission.py` — Mission, MissionObjective, MissionType, MissionStatus, GeofenceZone (Unit Tested)
+  - Lifecycle methods: start, pause, complete, abort with timestamp tracking
+  - Objective tracking with progress calculation
+  - Geofence zones (polygon or circle) for area of operations
+  - 16 tests, all passing
+
+### Command Center (tritium-sc)
+- WebSocket reconnection with exponential backoff (Build Verified)
+  - Backoff: 1s -> 2s -> 4s -> 8s -> 16s cap (was 2s with 1.5x)
+  - Fixed magenta DISCONNECTED banner at viewport top when connection drops
+  - Auto-clears on reconnect with full state refresh
+- Target pinning via right-click context menu (Build Verified)
+  - Pin/Unpin toggle in context menu for selected targets
+  - Pinned targets persist to localStorage across reloads
+  - Pinned targets protected from stale-target pruning in store
+  - Yellow pin icon rendered on map next to pinned targets
+
+### Edge Firmware (tritium-edge)
+- Boot diagnostics summary on serial output (Build Verified)
+  - ASCII table showing board type, display resolution, firmware version
+  - Heap/PSRAM/flash usage at boot
+  - Status of all subsystems: WiFi, BLE, MQTT, LoRa, ESP-NOW, CoT, webserver, diag
+  - Firmware: 47.9% RAM, 29.1% Flash (within budget)
+
+### Documentation & Redundancy
+- Updated iteration queue: Waves 29-32 marked DONE, Waves 34-36 planned
+- Updated STATUS.md with Wave 33 baseline (1364+ lib tests, 26 capabilities)
+- Redundancy audit: all 8 stores use BaseStore, geo re-export verified clean, no duplicate JSON helpers
+- Updated CHANGELOG.md with Wave 33 entries
+
+---
+
 ## 2026-03-14 — Wave 32: Security + Skepticism Audit
 
 ### Command Center (tritium-sc)
@@ -616,9 +651,9 @@ Ten waves of autonomous development transformed Tritium from a firmware OS with 
 
 ## Test Baselines
 
-| Suite | Start (Wave 1) | Current (Wave 30) | Status |
+| Suite | Start (Wave 1) | Current (Wave 33) | Status |
 |-------|----------------|-------------------|--------|
-| tritium-lib pytest | 833 passed | 1348 passed, 29 skipped | All passing |
+| tritium-lib pytest | 833 passed | 1364+ passed, 29 skipped | All passing |
 | tritium-sc fast (tiers 1-3+8) | 81 tiers | 96 tiers (375s) | All passing |
 | tritium-edge build | 45.9% RAM, 28.8% Flash | 47.9% RAM, 29.1% Flash | 0 warnings |
 

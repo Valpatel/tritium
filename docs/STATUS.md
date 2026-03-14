@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (post Wave 29, Wave 30 maintenance).
+Current state of all components as of 2026-03-14 (post Wave 33 maintenance).
 
 ## Component Health
 
@@ -9,16 +9,16 @@ Current state of all components as of 2026-03-14 (post Wave 29, Wave 30 maintena
 | **tritium-edge firmware** | Building | 47.9% RAM, 29.1% flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 1348+ tests passing |
+| **tritium-lib** | Stable | 1364+ tests passing |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 
-## Test Results (Wave 29 Baseline)
+## Test Results (Wave 33 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib pytest | 1348 passed, 29 skipped | All passing |
+| tritium-lib pytest | 1364+ passed, 29 skipped | All passing |
 | tritium-sc fast (tiers 1-3+8) | 96+ tiers | All passing |
 | tritium-edge build | 47.9% RAM, 29.1% Flash | 0 warnings |
 
@@ -40,9 +40,7 @@ Current state of all components as of 2026-03-14 (post Wave 29, Wave 30 maintena
 
 **Supported boards:** 6 Waveshare ESP32-S3 (3 hardware-verified, 1 pin-verified, 2 need verification)
 
-**Wave 29 additions:** Mesh sighting relay (multi-hop BLE/WiFi forwarding via mesh)
-
-**Wave 30 additions:** Diagnostic self-test (/api/diag/selftest — WiFi, NTP, heap, PSRAM, SD, uptime)
+**Wave 33 additions:** Boot diagnostics summary (ASCII serial output with board/firmware/services status)
 
 ### Known Blockers
 
@@ -65,11 +63,7 @@ Current state of all components as of 2026-03-14 (post Wave 29, Wave 30 maintena
 
 **Test suite:** 7 tiers (syntax, unit, JS, infrastructure, integration, visual quality, visual E2E)
 
-**Wave 28 additions:** Map measurement tool, automation export/import, fleet sparklines
-
-**Wave 29 additions:** BLE/WiFi coverage layers, target detail modal, target export, investigation graph
-
-**Wave 30 additions:** Real-time target counter widget, dark/light theme toggle
+**Wave 33 additions:** WebSocket exponential backoff reconnect + DISCONNECTED banner, target pinning (right-click Pin/Unpin with map icon)
 
 ### Plugins (14 active)
 | Plugin | Purpose |
@@ -116,14 +110,16 @@ Current state of all components as of 2026-03-14 (post Wave 29, Wave 30 maintena
 | BLE/WiFi coverage visualization | Active |
 | Target clustering for map readability | Active |
 | Event-driven alert rules | Active |
+| Target pinning (persistent, prune-protected) | Active |
+| WebSocket auto-reconnect with exponential backoff | Active |
 
 ## Shared Library (tritium-lib)
 
-**Models:** 130+ dataclass models covering device, firmware, mesh, BLE, CoT, alerts, topology, diagnostics, transport, sensor, acoustic, seed, provision, correlation, timeseries, trilateration, dossier, ontology, federation, drone/UAV, radio scheduler, camera MQTT, behavior, terrain, event schemas, export/import, alert rules, notification rules, system summary
+**Models:** 135+ dataclass models covering device, firmware, mesh, BLE, CoT, alerts, topology, diagnostics, transport, sensor, acoustic, seed, provision, correlation, timeseries, trilateration, dossier, ontology, federation, drone/UAV, radio scheduler, camera MQTT, behavior, terrain, event schemas, export/import, alert rules, notification rules, system summary, mission management
 
 **Graph:** KuzuDB embedded graph store with formal ontology schema
 
-**Stores:** SQLite-backed DossierStore, BleStore, TargetStore, ReIDStore, AuditStore (all using BaseStore)
+**Stores:** SQLite-backed DossierStore, BleStore, TargetStore, ReIDStore, AuditStore, ConfigStore (all using BaseStore)
 
 **MQTT:** Standardized topic hierarchy `tritium/{site}/{domain}/{device}/{type}`
 
@@ -140,7 +136,7 @@ Current state of all components as of 2026-03-14 (post Wave 29, Wave 30 maintena
 | 1-14 | Core OS features | Done |
 | 15 | Meshtastic BLE bridge | Blocked (WiFi/BLE coex) |
 | 16-31 | Full tactical intelligence platform | Done |
-| 32 | WiFi probe request tracking | Planned |
+| 32 | WiFi probe request tracking | Done (Wave 31) |
 | 33 | Multi-node trilateration | Done (Wave 13) |
 | 34 | Geofencing alerts | Done (Wave 6) |
 | 35 | Target history/trails | Done (Wave 6) |
@@ -179,10 +175,10 @@ Three rule types exist in the codebase. See docs/RULE_TYPES.md for detailed comp
 
 ## Development Velocity
 
-29 waves completed across autonomous sessions:
-- **1348+ tests** in tritium-lib
+33 waves completed across autonomous sessions:
+- **1364+ tests** in tritium-lib
 - **96+ test tiers** in tritium-sc
 - **14 plugins** active in tritium-sc
-- **24 intelligence capabilities** operational
+- **26 intelligence capabilities** operational
 - **3 submodules** coordinated with shared models and MQTT topics
-- **Wave 30** maintenance pass: docs, redundancy audit, target counter, theme toggle, self-test, system summary model
+- **Wave 33** maintenance pass: WS reconnect, target pinning, mission model, boot diagnostics
