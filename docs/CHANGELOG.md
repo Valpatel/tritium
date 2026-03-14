@@ -14,6 +14,37 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 25: Maintenance & Quality
+
+### Shared Library (tritium-lib)
+- Migrated BleStore, TargetStore, ReIDStore to BaseStore base class
+- Removed dead `oui_lookup` import from DeviceClassifier
+- Added READMEs for `web/` and `config/` modules
+- All 1273 tests passing (29 skipped)
+
+### Command Center (tritium-sc)
+- Added System Health panel: plugin statuses, targets, dossiers, notifications, Amy, demo, tests
+- Added Quick Start panel: new user orientation with demo launch and panel links
+- Enhanced edge_tracker: Apple Continuity device types now flow from edge through to TargetTracker
+- Removed dead `oui_lookup` import from enrichment module
+- Added READMEs for federation plugin, motion-sensor demo, swarm-drone demo
+- Updated plugins/README.md with federation plugin entry
+- Satellite imagery toggle already fully implemented (verified: Esri World Imagery tiles,
+  toggleSatellite in map-maplibre.js, satellite layer in layers panel and menu bar)
+
+### Edge Firmware (tritium-edge)
+- Added READMEs for 5 HAL libraries: hal_rf_monitor, hal_config_sync,
+  hal_radio_scheduler, hal_sighting_buffer, hal_cot
+- Verified Apple Continuity data (device_type, class fields) already present
+  in BLE sighting JSON output via get_devices_json()
+
+**Verification:**
+- tritium-lib: 1273/1273 tests pass (BaseStore migration verified)
+- tritium-sc: 50/50 plugin tests pass
+- Dead imports removed, redundant boilerplate eliminated
+
+---
+
 ## 2026-03-14 — Wave 24: Advanced Correlation & Behavior
 
 ### Shared Library
