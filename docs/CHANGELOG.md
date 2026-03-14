@@ -2,6 +2,46 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 70 (2026-03-14): MILESTONE — 70 Waves, Movement Analytics, Amy Briefing, Perf Benchmarks
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| Added `MovementAnalytics` model: per-target speed, distance, direction histogram, dwell times, activity periods | 14 tests passing |
+| Added `FleetMetrics` model: fleet-wide aggregate metrics with `from_analytics()` factory | Tested |
+| Added `ActivityPeriod` and `DwellTime` dataclasses with roundtrip serialization | Tested |
+| Updated `models/__init__.py` with new exports | Import verified |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Added movement analytics router: `GET /api/analytics/movement/{target_id}` (velocity, direction, dwell time) | 15 tests passing |
+| Added fleet movement endpoint: `GET /api/analytics/movement` (fleet-wide aggregates) | Tested |
+| Added Amy daily briefing: `POST /api/amy/briefing` with Ollama LLM + template fallback | 8 tests passing |
+| Added briefing GET endpoint with 5-minute caching | Tested |
+| Added API latency benchmarks: 20 endpoints, all must be <200ms | 21 tests |
+| Registered `movement_analytics_router` and `amy_briefing_router` in main.py | Verified |
+
+### Docs
+| Change | Verification |
+|--------|-------------|
+| Created `docs/MILESTONE_WAVE70.md` — comprehensive 70-wave milestone report | Complete |
+| Updated `docs/STATUS.md` — Wave 70 edition with definitive counts | Complete |
+| Updated `docs/CHANGELOG.md` — Wave 70 entry | Complete |
+
+### Test Baselines (Wave 70)
+| Suite | Count |
+|-------|-------|
+| tritium-lib pytest | 1,762+ passed, 0 failures |
+| tritium-sc Python (unit) | 8,637+ passed |
+| tritium-sc JS | 93+ test suites |
+| tritium-sc test files | 665 |
+| tritium-lib test files | 84 |
+| tritium-edge build | 49.6% RAM, 29.2% Flash, 0 warnings |
+| Total test files | 749 |
+
+---
+
 ## Wave 69 (2026-03-14): Maintenance — Wave 70 Prep, Test Fixes, Baseline Recording
 
 ### tritium-sc
