@@ -2,6 +2,34 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 61 (2026-03-14): WiFi Fingerprint, Threat Scoring, Swarm Models, Voice Commands
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| SwarmCommand, SwarmFormation, SwarmMember models — 6 formation types (line, wedge, circle, diamond, column, staggered), 6 command types, role system | Unit Tested (15 tests) |
+| Models __init__.py updated with all swarm exports | Import Tested |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| WiFi Fingerprint plugin (plugins/wifi_fingerprint/) — probe-BLE temporal/spatial correlation with OUI affinity scoring | Unit Tested (10 tests) |
+| WiFi Fingerprint API routes — /api/wifi-fingerprint/status, /links, /fingerprint/{mac}, /correlations/{ble_mac} | Code Reviewed |
+| WiFi Fingerprint frontend panel — correlation links display with score coloring | Code Reviewed |
+| Predictive threat scoring engine (engine/tactical/threat_scoring.py) — loitering, zone violations, timing, movement anomalies | Unit Tested (10 tests) |
+| TrackedTarget.threat_score field added — 0.0 to 1.0 threat probability, included in to_dict() | Code Reviewed |
+| Voice command API (/api/voice/command) — regex pattern matching for demo, panel, search, Amy, map, audio commands | Unit Tested (18 tests) |
+| Voice command frontend panel — browser SpeechRecognition microphone button + text input + command history | Code Reviewed |
+| Edge-to-edge handoff integration — HandoffTracker wired into edge_tracker BLE presence handler | Code Reviewed |
+| Voice router registered in app/main.py | Code Reviewed |
+
+### tritium-edge
+| Change | Verification |
+|--------|-------------|
+| watchdog.sh — fleet server process monitor with auto-restart, resource monitoring, signal handling | Script Tested (8 tests) |
+| health-check.sh — quick health probe for HTTP, MQTT, memory, disk, temp, file descriptors | Script Tested (8 tests) |
+| test-scripts.sh — bash test suite for watchdog and health-check scripts | Verified |
+
 ## Wave 60 (2026-03-14): 60-Wave Milestone + Maintenance + Disk Cleanup
 
 ### Parent Repo
