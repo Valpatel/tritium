@@ -2,6 +2,41 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 59 (2026-03-14): Screenshot Sharing + Correlation Lines + BLE Burst Mode
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| ScreenshotStore — SQLite-backed PNG screenshot persistence (save/list/get/delete/count) | Unit Tested (9 tests) |
+| Store __init__.py updated with ScreenshotStore export | Import Tested |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Screenshot sharing API — POST/GET/DELETE /api/screenshots with base64 upload + WebSocket broadcast | Code Reviewed |
+| Target correlation lines on tactical map — draws dashed lines between correlated targets with confidence % | Code Reviewed |
+| Plugin dependency visualization — SVG graph in system health panel showing plugin deps/capabilities | Code Reviewed |
+| Correlations API — GET /api/correlations exposes TargetCorrelator records for frontend | Code Reviewed |
+| Plugin dependencies API — GET /api/plugins/dependencies returns graph data for visualization | Code Reviewed |
+| Map screenshot share dialog — DOWNLOAD/SHARE/CANCEL options after Ctrl+Shift+P capture | Code Reviewed |
+| Routers registered in main.py (screenshots_router, correlations_router) | Import Tested |
+
+### tritium-edge
+| Change | Verification |
+|--------|-------------|
+| BLE scanner burst mode — 5s active scan burst every 30s, integrates with radio scheduler | Code Reviewed |
+| ScanConfig extended with burst_mode, burst_scan_ms, burst_interval_ms | Code Reviewed |
+| Burst API: start_burst(), is_burst_active(), burst_remaining_ms(), get_burst_count() | Code Reviewed |
+| BleScannerService auto-enables burst mode when ENABLE_RADIO_SCHEDULER defined | Code Reviewed |
+
+### Infrastructure
+| Change | Verification |
+|--------|-------------|
+| docs/REPLICATION.md — host inventory, recovery instructions, replication manifest | Code Reviewed |
+| gb10-02 reachability check — DNS resolution failure documented | Verified |
+
+---
+
 ## Wave 58 (2026-03-14): RL Model Sharing + Edge Intelligence
 
 ### tritium-lib
