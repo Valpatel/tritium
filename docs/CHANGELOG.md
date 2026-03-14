@@ -14,6 +14,35 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 28: Measurement Tools, Export/Import, MAC Randomization
+
+### Shared Library (tritium-lib)
+- Added `models/export.py` — ExportManifest, ExportPackage, ExportSection, ImportResult (Unit Tested)
+- 12 export section types for portable system state bundles
+- `create_export_manifest()`, `validate_import_compatibility()` utilities
+- 12 new tests, all passing
+
+### Command Center (tritium-sc)
+- Map measurement tool: press X to toggle, click two points to measure distance in meters/km (Unit Tested)
+  - ESC cancels active measurement, Delete clears all measurements
+  - Dashed yellow lines with labeled distance at midpoint
+- Automation rule export/import: GET /api/automation/export, POST /api/automation/import (Unit Tested)
+  - JSON package format with metadata and overwrite option
+  - 3 new tests for export format, roundtrip, and field preservation
+- Fleet dashboard sparklines: target count history per device recorded on heartbeat (Unit Tested)
+  - GET /api/fleet/devices/{id}/sparkline and GET /api/fleet/sparklines endpoints
+  - 60-point history (1 per minute = 1 hour of data)
+- Added READMEs to 6 engine subdirectories: actions, inference, nodes, perception, plugins, units
+- Redundancy audit: haversine already re-exported from tritium_lib.geo, no duplicate logic found
+
+### Edge Firmware (tritium-edge)
+- BLE MAC randomization detection: locally administered bit detection on first octet (Build Verified)
+- Timing correlation: departed random-MAC devices correlated with new arrivals within 5s at similar RSSI
+- Rotation groups: devices that rotate MACs are linked by group ID
+- JSON output includes `random_mac` and `rotation_group` fields
+
+---
+
 ## 2026-03-14 — Wave 26: WS Compression, Clustering, Event Schemas, RSSI History
 
 ### Shared Library (tritium-lib)
