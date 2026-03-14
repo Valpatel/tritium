@@ -14,6 +14,30 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 29: Coverage Layers, Target Detail, Alert Rules, Mesh Sighting Relay
+
+### Shared Library (tritium-lib)
+- Added `models/alert_rules.py` — AlertRule, AlertCondition, AlertTrigger, ConditionOperator (Unit Tested)
+  - Event-driven alert generation with trigger matching, condition evaluation, cooldown, severity
+  - 10 condition operators (eq, neq, gt, lt, gte, lte, contains, not_contains, in, regex)
+  - Zone and target alliance filters
+  - 5 default alert rules (hostile detected, geofence breach, device offline, battery critical, target loiter)
+  - 22 tests, all passing
+
+### Command Center (tritium-sc)
+- Map: BLE/WiFi coverage layer for edge nodes — dual-ring display with BLE ~30m cyan inner ring and WiFi ~50m blue outer ring (Build Verified)
+- Map: Target detail modal on double-click — rich modal with all identifiers, signal stats (RSSI/confidence), position trail mini-map (SVG), enrichments, dossier link, and action buttons (Build Verified)
+- API: `GET /api/targets/export?format=csv|json|geojson` — export all targets in standard formats for external tools (Unit Tested)
+- API: `GET /api/investigations/{id}/graph` — returns nodes+edges for investigation link chart visualization (Build Verified)
+
+### Edge Firmware (tritium-edge)
+- Mesh protocol: `MESH_EX_SIGHTING` message type with `MeshSightingPayload` for compact BLE/WiFi sighting relay (Build Verified)
+- MeshManager: `relaySighting()` and `relaySightingBatch()` for forwarding sightings from leaf/sensor nodes to gateway via TTL-based mesh routing (Build Verified)
+- Gateway nodes deliver received sightings to callback for MQTT publishing
+- Firmware: 47.9% RAM, 29.1% Flash (within budget)
+
+---
+
 ## 2026-03-14 — Wave 28: Measurement Tools, Export/Import, MAC Randomization
 
 ### Shared Library (tritium-lib)
