@@ -14,6 +14,32 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 40: Panel Utils, JS Test Fixes, Heatmap Timeline, Device Identity
+
+### Shared Library (tritium-lib)
+- `web.sanitize` module: `html_escape()`, `json_safe()`, `sanitize_filename()` (Unit Tested, 27 tests)
+- Exported from `tritium_lib.web` namespace
+
+### Command Center (tritium-sc)
+- `panel-utils.js` shared utilities: `_esc`, `_timeAgo`, `_badge`, `_statusDot`, `_fetchJson` (Integration Tested)
+- 7 panels refactored to import from panel-utils instead of inline `_esc` definitions
+- Fixed test_websocket.js: 8 failures -> 0 (synced expected values to actual reconnect params: 1000ms base, 16000ms max, 2x backoff)
+- Fixed test_map_render.js: 41 failures -> 0 (added `isTargetPinned` to mock TritiumStore)
+- Heatmap timeline panel: temporal playback with sparkline chart, play/pause/step transport (Build Verified)
+- `HeatmapEngine.get_timeline()` + `GET /api/heatmap/timeline` endpoint for time-bucketed frames
+- Notification bell badge in header: unread count, click opens notifications panel (Build Verified)
+- Updated test harnesses for alerts, audio, stats panels to load panel-utils.js
+- JS test results: 91/92 tiers pass (1 pre-existing menu_bar failure)
+
+### Edge Firmware (tritium-edge)
+- `hal_identity` service: generates UUIDv4 on first boot, persists in NVS (Build Verified)
+- Provides `get_uuid()`, `get_short_id()`, `get_device_name()`, `set_device_name()`, `regenerate()`
+- `identity_service.h` ServiceInterface wrapper, priority 5 (before networking)
+- main.cpp: identity UUID used as fallback when `DEFAULT_DEVICE_ID` not defined for heartbeat, MQTT, OTA, config sync, CoT
+- Serial commands: `UUID`, `SET_NAME`, `REGEN_UUID`
+
+---
+
 ## 2026-03-14 — Wave 39: Maintenance — Panel Search, Test Baseline, Docs Update
 
 ### Shared Library (tritium-lib)
