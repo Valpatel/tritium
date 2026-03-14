@@ -2,6 +2,33 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 68 (2026-03-14): Picture of Day, Nearby Targets, Time Slider, Heartbeat Compression
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| GET /api/picture-of-day — 24-hour ops summary: new targets, correlations, threats, zones, sightings by source, top devices, threat level | Tested (4 unit tests) |
+| GET /api/targets/{id}/nearby — co-located targets in time+space for relationship discovery | Tested (2 unit tests) |
+| GET /api/health/ollama — Ollama service health: models loaded, GPU, fleet multi-host | Tested (1 unit test) |
+| Ollama status added to main /api/health subsystem checks | Tested |
+| Map time slider (time-slider.js) — scrub 24 hours of target positions via playback SSE stream | Code Reviewed |
+| 3 new router modules, 7 new tests, all passing | Tested |
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| models/analytics.py — DailyAnalytics + DeviceActivity dataclasses for daily system performance tracking | Tested (9 unit tests) |
+| Full serialization roundtrip support, exported from models __init__ | Tested |
+
+### tritium-edge
+| Change | Verification |
+|--------|-------------|
+| Fleet heartbeat compression — compact JSON (~70 bytes) every 30s, full JSON (~500+ bytes) every 5 min | Code Reviewed |
+| BridgeConfig extended with full_heartbeat_interval_ms and compact_heartbeat toggle | Code Reviewed |
+| SC detects compact format via "c":1 key, reduces MQTT bandwidth ~85% for large fleets | Code Reviewed |
+
+---
+
 ## Wave 66 (2026-03-14): Maintenance — Boot Self-Test, MQTT Health, Panel Audit, Stats Update
 
 ### tritium-sc
