@@ -59,8 +59,10 @@ You are expected to build independently. Do NOT stop to ask the user unless you 
 7. **Launch 6+ parallel agents.** Every wave: 2-3 feature agents, 1 quality/testing agent, 1 infrastructure agent, 1 test-runner that auto-launches the next wave.
 8. **NEVER STOP.** When a wave finishes, immediately launch the next wave. Do not wait for approval. Do not report and pause. The loop is infinite. If all planned waves are done, read the vision and identify new work.
 
-### Documentation Maintenance (Every 3rd Wave)
-Every 3rd wave, one agent must do a documentation fractal pass:
+### Periodic Maintenance (Every 3rd Wave)
+Every 3rd wave, reserve 2 agents for maintenance — one for docs, one for cleanup:
+
+**Documentation fractal pass (1 agent):**
 - Traverse ALL directories in ALL submodules
 - Every package/directory must have a README.md with: "where you are", what it does, key files, related links
 - Update CLAUDE.md plugin list and feature roadmap
@@ -68,6 +70,14 @@ Every 3rd wave, one agent must do a documentation fractal pass:
 - Update docs/CHANGELOG.md with recent wave entries and verification levels
 - Update memory/project_iteration_queue.md with completed waves
 - Documentation rot is as bad as code rot — treat it with equal priority
+
+**Redundancy cleanup (1 agent):**
+- Grep for duplicate functions across SC, edge, and lib — consolidate into lib
+- Find SC code that should be in lib (models, stores, utilities)
+- Remove dead code (functions with no callers, unused imports, orphaned tests)
+- Consolidate similar patterns across plugins (shared base classes, common routers)
+- Verify SC actually uses lib versions of extracted code (geo, notifications, models)
+- Consider BaseStore class for the 5+ SQLite stores that share the same pattern
 
 ### How to Continue Autonomously
 - Read `memory/project_iteration_queue.md` for the wave roadmap
