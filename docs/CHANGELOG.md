@@ -2,6 +2,60 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 72 (2026-03-14): Maintenance — Docs, Intelligence Audit, Test Baselines, Wave Planning
+
+### Docs
+| Change | Verification |
+|--------|-------------|
+| Updated STATUS.md: Wave 72 edition with verified LOC counts, intelligence pipeline stats | wc -l verified |
+| Updated CHANGELOG.md: Wave 71 + 72 entries | Updated |
+| Updated iteration queue: Waves 70-71 marked DONE, Waves 73-77 planned | Updated |
+
+### Intelligence Audit
+| Change | Verification |
+|--------|-------------|
+| Reviewed 7 intelligence modules (2,667 LOC): shared patterns identified | Code review |
+| BaseLearner re-exported from tritium-lib, used as ABC contract | Verified |
+| FeatureAggregator and ClassificationFeedbackService: distinct responsibilities confirmed | Analyzed |
+| Shared patterns: singleton pattern (7/7), thread-safe locking (6/7), get_stats() (7/7) | Documented |
+| No pipeline abstraction needed: aggregator collects, feedback classifies+sends — different data flows | Analyzed |
+
+### Test Baselines (Wave 72)
+| Suite | Count |
+|-------|-------|
+| tritium-lib pytest | 1,750 passed, 29 skipped |
+| tritium-sc intelligence | 87 passed |
+| tritium-sc meshtastic (unit) | 105+ passed |
+| tritium-sc test files | 730 (631 py + 99 js) |
+| tritium-lib test files | 86 |
+| tritium-edge build | 49.6% RAM, 29.2% Flash, 0 warnings |
+| Total test files | 816 |
+
+---
+
+## Wave 71 (2026-03-14): Edge-to-Cloud Intelligence Pipeline
+
+### tritium-edge
+| Change | Verification |
+|--------|-------------|
+| Added `hal_ble_features`: BLE feature extraction HAL for edge-to-cloud ML pipeline | Build verified |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Added `FeatureAggregator`: collects BLE feature vectors from edge nodes, rolling window, mean computation | 16 tests |
+| Added `ClassificationFeedbackService`: sends ML classifications back to edge via MQTT, tracks consistency | 87 total intel tests |
+| Added edge intelligence panel (frontend): per-node ML metrics, aggregator stats | Visual |
+| Registered intelligence router in main.py | Verified |
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| Added `FeatureVector`, `ClassificationFeedback`, `EdgeIntelligenceMetrics` models | 14+ tests |
+| Updated models/__init__.py with new intelligence exports | Import verified |
+
+---
+
 ## Wave 70 (2026-03-14): MILESTONE — 70 Waves, Movement Analytics, Amy Briefing, Perf Benchmarks
 
 ### tritium-lib
