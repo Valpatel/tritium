@@ -79,6 +79,28 @@ Every 3rd wave, reserve 2 agents for maintenance — one for docs, one for clean
 - Verify SC actually uses lib versions of extracted code (geo, notifications, models)
 - Consider BaseStore class for the 5+ SQLite stores that share the same pattern
 
+### Security & Performance Audit (Every 5th Wave)
+Every 5th wave, dedicate 2 agents to adversarial review:
+
+**Security audit (1 agent):**
+- OWASP Top 10 review: injection, XSS, broken auth, sensitive data exposure, CSRF
+- API endpoint audit: which endpoints lack auth? Which accept unsanitized input?
+- MQTT security: can an unauthorized device publish to command topics?
+- SQLite injection: are all queries parameterized?
+- File path traversal: can API params escape intended directories?
+- Secrets in code: grep for hardcoded passwords, API keys, tokens
+- Dependency audit: check for known CVEs in pip dependencies
+
+**Performance & skepticism audit (1 agent):**
+- Memory profiling: how much RAM does the SC server use under load?
+- Query performance: are there N+1 queries? Unindexed lookups?
+- WebSocket scalability: what happens with 100 connected browsers?
+- Plugin startup time: do any plugins block app boot?
+- TargetTracker lock contention: is the threading lock a bottleneck at scale?
+- Assume NOTHING works: try to start the server, hit every API endpoint, verify real responses
+- Try demo mode end-to-end: does it actually show fusion on a map?
+- Try every frontend panel: do they load? Do they show data? Or are they just empty shells?
+
 ### How to Continue Autonomously
 - Read `memory/project_iteration_queue.md` for the wave roadmap
 - Find the first incomplete wave
