@@ -14,6 +14,27 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 44: Maintenance — Panel Utils, Categorized Menu, Setup Wizard
+
+### Command Center (tritium-sc)
+- **Panel redundancy cleanup**: Migrated 42 panels from inlined `_esc()` and `_timeAgo()` to shared `panel-utils.js` imports. Zero panels with duplicated helper functions remaining (Integration Tested — 92 JS suites pass)
+- **Categorized panel menu**: VIEW menu now groups 55 panels into 7 categories (Tactical, Intelligence, Sensors, Fleet, AI & Comms, Simulation, System) with styled category headers. Empty categories auto-hidden (Integration Tested)
+- **Setup wizard panel**: First-launch configuration wizard with 6 steps: welcome, map center (with city presets), demo mode toggle, MQTT broker config, default layout selection, completion. ConfigStore persists to localStorage. Auto-opens when no config exists (Unit Tested — syntax)
+- **ConfigStore**: New localStorage-backed configuration store with get/set/getAll and event emission on changes. Accessible via `window.ConfigStore` (Unit Tested)
+- Fixed 9 JS test failures caused by panel-utils migration (test_menu_bar, test_amy_panel, test_game_hud, test_units_panel, test_unit_command, test_inventory_panel, test_unit_inspector, test_upgrades, test_timeline_panel)
+
+### Documentation
+- **STATUS.md**: Updated to Wave 44 — 55 panels, 1433 lib tests, 3726 SC tests, 92 JS suites, 43 HALs, 266K LOC
+- **CLAUDE.md**: Feature roadmap updated through Wave 44 (92 completed features)
+
+### Test Baselines
+- tritium-lib: 1433 passed, 29 skipped, 0 failures
+- tritium-sc Python: 3726 passed, 72 skipped, 1 Ollama-dependent failure
+- tritium-sc JS: 92 suites, 0 failures
+- tritium-edge: 48.0% RAM, 29.1% Flash, 0 warnings
+
+---
+
 ## 2026-03-14 — Wave 43: Ops Dashboard, Capability Ads, Map Dark Mode, Dossier Groups
 
 ### Command Center (tritium-sc)

@@ -1,55 +1,52 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (post Wave 42 security audit).
+Current state of all components as of 2026-03-14 (post Wave 44 maintenance).
 
 ## Component Health
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| **tritium-edge firmware** | Building | 47.9% RAM, 29.1% flash (within budget) |
+| **tritium-edge firmware** | Building | ~48% RAM, ~29% flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 1404 tests passing, 0 failures |
+| **tritium-lib** | Stable | 1433 tests passing, 29 skipped, 0 failures |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 
-## Test Results (Wave 42 Baseline)
+## Test Results (Wave 44 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib pytest | 1420 passed, 29 skipped | All passing |
-| tritium-sc fast suite | 17,824 passed, 41 known failures | 95/96 tiers pass |
-| tritium-sc test infra | 120 passed | All passing |
-| tritium-sc ROS2 robot | 125 passed | All passing |
-| tritium-edge build | 47.9% RAM, 29.1% Flash | 0 warnings |
+| tritium-lib pytest | 1433 passed, 29 skipped | All passing |
+| tritium-sc Python | 3726 passed, 72 skipped, 1 known failure | 1 Ollama connectivity test (requires running LLM) |
+| tritium-sc JS | 92 test suites, 0 failures | All passing |
+| tritium-edge build | ~48% RAM, ~29% Flash | 0 warnings |
 
-**Known JS test failures (pre-existing):**
-- `test_menu_bar.js` — 41 failures (panel button order off-by-one after panel additions)
-
-## Codebase Metrics (Wave 42)
+## Codebase Metrics (Wave 44)
 
 | Component | Language | Lines of Code |
 |-----------|----------|---------------|
-| tritium-sc Python | Python | 88,871 |
-| tritium-sc JS | JavaScript | 63,993 |
-| tritium-edge firmware | C++/H | 71,206 |
-| tritium-edge fleet server | Python | 25,037 |
-| tritium-lib | Python | 16,736 |
-| **Total** | **All** | **265,843** |
+| tritium-sc Python | Python | ~89,000 |
+| tritium-sc JS | JavaScript | ~64,000 |
+| tritium-edge firmware | C++/H | ~71,000 |
+| tritium-edge fleet server | Python | ~25,000 |
+| tritium-lib | Python | ~17,000 |
+| **Total** | **All** | **~266,000** |
 
 | Metric | Value |
 |--------|-------|
-| Total test files | 818 (634 SC + 65 lib + 119 edge) |
-| Total test assertions (SC fast) | 17,824 |
-| Test-to-code ratio (SC Python) | 1 test file per 140 LOC |
-| Test-to-code ratio (lib) | 1 test file per 257 LOC |
+| Total test files | 820+ (SC + lib + edge) |
+| Total SC Python tests | 3,726 |
+| Total lib tests | 1,433 |
+| Total JS test suites | 92 |
+| Test-to-code ratio (SC Python) | 1 test file per ~140 LOC |
 
 ## Firmware (tritium-edge)
 
 **Build target:** `pio run -e touch-lcd-43c-box-os`
 
-**HAL count:** 42 hardware abstraction layers
+**HAL count:** 43 hardware abstraction layers
 
 **Launcher apps:** Settings, Monitor, Mesh, Storage, BLE, Terminal
 
@@ -75,7 +72,7 @@ Current state of all components as of 2026-03-14 (post Wave 42 security audit).
 
 **Server:** FastAPI on :8000
 
-**Frontend:** Vanilla JS command center with tactical map, 48 floating panels, panel search
+**Frontend:** Vanilla JS command center with tactical map, 55 floating panels, categorized panel menu, panel search
 
 **AI Commander Amy:** 4-layer cognitive AI (reflex, instinct, awareness, deliberation)
 - Instinct layer: automatic threat response rules
@@ -85,6 +82,8 @@ Current state of all components as of 2026-03-14 (post Wave 42 security audit).
 **Simulation:** 10Hz battle engine, 10-wave combat, 16 unit types
 
 **Test suite:** 7 tiers (syntax, unit, JS, infrastructure, integration, visual quality, visual E2E)
+
+**API endpoints:** 417+ routes across 56 router files
 
 ### Plugins (14 active)
 | Plugin | Purpose |
@@ -104,58 +103,65 @@ Current state of all components as of 2026-03-14 (post Wave 42 security audit).
 | acoustic | Sound classification (gunshot, voice, vehicle) |
 | federation | Multi-site Tritium federation via MQTT |
 
-### Frontend Panels (48 registered)
-| Panel | Purpose |
-|-------|---------|
-| amy | Amy AI commander chat + status |
-| amy-conversation | Full inner monologue timeline |
-| alerts | Alert feed |
-| assets | Asset placement (drag sensors onto map) |
-| audio | Audio controls |
-| automation | If-then rule CRUD |
-| bookmarks | Map position bookmarks |
-| camera-feeds | Live camera feed grid (MJPEG) |
-| cameras | Synthetic camera PIP |
-| device-manager | Remote OTA, reboot, config |
-| dossiers | Persistent entity intelligence browser |
-| edge-tracker | Edge device sighting monitor |
-| escalation | Threat escalation display |
-| events | Events timeline |
-| export-scheduler | Data export scheduling |
-| fleet | Fleet node monitoring |
-| fleet-dashboard | Aggregated fleet dashboard |
-| game-hud | Battle game HUD |
-| geofence | Polygon zone management |
-| graph-explorer | Force-directed entity graph |
-| graphlings | NPC behavior observer |
-| heatmap | Target density heatmap |
-| layers | Map layer browser (43 layers) |
-| mesh | Meshtastic LoRa client |
-| minimap | Tactical overview minimap |
-| missions | Mission coordination |
-| multi-camera | Multi-camera grid view |
-| notification_prefs | Notification preferences |
-| notifications | Notification feed |
-| patrol | Patrol route management |
-| quick-start | Getting started guide |
-| replay | Event replay |
-| rf-motion | RF-based motion events |
-| scenarios | Scenario runner |
-| search | Intel search |
-| sensors | Sensor network view |
-| stats | Battle statistics |
-| system | Infrastructure panel |
-| system-health | System health overview |
-| tak | TAK server management |
-| target-compare | Side-by-side target comparison |
-| target-merge | Target merge workflow |
-| target-search | Target search/filter |
-| testing | Testing dashboard |
-| timeline | Target timeline |
-| unit-inspector | Unit detail inspector |
-| units | Unit list |
-| videos | Video playback |
-| zones | Zone management |
+### Frontend Panels (55 registered, 7 categories)
+
+**Categories:** Tactical (12), Intelligence (11), Sensors (8), Fleet (4), AI & Comms (6), Simulation (4), System (8)
+
+| Panel | Category | Purpose |
+|-------|----------|---------|
+| ops-dashboard | Tactical | War room at a glance |
+| units | Tactical | Unit list with detail |
+| unit-inspector | Tactical | Deep unit detail inspector |
+| alerts | Tactical | Alert feed |
+| escalation | Tactical | Threat level display |
+| missions | Tactical | Mission coordination |
+| patrol | Tactical | Patrol route management |
+| geofence | Tactical | Polygon zone management |
+| zones | Tactical | Zone management |
+| minimap | Tactical | Tactical overview minimap |
+| layers | Tactical | Map layer browser (43 layers) |
+| bookmarks | Tactical | Map position bookmarks |
+| search | Intelligence | Full intel search |
+| dossiers | Intelligence | Persistent entity intelligence |
+| dossier-groups | Intelligence | Dossier group management |
+| graph-explorer | Intelligence | Force-directed entity graph |
+| timeline | Intelligence | Target timeline |
+| target-search | Intelligence | Target search/filter |
+| target-compare | Intelligence | Side-by-side comparison |
+| target-merge | Intelligence | Target merge workflow |
+| heatmap | Intelligence | Target density heatmap |
+| heatmap-timeline | Intelligence | Temporal heatmap playback |
+| automation | Intelligence | If-then rule CRUD |
+| edge-tracker | Sensors | Edge device sighting monitor |
+| camera-feeds | Sensors | Live camera feed grid (MJPEG) |
+| cameras | Sensors | Synthetic camera PIP |
+| multi-camera | Sensors | Multi-camera grid view |
+| rf-motion | Sensors | RF-based motion events |
+| mesh | Sensors | Meshtastic LoRa client |
+| sensors | Sensors | Sensor network view |
+| tak | Sensors | TAK server management |
+| fleet | Fleet | Fleet node monitoring |
+| fleet-dashboard | Fleet | Aggregated fleet dashboard |
+| device-manager | Fleet | Remote OTA, reboot, config |
+| assets | Fleet | Asset placement on map |
+| amy | AI & Comms | Amy AI commander chat + status |
+| amy-conversation | AI & Comms | Full inner monologue timeline |
+| graphlings | AI & Comms | NPC behavior observer |
+| audio | AI & Comms | Audio controls |
+| notifications | AI & Comms | Notification feed |
+| notification-prefs | AI & Comms | Notification preferences |
+| game | Simulation | Battle game HUD |
+| battle-stats | Simulation | Battle statistics |
+| replay | Simulation | Event replay |
+| scenarios | Simulation | Scenario runner |
+| system | System | Infrastructure panel |
+| system-health | System | System health overview |
+| testing | System | Testing dashboard |
+| export-scheduler | System | Data export scheduling |
+| events | System | Events timeline |
+| videos | System | Video playback |
+| quick-start | System | Getting started guide |
+| setup-wizard | System | First-launch configuration wizard |
 
 ### Intelligence Capabilities (28)
 | Capability | Status |
@@ -191,7 +197,7 @@ Current state of all components as of 2026-03-14 (post Wave 42 security audit).
 
 ## Shared Library (tritium-lib)
 
-**Models:** 250 exports from 42 model files covering device, firmware, mesh, BLE, CoT, alerts, topology, diagnostics, transport, sensor, acoustic, seed, provision, correlation, timeseries, trilateration, dossier, ontology, federation, drone/UAV, radio scheduler, camera MQTT, behavior, terrain, event schemas, export/import, alert rules, notification rules, system summary, mission management, intelligence reports, sensor configuration, LPR, AIS/ADS-B
+**Models:** 250+ exports from 42+ model files covering device, firmware, mesh, BLE, CoT, alerts, topology, diagnostics, transport, sensor, acoustic, seed, provision, correlation, timeseries, trilateration, dossier, ontology, federation, drone/UAV, radio scheduler, camera MQTT, behavior, terrain, event schemas, export/import, alert rules, notification rules, system summary, mission management, intelligence reports, sensor configuration, LPR, AIS/ADS-B, operational periods, device capabilities
 
 **Graph:** KuzuDB embedded graph store with formal ontology schema
 
@@ -202,6 +208,8 @@ Current state of all components as of 2026-03-14 (post Wave 42 security audit).
 **Geo:** Coordinate transforms, camera projection, haversine distance (shared with SC)
 
 **Classifier:** Multi-signal BLE/WiFi device classifier with 11 fingerprint databases
+
+**Web:** HTML sanitization, JSON safety, filename sanitization
 
 **Packages:** models, mqtt, events, auth, config, store, cot, web, testing, graph, ontology, geo, notifications, classifier
 
@@ -222,42 +230,50 @@ Current state of all components as of 2026-03-14 (post Wave 42 security audit).
 | 39 | Video recording/playback | Done (Wave 18) |
 | 40 | Multi-site federation | Done (Wave 14+) |
 
-## Panel Redundancy Analysis (Wave 39)
+## Panel Redundancy (Wave 44 Cleanup)
 
-49 panel JS files, 48 registered. Potentially overlapping panels identified:
+All 42 panels with inlined `_esc()` and `_timeAgo()` have been migrated to import from shared `panel-utils.js`. Only 8 panels were using panel-utils prior to Wave 44.
 
-| Panel Pair | Verdict | Reason |
-|------------|---------|--------|
-| cameras.js / camera-feeds.js | Distinct | cameras = synthetic PIP overlay; camera-feeds = live MJPEG grid from camera_feeds plugin |
-| fleet.js / fleet-dashboard.js | Distinct | fleet = deep node monitoring with per-device detail; fleet-dashboard = aggregated overview |
-| search.js / target-search.js | Distinct | search = full intel search (text, events); target-search = target-specific filter panel |
-| system.js / system-health.js | Distinct | system = infrastructure config/actions; system-health = at-a-glance status dashboard |
-| notification_prefs.js | Not registered | File exists but is not registered in main.js |
+**After cleanup:**
+- 0 panels with inlined `_esc()` (was 42)
+- 0 panels with inlined `_timeAgo()` (was 6)
+- All 50 panel files import from `panel-utils.js`
 
-**Shared patterns that could benefit from a base component:**
-- `_esc()` helper duplicated in 30+ panels -- could be extracted to a shared utility
-- `_timeAgo()` helper duplicated in 8+ panels -- candidate for shared utility
-- List+detail pattern (fleet, dossiers, units, targets) -- could share a filterable list component
-- CRUD pattern (automation, geofence, missions, zones) -- could share form builder
+## Panel Categories (Wave 44)
 
-**Recommendation:** Extract `_esc()` and `_timeAgo()` to a shared `panel-utils.js` module. The list+detail and CRUD patterns are similar but each has domain-specific rendering, so forced abstraction would add complexity without clear benefit at this scale.
+The VIEW menu now groups 55 panels into 7 collapsible categories:
+- **Tactical** (12 panels): Core situation awareness
+- **Intelligence** (11 panels): Analysis, search, dossiers
+- **Sensors** (8 panels): Camera, BLE, RF, mesh, TAK
+- **Fleet** (4 panels): Device management and placement
+- **AI & Comms** (6 panels): Amy, NPC, notifications, audio
+- **Simulation** (4 panels): Battle, replay, scenarios
+- **System** (8 panels): Config, health, testing, export
 
-## Rule System Analysis
+## Setup Wizard (Wave 44)
 
-Three rule types exist in the codebase with deliberate separation of concerns:
+First-launch configuration wizard with 6 steps:
+1. Welcome
+2. Map center (with city presets)
+3. Demo mode toggle
+4. MQTT broker configuration
+5. Default layout selection (Commander/Observer/Tactical)
+6. Completion
 
-| Rule Type | Location | Purpose | Common Fields |
-|-----------|----------|---------|---------------|
-| **AutomationRule** | tritium-sc/plugins/automation/ | Execute actions (commands, tags, escalations) in response to events | rule_id, name, trigger, conditions, enabled, cooldown |
-| **AlertRule** | tritium-lib/models/alert_rules.py | Generate alerts/notifications from system events with severity routing | rule_id, name, trigger, conditions, enabled, cooldown, channels |
-| **NotificationRule** | tritium-lib/models/notification_rules.py | Route notifications to channels (WS, MQTT, email) with severity filtering | rule_id, name, trigger, enabled, cooldown, channels |
+Settings stored in `ConfigStore` (localStorage-backed). Wizard auto-opens when no config exists. Can be reopened from VIEW > System > Setup Wizard.
 
-## API Documentation
+## Security (Wave 42 Audit)
 
-GET /api/docs -- auto-generated JSON catalog of all API endpoints from FastAPI OpenAPI schema.
-- `/api/docs` -- full catalog with parameters and request body schemas
-- `/api/docs/summary` -- compact method + path + summary
-- `/api/docs/tags` -- endpoints grouped by tag
+| Area | Status | Details |
+|------|--------|---------|
+| Annotation XSS | Hardened | HTML tags stripped, entities escaped, text length limits |
+| Watchlist XSS | Hardened | HTML tags stripped, tag count limits, notes length limits |
+| Annotation type validation | Hardened | Enum validation (6 valid types only) |
+| Lat/lng range validation | Hardened | -90..90 lat, -180..180 lng |
+| Collection DoS | Hardened | Max 10,000 annotations, 5,000 watch entries |
+| WebSocket auth | Hardened | Optional token via WS_AUTH_TOKEN env var, 4003 reject |
+| WebSocket heartbeat | Hardened | Server ping every 30s, stale connections closed after 90s |
+| SQL injection | N/A | In-memory stores (no SQL), user text HTML-escaped |
 
 ## Integration Points
 
@@ -276,28 +292,18 @@ GET /api/docs -- auto-generated JSON catalog of all API endpoints from FastAPI O
 | Federation MQTT bridge to remote sites | Working |
 | Mesh sighting relay (leaf to gateway) | Working |
 
-## Security (Wave 42 Audit)
-
-| Area | Status | Details |
-|------|--------|---------|
-| Annotation XSS | Hardened | HTML tags stripped, entities escaped, text length limits |
-| Watchlist XSS | Hardened | HTML tags stripped, tag count limits, notes length limits |
-| Annotation type validation | Hardened | Enum validation (6 valid types only) |
-| Lat/lng range validation | Hardened | -90..90 lat, -180..180 lng |
-| Collection DoS | Hardened | Max 10,000 annotations, 5,000 watch entries |
-| WebSocket auth | Hardened | Optional token via WS_AUTH_TOKEN env var, 4003 reject |
-| WebSocket heartbeat | Hardened | Server ping every 30s, stale connections closed after 90s |
-| SQL injection | N/A | In-memory stores (no SQL), user text HTML-escaped |
-
 ## Development Velocity
 
-42 waves completed across autonomous sessions:
-- **265,843 lines of code** across 3 repos (Python + JS + C++)
-- **818 test files** with 17,824+ assertions
-- **1,420 tests** in tritium-lib (0 failures)
-- **48 floating panels** in the command center frontend
-- **42 HALs** in tritium-edge firmware
+44 waves completed across autonomous sessions:
+- **~266,000 lines of code** across 3 repos (Python + JS + C++)
+- **820+ test files** with 5,200+ test assertions
+- **1,433 tests** in tritium-lib (0 failures)
+- **3,726 tests** in tritium-sc Python (0 failures, 1 known Ollama-dependent)
+- **92 JS test suites** in tritium-sc (0 failures)
+- **55 floating panels** in the command center frontend (7 categories)
+- **43 HALs** in tritium-edge firmware
 - **14 plugins** active in tritium-sc
+- **417+ API endpoints** across 56 router files
 - **28 intelligence capabilities** operational
-- **250 model exports** in tritium-lib
+- **250+ model exports** in tritium-lib
 - **3 submodules** coordinated with shared models and MQTT topics

@@ -192,7 +192,7 @@ cd tritium-sc && ./start.sh
 
 ## Feature Roadmap
 
-### Completed (Waves 1-39)
+### Completed (Waves 1-44)
 1. SQLite sighting logger
 2. P2P mesh chat (ESP-NOW)
 3. MQTT SC bridge (heartbeat, sighting, chat, commands)
@@ -274,11 +274,22 @@ cd tritium-sc && ./start.sh
 79. WiFi probe HAL (Wave 38)
 80. Power saver HAL (Wave 38)
 81. Panel search with Ctrl+/ shortcut (Wave 39)
+82. Heatmap timeline + notification bell (Wave 39)
+83. Map annotations + target watch list (Wave 40)
+84. Plugin messaging bus (Wave 40)
+85. Compass rose overlay (Wave 40)
+86. Ops dashboard panel (Wave 41)
+87. Map dark mode toggle (Wave 41)
+88. Dossier target grouping on map (Wave 41)
+89. Input validation + WebSocket auth/heartbeat (Wave 42)
+90. Shared panel-utils.js (_esc, _timeAgo, _badge, _statusDot, _fetchJson) (Wave 44)
+91. Categorized panel menu (7 categories, 55 panels) (Wave 44)
+92. Setup wizard (first-launch configuration) (Wave 44)
 
 ### Next Up
-82. **RF environment mapping** — passive spectrum analysis beyond motion detection
-83. **Multi-camera re-identification** — cross-camera person tracking via embeddings
-84. **Shared panel utilities** — extract _esc(), _timeAgo() from 30+ panels into panel-utils.js
+93. **RF environment mapping** — passive spectrum analysis beyond motion detection
+94. **Multi-camera re-identification** — cross-camera person tracking via embeddings
+95. **Panel data subscriptions** — reactive data binding for panels (reduce polling)
 
 ## Known Blockers
 - **NimBLE esp_bt.h not found** — BLE scanner runs stubs, WiFi/mesh alternatives work fine
