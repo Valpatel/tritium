@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (Wave 60 — 60-wave milestone).
+Current state of all components as of 2026-03-14 (Wave 65 — security + skepticism).
 
 ## Component Health
 
@@ -14,13 +14,13 @@ Current state of all components as of 2026-03-14 (Wave 60 — 60-wave milestone)
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 
-## Wave 60 Milestone Summary
+## Wave 65 Milestone Summary
 
 | Milestone Metric | Value |
 |------------------|-------|
-| **Total waves completed** | 60 |
-| **Total features shipped** | 134 |
-| **Total lines of code** | ~280,000 across 3 repos |
+| **Total waves completed** | 65 |
+| **Total features shipped** | 134+ |
+| **Total lines of code** | ~626,000 across 3 repos (295K source + 331K tests) |
 | **Active plugins** | 14 |
 | **Frontend panels** | 64 registered (7 categories) |
 | **API routes** | 460+ across 66 router files |
@@ -30,29 +30,31 @@ Current state of all components as of 2026-03-14 (Wave 60 — 60-wave milestone)
 | **Intelligence capabilities** | 40+ operational |
 | **Correlation strategies** | 5 (spatial, temporal, signal_pattern, dossier, learned) |
 
-## Test Results (Wave 60 Baseline)
+## Test Results (Wave 65 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
 | tritium-lib pytest | 1,584 passed | All passing |
-| tritium-sc Python | 13,432 collected | All passing |
+| tritium-sc Python | 1,400+ unit tests | All passing |
 | tritium-sc JS | 95 test suites | All passing |
-| tritium-sc test files | 560 | -- |
-| tritium-lib test files | 78 | -- |
+| tritium-sc test files | 565 | -- |
+| tritium-lib test files | 81 | -- |
 | tritium-edge build | ~48% RAM, ~29% Flash | 0 warnings |
-| **Total test files** | 638+ across all repos | -- |
+| **Total test files** | 646 across all repos | -- |
 
-## Codebase Metrics (Wave 60 Baseline)
+## Codebase Metrics (Wave 65 Baseline)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 60 |
-| **Total features shipped** | 134 |
-| **Total lines of code** | ~280,000 across 3 repos |
-| **SC Python tests** | 13,432 |
+| **Total waves completed** | 65 |
+| **Total features shipped** | 134+ |
+| **Total lines of code** | ~626,000 across 3 repos |
+| **Source code (excl tests)** | ~295,000 |
+| **Test code** | ~331,000 |
+| **SC Python tests** | 1,400+ unit (API tier) |
 | **Lib tests** | 1,584 |
 | **JS test suites** | 95 |
-| **Frontend JS files** | 125 |
+| **Frontend JS files** | 125+ |
 | **Frontend panels** | 64 registered (7 categories) |
 | **Active plugins** | 14 |
 | **Plugin route files** | 12 |
@@ -67,18 +69,20 @@ Current state of all components as of 2026-03-14 (Wave 60 — 60-wave milestone)
 
 | Component | Language | Lines of Code |
 |-----------|----------|---------------|
-| tritium-sc Python (src) | Python | ~96,000 |
-| tritium-sc Python (plugins) | Python | ~14,400 |
-| tritium-sc JS | JavaScript | ~67,600 |
-| tritium-edge firmware | C++/H | ~52,900 |
-| tritium-edge fleet server | Python | ~25,000* |
-| tritium-lib (src) | Python | ~19,900 |
-| tritium-lib (tests) | Python | ~16,600 |
-| **Total** | **All** | **~280,000** |
+| tritium-sc Python (src) | Python | ~97,000 |
+| tritium-sc Python (plugins) | Python | ~15,500 |
+| tritium-sc Python (tests) | Python | ~251,000 |
+| tritium-sc Python (scripts) | Python | ~5,400 |
+| tritium-sc Python (examples) | Python | ~16,000 |
+| tritium-sc JS (frontend) | JavaScript | ~68,000 |
+| tritium-sc JS (tests) | JavaScript | ~63,000 |
+| tritium-edge firmware (src+lib) | C++/H | ~62,000 |
+| tritium-edge fleet server | Python | ~10,000 |
+| tritium-lib (src) | Python | ~20,500 |
+| tritium-lib (tests) | Python | ~17,000 |
+| **Total** | **All** | **~626,000** |
 
-*Fleet server LOC includes .pio/libdeps vendored code counted separately.
-
-## Disk Usage (Wave 60)
+## Disk Usage (Wave 65)
 
 | Directory | Size | Notes |
 |-----------|------|-------|
@@ -272,7 +276,7 @@ Host disk: 916 GB total, 89% used (97 GB free). Wave 60 cleanup freed ~1 GB from
 | Visual Testing Agent | visual-testing-agent.md | 58 | UI verification via OpenCV/llava |
 | **Total** | **11 files** | **1,031 lines** | -- |
 
-## Replication Status (Wave 60)
+## Replication Status (Wave 65)
 
 | Host | Tailscale IP | Status | Last Check |
 |------|-------------|--------|------------|
@@ -282,7 +286,7 @@ Host disk: 916 GB total, 89% used (97 GB free). Wave 60 cleanup freed ~1 GB from
 | GitHub | git@github.com:Valpatel/tritium.git | Pushed | Current |
 | mv-yoga | 100.83.248.77 | Offline (1d ago) | 2026-03-14 |
 
-## Security (Wave 42-60 Audits)
+## Security (Wave 42-65 Audits)
 
 | Area | Status | Details |
 |------|--------|---------|
@@ -292,6 +296,7 @@ Host disk: 916 GB total, 89% used (97 GB free). Wave 60 cleanup freed ~1 GB from
 | WebSocket heartbeat | Hardened | Server ping every 30s, stale connections closed after 90s |
 | API input validation | Hardened | All user inputs sanitized across all routers |
 | System metrics | Active | Runtime monitoring: memory, connections, targets, uptime |
+| Meshtastic bridge | Hardened | MQTT topic injection prevention, input sanitization, type validation |
 | Secrets audit | Clean | No secrets in git history across all 3 repos |
 
 ## Integration Points
@@ -315,13 +320,13 @@ Host disk: 916 GB total, 89% used (97 GB free). Wave 60 cleanup freed ~1 GB from
 
 ## Development Velocity
 
-60 waves completed across autonomous sessions:
-- **~280,000 lines of code** across 3 repos (Python + JS + C++)
-- **134 features shipped**
-- **13,432 SC Python tests** collected
+65 waves completed across autonomous sessions:
+- **~626,000 lines of code** across 3 repos (295K source + 331K tests)
+- **134+ features shipped**
+- **1,400+ SC Python unit tests** passing (API tier)
 - **1,584 tests** in tritium-lib (0 failures)
 - **95 JS test suites** in tritium-sc
-- **638+ test files** across all repos
+- **646 test files** across all repos
 - **64 floating panels** in the command center frontend (7 categories)
 - **140 HAL headers** in tritium-edge firmware
 - **14 plugins** active in tritium-sc

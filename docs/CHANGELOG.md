@@ -2,6 +2,32 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 65 (2026-03-14): Security Hardening + Meshtastic Telemetry Charts + Stats Audit
+
+### Security
+| Change | Verification |
+|--------|-------------|
+| Meshtastic bridge MQTT topic injection prevention — sanitize node IDs for `/`, `+`, `#`, NUL | Code Reviewed |
+| Meshtastic bridge input type validation — all floats/ints validated, NaN/Inf rejected | Code Reviewed |
+| Meshtastic bridge string length bounds — node IDs max 64, names max 128, text max 512 | Code Reviewed |
+| Meshtastic bridge packet type checking — decoded dict validation before access | Code Reviewed |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Meshtastic node telemetry history ring buffer (100 points/node) | Code Reviewed |
+| `/api/meshtastic/nodes/{id}/telemetry-history` endpoint for sparkline data | Code Reviewed |
+| Mesh panel node detail sparkline charts — battery, voltage, temperature canvas rendering | Code Reviewed |
+| CSS for `.mesh-sparkline-section` and `.mesh-sparkline` canvas elements | Code Reviewed |
+| Fix `test_sensorium_narrative_updates` Playwright timeout — skip when no live server | Tested (syntax + unit) |
+
+### Docs
+| Change | Verification |
+|--------|-------------|
+| STATUS.md LOC audit — corrected from ~280K to ~626K (295K source + 331K tests) | Verified (wc -l) |
+| STATUS.md test file count — corrected to 646 (565 SC + 81 lib) | Verified (find) |
+| STATUS.md wave number updated to 65 | Updated |
+
 ## Wave 64 (2026-03-14): Meshtastic Environment Sensors + Amy Awareness
 
 ### tritium-lib
