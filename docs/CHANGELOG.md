@@ -14,6 +14,33 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 16: Hardware Enablement
+
+### Edge Firmware
+- Radio scheduler HAL (`hal_radio_scheduler`) — BLE/WiFi time-division multiplexing
+  with configurable slot durations, transition management, and os_events integration
+- Camera MQTT publisher (`camera_mqtt_publisher`) — captures JPEG frames from CameraHAL
+  and publishes to `tritium/{device_id}/camera/frame` for SC consumption
+- MQTT SC bridge accessor for binary frame publishing
+
+### Command Center (SC)
+- JWT authentication middleware (`app/auth.py`) with login, refresh, and user info endpoints
+- Auth router at `/api/auth/` with login, refresh, status endpoints
+- Config additions: `auth_enabled`, `auth_secret_key`, `tls_enabled`, `rate_limit_enabled`
+- Default admin user initialization on startup
+
+### Shared Library
+- Radio scheduler models: `RadioMode`, `RadioSchedulerConfig`, `RadioSchedulerStatus`
+- Camera MQTT models: `CameraMqttConfig`, `CameraMqttStats`
+- 13 new tests for radio models, 8 new tests for auth module
+
+**Verification:**
+- tritium-lib: 13/13 radio model tests pass
+- tritium-sc: 8/8 auth tests pass
+- tritium-edge: BUILD SUCCESS — 47.4% RAM, 28.9% Flash
+
+---
+
 ## 2026-03-14 — Wave 15 Validation
 
 ### Wave 15: Complete the Stack — VALIDATED
