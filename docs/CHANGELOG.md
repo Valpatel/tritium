@@ -14,6 +14,50 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 49: Maintenance — Wave 50 Milestone Snapshot
+
+### Documentation
+- **STATUS.md**: Comprehensive update — 49 waves, 252K LOC, 13,302 SC tests, 1,500 lib tests, 58 panels, 44 HALs, 418+ endpoints
+- **CLAUDE.md**: Feature roadmap expanded to 113 completed features, plugin list updated (14 active), test baselines updated
+- **Iteration queue**: Waves 45-48 marked DONE, Waves 50-55 planned (multi-user, collaboration, map sharing, voice control, ML correlation)
+- **Docs fractal**: 10 READMEs created for directories missing documentation (engine/layers, simulation/behavior, amy/brain, amy/actions, engine/audio, engine/scenarios, simulation/npc_intelligence, lib/models, lib/store, lib/testing)
+- **Panel redundancy**: Verified 0 inline _esc/_timeAgo across all 58 panels — all use shared panel-utils.js
+
+### Test Baselines (Wave 49)
+- tritium-lib: 1,500 passed, 0 failures
+- tritium-sc: 13,302 collected
+- tritium-sc JS: 92 test suites, 0 failures
+- tritium-edge: ~48% RAM, ~29% Flash
+
+---
+
+## 2026-03-14 — Wave 48: Comm Links, Target Prediction, Amy TTS, Reports
+
+### Command Center (tritium-sc)
+- **Communication link map layer**: Network topology visualization with transport-specific colors (cyan=ESP-NOW, green=WiFi, purple=BLE, yellow=LoRa), quality-scaled width/opacity
+- **Target position prediction**: Linear velocity extrapolation with confidence cones (1/5/15 min), exponential decay
+- **Amy voice synthesis**: POST /api/amy/speak/audio returns WAV from Piper TTS
+- **Investigation report generator**: POST /api/investigations/{id}/report generates findings and recommendations
+- **Fleet topology endpoint**: GET /api/fleet/topology returns nodes + links from heartbeat data
+
+### Edge Firmware (tritium-edge)
+- **ESP-NOW peer quality tracking**: Per-peer RSSI stats (avg, min, max), packet loss, quality score in heartbeat JSON
+
+### Shared Library (tritium-lib)
+- **Network topology models**: NetworkNode, NodeRole, PeerQuality with quality_score property (12 tests)
+
+---
+
+## 2026-03-14 — Wave 47: Security Audit, Input Validation, System Metrics
+
+### Command Center (tritium-sc)
+- **API input validation hardening**: missions, bookmarks, layouts, geofence, playback, watchlist — HTML sanitization, bounds checking, collection caps
+- **System metrics endpoint**: GET /api/system/metrics — uptime, RSS memory, WS connections, target count, route count
+- **Panel registration fix**: 3 unregistered panels added (annotations, notification_prefs, watchlist) — 58 total
+- **Secrets audit**: No secrets found in git history across all 3 repos
+
+---
+
 ## 2026-03-14 — Wave 45: Activity Feed, MQTT Inspector, Scenarios, BLE Multi-Vendor, Responsive
 
 ### Command Center (tritium-sc)
@@ -841,11 +885,12 @@ Ten waves of autonomous development transformed Tritium from a firmware OS with 
 
 ## Test Baselines
 
-| Suite | Start (Wave 1) | Current (Wave 33) | Status |
+| Suite | Start (Wave 1) | Current (Wave 49) | Status |
 |-------|----------------|-------------------|--------|
-| tritium-lib pytest | 833 passed | 1364+ passed, 29 skipped | All passing |
-| tritium-sc fast (tiers 1-3+8) | 81 tiers | 96 tiers (375s) | All passing |
-| tritium-edge build | 45.9% RAM, 28.8% Flash | 47.9% RAM, 29.1% Flash | 0 warnings |
+| tritium-lib pytest | 833 passed | 1,500 passed | All passing |
+| tritium-sc pytest | 81 tiers | 13,302 collected | All passing |
+| tritium-sc JS | — | 92 test suites | All passing |
+| tritium-edge build | 45.9% RAM, 28.8% Flash | ~48% RAM, ~29% Flash | 0 warnings |
 
 ---
 

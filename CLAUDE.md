@@ -19,17 +19,17 @@ Three git submodules, all track `dev` branch. See [docs/ARCHITECTURE.md](docs/AR
 
 | Component | Location | Language | Port | CLAUDE.md | Purpose |
 |-----------|----------|----------|------|-----------|---------|
-| **Edge Firmware** | `tritium-edge/` | C++17 | — | [CLAUDE.md](tritium-edge/CLAUDE.md) | Tritium-OS on ESP32-S3 (6 boards, 40+ HALs) |
+| **Edge Firmware** | `tritium-edge/` | C++17 | — | [CLAUDE.md](tritium-edge/CLAUDE.md) | Tritium-OS on ESP32-S3 (6 boards, 44 HALs) |
 | **Fleet Server** | `tritium-edge/server/` | Python | 8080 | — | Provisioning, OTA, monitoring |
 | **Command Center** | `tritium-sc/` | Python + JS | 8000 | [CLAUDE.md](tritium-sc/CLAUDE.md) | Tactical dashboard, AI commander Amy, plugins |
 | **Shared Library** | `tritium-lib/` | Python (+ C++, JS future) | — | [CLAUDE.md](tritium-lib/CLAUDE.md) | Common code: models, MQTT topics, auth, events, test utils, themes |
 
 ### Plugin System (the growth engine)
-Plugins are how every capability gets added. Each plugin owns its own backend services, API routes, UI panels, and pub/sub topics. Current plugins:
+Plugins are how every capability gets added. Each plugin owns its own backend services, API routes, UI panels, and pub/sub topics. Current plugins (14 active):
 - **edge_tracker** — BLE/WiFi presence → TargetTracker → map, with BLE classifier
 - **meshtastic** — LoRa mesh radio bridge, GPS-equipped nodes on map
 - **camera_feeds** — multi-source camera management (synthetic/RTSP/MJPEG/MQTT/USB)
-- **fleet_dashboard** — device registry, battery, uptime, sighting counts
+- **fleet_dashboard** — device registry, battery, uptime, sighting counts, network topology
 - **yolo_detector** — YOLO object detection pipeline
 - **tak_bridge** — ATAK/CoT interoperability (multicast UDP, TCP, MQTT)
 - **gis_layers** — OSM/satellite/terrain/building map layers
@@ -37,6 +37,9 @@ Plugins are how every capability gets added. Each plugin owns its own backend se
 - **threat_feeds** — STIX/TAXII-style known-bad indicator matching
 - **graphlings** — NPC AI agents
 - **npc_thoughts** — NPC context-aware thought bubbles
+- **rf_motion** — passive RF-based motion detection via RSSI variance
+- **acoustic** — sound classification (gunshot, voice, vehicle, siren, glass_break)
+- **federation** — multi-site Tritium federation via MQTT bridge
 
 ### Integration
 - MQTT broker for device telemetry, commands, and chat
@@ -192,7 +195,7 @@ cd tritium-sc && ./start.sh
 
 ## Feature Roadmap
 
-### Completed (Waves 1-44)
+### Completed (Waves 1-48, 100+ features)
 1. SQLite sighting logger
 2. P2P mesh chat (ESP-NOW)
 3. MQTT SC bridge (heartbeat, sighting, chat, commands)
@@ -283,13 +286,36 @@ cd tritium-sc && ./start.sh
 88. Dossier target grouping on map (Wave 41)
 89. Input validation + WebSocket auth/heartbeat (Wave 42)
 90. Shared panel-utils.js (_esc, _timeAgo, _badge, _statusDot, _fetchJson) (Wave 44)
-91. Categorized panel menu (7 categories, 55 panels) (Wave 44)
+91. Categorized panel menu (7 categories) (Wave 44)
 92. Setup wizard (first-launch configuration) (Wave 44)
+93. SITREP generator (JSON + text tactical report) (Wave 43)
+94. Multi-select + bulk actions on map (Wave 43)
+95. Target history export (CSV/JSON/GeoJSON) (Wave 43)
+96. Print-friendly CSS (Wave 43)
+97. LED status indicator HAL (Wave 44)
+98. Communication channel models (Wave 44)
+99. Activity feed panel (live target events) (Wave 45)
+100. MQTT inspector panel (message debugger) (Wave 45)
+101. Map screenshot with classification banner (Wave 45)
+102. Responsive layout (tablet/phone breakpoints) (Wave 45)
+103. Multi-vendor BLE ad parsing (Samsung, Google, Microsoft, Fitbit) (Wave 45)
+104. Tactical scenario models (Wave 45)
+105. API input validation hardening (6 routers) (Wave 47)
+106. System metrics endpoint (Wave 47)
+107. Panel registration fix (58 panels registered) (Wave 47)
+108. Target position prediction (velocity extrapolation) (Wave 48)
+109. Communication link map layer (network topology) (Wave 48)
+110. Amy voice synthesis (Piper TTS via API) (Wave 48)
+111. Investigation report generator (Wave 48)
+112. ESP-NOW peer quality tracking (Wave 48)
+113. Network topology models (NetworkNode, PeerQuality) (Wave 48)
 
 ### Next Up
-93. **RF environment mapping** — passive spectrum analysis beyond motion detection
-94. **Multi-camera re-identification** — cross-camera person tracking via embeddings
-95. **Panel data subscriptions** — reactive data binding for panels (reduce polling)
+114. **Multi-user sessions** — concurrent operator support with role-based access
+115. **Real-time collaboration** — shared cursors, live panel sync across operators
+116. **Map sharing** — export/import tactical situations between installations
+117. **Voice control** — speech-to-command for hands-free operation
+118. **Advanced ML correlation** — neural network-based target fusion
 
 ## Known Blockers
 - **NimBLE esp_bt.h not found** — BLE scanner runs stubs, WiFi/mesh alternatives work fine
