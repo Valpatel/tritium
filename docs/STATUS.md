@@ -9,7 +9,7 @@ Current state of all components as of 2026-03-14 (Wave 49 — pre-Wave 50 milest
 | **tritium-edge firmware** | Building | ~48% RAM, ~29% flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 1500 tests passing, 0 failures |
+| **tritium-lib** | Stable | 1471 tests passing, 29 skipped, 0 failures |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
@@ -18,7 +18,7 @@ Current state of all components as of 2026-03-14 (Wave 49 — pre-Wave 50 milest
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib pytest | 1500 passed | All passing |
+| tritium-lib pytest | 1471 passed, 29 skipped | All passing |
 | tritium-sc Python | 13,302 collected | All passing (pending full run) |
 | tritium-sc JS | 92 test suites, 0 failures | All passing |
 | tritium-edge build | ~48% RAM, ~29% Flash | 0 warnings |
@@ -30,7 +30,7 @@ Current state of all components as of 2026-03-14 (Wave 49 — pre-Wave 50 milest
 | **Total waves completed** | 49 |
 | **Total lines of code** | ~252,000 across 3 repos |
 | **SC Python tests** | 13,302 |
-| **Lib tests** | 1,500 |
+| **Lib tests** | 1,471 |
 | **JS test suites** | 92 |
 | **Frontend panels** | 58 registered (7 categories) |
 | **Active plugins** | 14 |
@@ -326,7 +326,7 @@ Settings stored in `ConfigStore` (localStorage-backed). Wizard auto-opens when n
 49 waves completed across autonomous sessions:
 - **~252,000 lines of code** across 3 repos (Python + JS + C++)
 - **13,302 SC Python tests** collected
-- **1,500 tests** in tritium-lib (0 failures)
+- **1,471 tests** in tritium-lib (0 failures, 29 skipped)
 - **92 JS test suites** in tritium-sc (0 failures)
 - **58 floating panels** in the command center frontend (7 categories)
 - **44 HALs** in tritium-edge firmware

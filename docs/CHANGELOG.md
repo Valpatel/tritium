@@ -24,7 +24,7 @@ Changes tracked with verification status. All changes on `dev` branch.
 - **Panel redundancy**: Verified 0 inline _esc/_timeAgo across all 58 panels — all use shared panel-utils.js
 
 ### Test Baselines (Wave 49)
-- tritium-lib: 1,500 passed, 0 failures
+- tritium-lib: 1,471 passed, 29 skipped, 0 failures
 - tritium-sc: 13,302 collected
 - tritium-sc JS: 92 test suites, 0 failures
 - tritium-edge: ~48% RAM, ~29% Flash
@@ -887,7 +887,7 @@ Ten waves of autonomous development transformed Tritium from a firmware OS with 
 
 | Suite | Start (Wave 1) | Current (Wave 49) | Status |
 |-------|----------------|-------------------|--------|
-| tritium-lib pytest | 833 passed | 1,500 passed | All passing |
+| tritium-lib pytest | 833 passed | 1,471 passed, 29 skipped | All passing |
 | tritium-sc pytest | 81 tiers | 13,302 collected | All passing |
 | tritium-sc JS | — | 92 test suites | All passing |
 | tritium-edge build | 45.9% RAM, 28.8% Flash | ~48% RAM, ~29% Flash | 0 warnings |
