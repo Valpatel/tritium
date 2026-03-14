@@ -119,12 +119,14 @@ The system must eventually self-improve WITHOUT Claude. Use small local models (
 ### How to Continue Autonomously
 - Read `memory/project_iteration_queue.md` for the wave roadmap
 - Find the first incomplete wave
-- Launch 6 agents per wave with BROAD scope across ALL submodules:
-  - **1 tritium-edge agent** — firmware HALs, sensor drivers, OTA, device management
-  - **1-2 tritium-sc backend agents** — plugins, APIs, intelligence, integration
-  - **1 tritium-sc frontend agent** — panels, map rendering, 3D visualization, UX
-  - **1 tritium-lib agent** — extract shared code from SC/edge, add models, stores
+- Launch 6 agents per wave. Each agent reads its role-specific context from `.claude/agents/`:
+  - **1 edge agent** (read `.claude/agents/edge-agent.md`) — firmware HALs, sensors, OTA
+  - **1-2 feature agents** (read `.claude/agents/feature-agent.md`) — plugins, APIs, intelligence
+  - **1 quality agent** (read `.claude/agents/quality-agent.md`) — assume broken, verify everything
+  - **1 maintenance agent** (read `.claude/agents/maintenance-agent.md`) — docs, redundancy, cleanup
   - **1 test-runner** (delayed 15min) — validates, updates changelogs, MUST auto-launch next wave
+  - On security waves: **1 security agent** (read `.claude/agents/security-agent.md`)
+  - On RL waves: **1 RL agent** (read `.claude/agents/rl-agent.md`)
 - **RESOURCE SAFETY**: Feature agents run TARGETED tests only (their specific test files, not full suite). Only the test-runner runs `./test.sh fast`. Never run multiple full test suites concurrently — this will OOM the system. Check `free -m` before heavy operations.
 - **BROAD SCOPE**: Don't only build new features. Also:
   - Complete the stack for existing features (backend-only → add frontend + edge)
@@ -207,7 +209,7 @@ cd tritium-sc && ./start.sh
 
 ## Feature Roadmap
 
-### Completed (Waves 1-48, 100+ features)
+### Completed (Waves 1-57, 130+ features)
 1. SQLite sighting logger
 2. P2P mesh chat (ESP-NOW)
 3. MQTT SC bridge (heartbeat, sighting, chat, commands)
@@ -322,12 +324,36 @@ cd tritium-sc && ./start.sh
 112. ESP-NOW peer quality tracking (Wave 48)
 113. Network topology models (NetworkNode, PeerQuality) (Wave 48)
 
+114. Multi-user sessions + cursor sharing (Wave 50)
+115. Map sharing + keyboard macros + grid overlay (Wave 50)
+116. System inventory endpoint (Wave 55)
+117. RL correlation learner (logistic regression from operator feedback) (Wave 52)
+118. LearnedStrategy as 5th correlator strategy (Wave 52)
+119. Auto-retrain scheduler + training dashboard (Wave 52)
+120. RL E2E test + missing router fix (Wave 55)
+121. BLE classification learner (ML, 19 device types) (Wave 56)
+122. Anomaly baseline collector (2-sigma RF environment detection) (Wave 56)
+123. Target handoff between nodes (Wave 56)
+124. Investigation escalation workflow (Wave 56)
+125. BLE fingerprint hash for dedup (Wave 54)
+126. Ollama LLM HAL stub (Wave 54)
+127. Power consumption tracking (Wave 54)
+128. Amy anomaly awareness (RF deviation narration) (Wave 57)
+
 ### Next Up
-114. **Multi-user sessions** — concurrent operator support with role-based access
-115. **Real-time collaboration** — shared cursors, live panel sync across operators
-116. **Map sharing** — export/import tactical situations between installations
-117. **Voice control** — speech-to-command for hands-free operation
-118. **Advanced ML correlation** — neural network-based target fusion
+129. **Multi-site RL model sharing** — federate learned correlation models across sites
+130. **Edge device ML inference** — deploy trained classifiers to ESP32-S3 (TinyML)
+131. **Acoustic ML classification** — ML-based sound classification pipeline
+132. **Visual similarity learning** — embeddings for camera-based re-identification
+133. **Graph-enhanced correlation** — use graph relationships to improve target fusion
+134. **Voice control** — speech-to-command for hands-free operation
+
+## Test Baselines (Wave 57)
+- **tritium-lib**: 1,584 tests passing
+- **tritium-sc**: 13,432 Python tests collected, 95 JS test suites
+- **tritium-edge**: ~48% RAM, ~29% Flash, 0 warnings
+- **Total test files**: 1,983 across all repos
+- **Total LOC**: ~266,000
 
 ## Known Blockers
 - **NimBLE esp_bt.h not found** — BLE scanner runs stubs, WiFi/mesh alternatives work fine
