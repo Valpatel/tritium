@@ -2,6 +2,29 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 64 (2026-03-14): Meshtastic Environment Sensors + Amy Awareness
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| EnvironmentReading model — temperature, humidity, pressure, AQI, light, noise, gas resistance, UV, wind, rainfall | Unit Tested (10 tests) |
+| EnvironmentSnapshot — aggregated readings from multiple sources | Unit Tested |
+| EnvironmentSource enum — meshtastic, edge_device, weather_api, manual | Unit Tested |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Meshtastic plugin emits environment events from node telemetry | Integration Tested |
+| `/api/meshtastic/environment` endpoint — env-capable mesh nodes | Code Reviewed |
+| Amy sensorium update_environment() + environment_context() | Integration Tested |
+| Amy thinking prompt includes environment awareness | Integration Tested |
+| Bridge script quality test — TCP connects, MQTT needs broker | Tested |
+
+### tritium-edge
+| Change | Verification |
+|--------|-------------|
+| hal_environment — BME280/BMP280/SHT31/BME680/BH1750 HAL with I2C auto-detect (stub) | Code Reviewed |
+
 ## Wave 61 (2026-03-14): WiFi Fingerprint, Threat Scoring, Swarm Models, Voice Commands
 
 ### tritium-lib
