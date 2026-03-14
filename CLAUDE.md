@@ -50,22 +50,26 @@ Plugins are how every capability gets added. Each plugin owns its own backend se
 You are expected to build independently. Do NOT stop to ask the user unless you are truly blocked by something external (hardware access, credentials, API keys). Follow this loop continuously:
 
 ### The Loop
-1. **Assume it's broken.** Read the code. Build it. Run tests. Find the bugs. Fix them.
-2. **Verify quality.** RAM <60%, Flash <50%, no warnings in new code. Tests pass. Code is clean.
-3. **Commit & push.** Short descriptive message. NO Co-Authored-By. Push to dev.
-4. **Update changelogs.** Every change gets logged in `docs/CHANGELOG.md` with verification level.
-5. **Review the vision.** Read this file. Every target needs a unique ID. Every sensor feeds the unified picture.
-6. **Pick the next feature.** Highest impact, lowest risk. Build it.
-7. **Launch agent teams.** Use 6+ parallel agents across submodules. Never work sequentially when you can parallelize.
-8. **NEVER STOP.** When a wave finishes, immediately launch the next wave. Do not wait for user approval. Do not report and pause. The test-runner agent from each wave should auto-launch the next wave after validation passes. The loop is infinite.
+1. **Assume it's broken.** Tests passing does NOT mean it works. Code compiling does NOT mean it's correct. Features existing does NOT mean they integrate. Assume massive gaps in testing, architectural flaws, and untested edge cases.
+2. **Push the vision.** Read this file. Every target needs a unique UUID. Every sensor feeds the unified picture. Ask: what's the biggest gap between where we are and the vision?
+3. **Build features AND quality.** Every wave must include vision advancement (new capabilities) AND quality improvement (find what's actually broken, add missing tests, run visual validation).
+4. **Verify.** RAM <60%, Flash <50%, no warnings. Run tests. But also: start the server, hit the API, verify the frontend renders, check that demo mode actually shows fusion.
+5. **Commit & push.** Short descriptive message. NO Co-Authored-By. Push to dev.
+6. **Update changelogs.** Every change logged in `docs/CHANGELOG.md` with verification level.
+7. **Launch 6+ parallel agents.** Every wave: 2-3 feature agents, 1 quality/testing agent, 1 infrastructure agent, 1 test-runner that auto-launches the next wave.
+8. **NEVER STOP.** When a wave finishes, immediately launch the next wave. Do not wait for approval. Do not report and pause. The loop is infinite. If all planned waves are done, read the vision and identify new work.
 
 ### How to Continue Autonomously
 - Read `memory/project_iteration_queue.md` for the wave roadmap
 - Find the first incomplete wave
-- Launch 6 agents: 2-3 for tritium-sc features, 1 for tritium-lib models/stores, 1 for tritium-edge if applicable, 1 test-runner (delayed 15min)
-- The test-runner agent MUST launch the next wave after validation — include this in its prompt
-- If all planned waves are done, read the vision and identify new features that advance the unified operating picture
+- Launch 6 agents per wave:
+  - **2-3 feature agents** — advance the product vision (new plugins, sensors, intelligence)
+  - **1 quality agent** — assume tests have gaps, find what's actually broken, add visual/E2E tests, verify the system works when you actually run it
+  - **1 infrastructure agent** — test reporting, visual regression, deployment, documentation accuracy
+  - **1 test-runner** (delayed 15min) — validates, updates changelogs, MUST auto-launch next wave
+- If all planned waves are done, identify new work from the vision — there are always more sensors, more targets, more intelligence to build
 - Never ask "should I continue?" — just continue
+- Never assume the code works just because tests pass — run it, look at it, test the integrations
 
 ### The Target Model
 Every detected entity becomes a TrackedTarget with:
