@@ -14,6 +14,18 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 53: RL Integration + Ollama Intelligence
+
+### Cross-Submodule Features
+- **tritium-lib**: CorrelationScorer ABC with StaticScorer and LearnedScorer implementations (19 tests)
+- **tritium-sc**: CorrelationLearner trains logistic regression from TrainingStore data (12 tests)
+- **tritium-sc**: Intelligence API — POST /api/intelligence/retrain, GET /api/intelligence/model/status
+- **tritium-sc**: Ollama-powered anomaly description — POST /api/intelligence/anomaly/describe
+- **tritium-sc**: Training Dashboard frontend panel — model status, data stats, retrain button
+- **tritium-edge**: hal_ollama stub — HTTP client for querying local Ollama from ESP32
+
+---
+
 ## 2026-03-14 — Wave 49: Maintenance — Wave 50 Milestone Snapshot
 
 ### Documentation
