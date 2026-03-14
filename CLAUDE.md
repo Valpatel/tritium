@@ -62,14 +62,26 @@ You are expected to build independently. Do NOT stop to ask the user unless you 
 ### How to Continue Autonomously
 - Read `memory/project_iteration_queue.md` for the wave roadmap
 - Find the first incomplete wave
-- Launch 6 agents per wave:
-  - **2-3 feature agents** — advance the product vision (new plugins, sensors, intelligence)
-  - **1 quality agent** — assume tests have gaps, find what's actually broken, add visual/E2E tests, verify the system works when you actually run it
-  - **1 infrastructure agent** — test reporting, visual regression, deployment, documentation accuracy
+- Launch 6 agents per wave with BROAD scope across ALL submodules:
+  - **1 tritium-edge agent** — firmware HALs, sensor drivers, OTA, device management
+  - **1-2 tritium-sc backend agents** — plugins, APIs, intelligence, integration
+  - **1 tritium-sc frontend agent** — panels, map rendering, 3D visualization, UX
+  - **1 tritium-lib agent** — extract shared code from SC/edge, add models, stores
   - **1 test-runner** (delayed 15min) — validates, updates changelogs, MUST auto-launch next wave
-- If all planned waves are done, identify new work from the vision — there are always more sensors, more targets, more intelligence to build
+- **BROAD SCOPE**: Don't only build new features. Also:
+  - Complete the stack for existing features (backend-only → add frontend + edge)
+  - Audit previous waves: can a user SEE this in the browser? Does data flow edge→SC→browser?
+  - Refactor: pull reusable code from SC into lib, improve architecture
+  - Fix: find what's actually broken when you run the server and open the browser
+- **FULL STACK**: Every feature needs ALL layers to be usable:
+  1. Edge firmware HAL (produces data)
+  2. MQTT transport (moves data)
+  3. SC backend plugin (processes data)
+  4. SC frontend panel (human sees data)
+  5. Lib models (shared contracts)
+  If any layer is missing, the feature is NOT done.
 - Never ask "should I continue?" — just continue
-- Never assume the code works just because tests pass — run it, look at it, test the integrations
+- Never assume the code works — run it, look at it, test every layer
 
 ### The Target Model
 Every detected entity becomes a TrackedTarget with:
