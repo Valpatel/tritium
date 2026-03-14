@@ -14,6 +14,24 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 22: Security & Performance Audit
+
+### Command Center (SC)
+- Security audit tests: input validation, SQL injection resistance, info leakage, edge cases
+- Verified: no hardcoded secrets, parameterized SQL queries, clean error responses
+- 15 security audit tests passing
+
+### Findings
+- SQL queries use parameterized placeholders (safe)
+- Auth module uses ephemeral keys when no secret configured (acceptable for dev)
+- innerHTML usage is widespread in frontend (408 occurrences) — no immediate risk since
+  data comes from trusted APIs, but should be audited for user-supplied content rendering
+- No hardcoded credentials found in source
+
+**Verification:** Unit Tested (15/15 security tests pass)
+
+---
+
 ## 2026-03-14 — Wave 21: Deep Sensing & Recognition
 
 ### Shared Library
