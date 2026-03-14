@@ -14,6 +14,28 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 43: Ops Dashboard, Capability Ads, Map Dark Mode, Dossier Groups
+
+### Command Center (tritium-sc)
+- **Operational dashboard panel**: "War room at a glance" single-screen view combining target counter, active alerts, fleet status, Amy status, demo mode toggle, and active missions. Auto-refreshes with reactive store bindings + 5s async polling (Unit Tested — syntax)
+- **Map dark mode enhancement**: CSS filter dims satellite/OSM tiles (brightness 0.65, contrast 1.15, saturate 0.7, hue-rotate 200deg) in dark theme for cyberpunk aesthetic. Light theme gets full brightness (Unit Tested — syntax)
+- **Target grouping by dossier panel**: Toggle to group targets sharing a dossier into single icon with count badge. Fetches from /api/dossiers, shows dossier list with threat level colors, click to center map (Unit Tested — syntax)
+- Both new panels registered in PanelManager, auto-appear in View menu
+
+### Shared Library (tritium-lib)
+- **DeviceCapability model**: Rich capability type (cap_type, version, enabled, config, description) replacing simple boolean flags for HAL advertisement (Unit Tested — 13 tests)
+- **CapabilityAdvertisement model**: Full device capability advertisement (device_id, board, firmware_version, capabilities list) with has_capability(), get_capability(), to_heartbeat_list() for backward compatibility (Unit Tested — 13 tests)
+- **CapabilityType enum**: 26 standard capability types matching edge HAL names (ble_scanner, wifi_scanner, camera, audio, etc.) (Unit Tested)
+- **DeviceCapabilities**: Added ble and wifi boolean fields to existing model
+- **MQTT topics**: Added edge_capabilities() topic builder for device capability advertisements
+
+### Edge Firmware (tritium-edge)
+- **Capability advertisement via MQTT**: On first MQTT connect, publishes JSON capability advertisement to tritium/{device_id}/capabilities (retained). Lists all compiled-in HALs using __has_include() detection for 20+ HAL types (Build Verified — syntax)
+- **publish_capabilities() API**: New function in mqtt_sc_bridge namespace for manual capability re-advertisement (e.g., after radio scheduler mode change)
+- All 1,462 tritium-lib tests passing
+
+---
+
 ## 2026-03-14 — Wave 42: Security Hardening + Skepticism Audit
 
 ### Command Center (tritium-sc)
