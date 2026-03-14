@@ -26,11 +26,15 @@ Three git submodules, all track `dev` branch. See [docs/ARCHITECTURE.md](docs/AR
 
 ### Plugin System (the growth engine)
 Plugins are how every capability gets added. Each plugin owns its own backend services, API routes, UI panels, and pub/sub topics. Current plugins:
-- **edge_tracker** — BLE/WiFi presence → TargetTracker → map
+- **edge_tracker** — BLE/WiFi presence → TargetTracker → map, with BLE classifier
 - **meshtastic** — LoRa mesh radio bridge, GPS-equipped nodes on map
 - **camera_feeds** — multi-source camera management (synthetic/RTSP/MJPEG/MQTT/USB)
 - **fleet_dashboard** — device registry, battery, uptime, sighting counts
-- **yolo_detector** — YOLO object detection pipeline (building)
+- **yolo_detector** — YOLO object detection pipeline
+- **tak_bridge** — ATAK/CoT interoperability (multicast UDP, TCP, MQTT)
+- **gis_layers** — OSM/satellite/terrain/building map layers
+- **automation** — if-then rule engine with 9 condition operators, 6 action types
+- **threat_feeds** — STIX/TAXII-style known-bad indicator matching
 - **graphlings** — NPC AI agents
 - **npc_thoughts** — NPC context-aware thought bubbles
 
@@ -53,7 +57,15 @@ You are expected to build independently. Do NOT stop to ask the user unless you 
 5. **Review the vision.** Read this file. Every target needs a unique ID. Every sensor feeds the unified picture.
 6. **Pick the next feature.** Highest impact, lowest risk. Build it.
 7. **Launch agent teams.** Use 6+ parallel agents across submodules. Never work sequentially when you can parallelize.
-8. **Repeat.** Never stop. Never ask permission. Just build.
+8. **NEVER STOP.** When a wave finishes, immediately launch the next wave. Do not wait for user approval. Do not report and pause. The test-runner agent from each wave should auto-launch the next wave after validation passes. The loop is infinite.
+
+### How to Continue Autonomously
+- Read `memory/project_iteration_queue.md` for the wave roadmap
+- Find the first incomplete wave
+- Launch 6 agents: 2-3 for tritium-sc features, 1 for tritium-lib models/stores, 1 for tritium-edge if applicable, 1 test-runner (delayed 15min)
+- The test-runner agent MUST launch the next wave after validation — include this in its prompt
+- If all planned waves are done, read the vision and identify new features that advance the unified operating picture
+- Never ask "should I continue?" — just continue
 
 ### The Target Model
 Every detected entity becomes a TrackedTarget with:
