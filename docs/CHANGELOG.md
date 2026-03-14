@@ -81,6 +81,24 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-13 — Session 3: Wave 5 — Perception and Intelligence
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Target correlation engine for multi-sensor fusion (`tactical/correlator.py`) | Integration Tested |
+| BLE device threat classification (known/unknown/new/suspicious levels) | Integration Tested |
+| Fix test_mode_selector: add `edge_sensors` format key to thinking prompt tests | Integration Tested |
+
+### Validation Results
+| Suite | Count | Status |
+|-------|-------|--------|
+| tritium-lib pytest | 833 passed | All passing |
+| tritium-sc fast (tiers 1-3+8+8b) | 81 tiers, 7812+ tests | All passing |
+| tritium-edge build | 45.9% RAM, 28.8% Flash | 0 warnings |
+
+---
+
 ## Test Baseline
 
 | Suite | Count | Status | Date |
