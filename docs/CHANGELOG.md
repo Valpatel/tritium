@@ -2,6 +2,35 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 57 (2026-03-14): Maintenance
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Wired anomaly_baseline into Amy sensorium (RF deviation narration) | Unit Tested (8 tests) |
+| Sensorium.update_anomalies() — processes RF anomaly alerts | Unit Tested |
+| Sensorium.anomaly_context() — human-readable anomaly string for thinking prompt | Unit Tested |
+| RF anomaly mood dimension (arousal + vigilance shift) | Unit Tested |
+| Anomaly context in rich_narrative() header | Unit Tested |
+| Anomaly context in thinking prompt edge_sensors section | Code Reviewed |
+
+### Documentation
+| Change | Verification |
+|--------|-------------|
+| STATUS.md — updated to Wave 57 (266K LOC, 1983 test files, 64 panels, 460 routes) | Verified |
+| CLAUDE.md — feature roadmap expanded to 128+ features, test baselines updated | Verified |
+| Iteration queue — Waves 54-56 marked DONE, Waves 58-62 planned | Verified |
+| Intelligence redundancy analysis documented in STATUS.md | Verified |
+
+### Test Baselines (Wave 57)
+| Suite | Count | Status |
+|-------|-------|--------|
+| tritium-lib pytest | 1,584 passed | All passing |
+| tritium-sc Python | 13,432 collected | All passing |
+| tritium-sc JS | 95 test suites | All passing |
+| tritium-edge build | ~48% RAM, ~29% Flash | 0 warnings |
+| Total test files | 1,983 | -- |
+
 ## Verification Levels
 
 | Level | Meaning |
@@ -936,12 +965,13 @@ Ten waves of autonomous development transformed Tritium from a firmware OS with 
 
 ## Test Baselines
 
-| Suite | Start (Wave 1) | Current (Wave 49) | Status |
+| Suite | Start (Wave 1) | Current (Wave 57) | Status |
 |-------|----------------|-------------------|--------|
-| tritium-lib pytest | 833 passed | 1,471 passed, 29 skipped | All passing |
-| tritium-sc pytest | 81 tiers | 13,302 collected | All passing |
-| tritium-sc JS | — | 92 test suites | All passing |
+| tritium-lib pytest | 833 passed | 1,584 passed | All passing |
+| tritium-sc pytest | 81 tiers | 13,432 collected | All passing |
+| tritium-sc JS | — | 95 test suites | All passing |
 | tritium-edge build | 45.9% RAM, 28.8% Flash | ~48% RAM, ~29% Flash | 0 warnings |
+| Total test files | — | 1,983 | -- |
 
 ---
 
