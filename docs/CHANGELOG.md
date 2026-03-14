@@ -2,6 +2,90 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 78 (2026-03-14): Maintenance — Plugin Discovery, Docs, Test Baselines, Wave Planning
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Plugin auto-discovery verification: detailed boot logging of scan paths, found/registered/started/failed plugins | Code review |
+| Plugin discovery report endpoint: GET /api/plugins/discovery | 2 tests passing |
+| Health endpoint enriched with plugin_discovery report | Verified |
+| Boot self-test enhanced: plugin discovery stats (files scanned, found, started, failed, failed names) | Integrated |
+| Test baselines updated in /api/health response | Verified |
+| Plugin API tests: 10 passing (2 new discovery tests) | pytest |
+
+### Docs
+| Change | Verification |
+|--------|-------------|
+| Updated STATUS.md: Wave 78 edition with verified LOC counts, 17 plugins, 840 test files | wc -l verified |
+| Updated CHANGELOG.md: Waves 73-78 entries | Updated |
+| Updated iteration queue: Waves 73-77 marked DONE, Waves 79-83 planned | Updated |
+| Agent files updated with current counts (17 plugins, 50 HALs, 78 routers, 71 panels, 61 models) | Verified |
+
+### Test Baselines (Wave 78)
+| Suite | Count |
+|-------|-------|
+| tritium-lib pytest | 1,822 passed, 29 skipped |
+| tritium-sc test.sh fast | 97 tiers passed, 0 failed |
+| tritium-sc plugin API | 10 passed |
+| tritium-sc test files | 672 (577 py + 95 js) |
+| tritium-lib test files | 89 |
+| tritium-edge build | 49.6% RAM, 29.2% Flash, 0 warnings |
+| Total test files | 840 |
+
+---
+
+## Wave 77 (2026-03-14): Fleet Operations + Multi-Node Coordination
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Fleet coordination: group commands, config templates, analytics dashboard | 20 tests |
+| Supported command types: reboot, scan_burst, increase_rate, decrease_rate, ota_update, apply_template | Unit tested |
+| Device group management, config template CRUD | Unit tested |
+| Fleet analytics with history and coverage map | Unit tested |
+
+---
+
+## Wave 76 (2026-03-14): Behavioral Intelligence + Pattern Learning
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Behavioral Intelligence plugin: pattern detection, co-presence, anomaly alerting | 15 tests |
+| Frontend behavioral-intelligence panel: 4-tab UI (patterns, relations, anomalies, alerts) | Code review |
+
+---
+
+## Wave 75 (2026-03-14): Security Hardening
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| API key rotation mechanism with grace periods | 12 tests |
+| AR export sanitization, floorplan upload limits | 9 tests |
+
+---
+
+## Wave 74 (2026-03-14): Advanced Visualization
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| 3D trajectory ribbons, sensor coverage volumes, timeline scrubber, AR export | Unit tested |
+
+---
+
+## Wave 73 (2026-03-14): Spatial Intelligence + Indoor Mapping
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Floor plan plugin: upload, geo-reference, indoor localization | Unit tested |
+| WiFi fingerprint plugin: probe correlation, device tracking | Unit tested |
+
+---
+
 ## Wave 72 (2026-03-14): Maintenance — Docs, Intelligence Audit, Test Baselines, Wave Planning
 
 ### Docs

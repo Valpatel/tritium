@@ -18,7 +18,7 @@ You build firmware for ESP32-S3 Waveshare boards running Tritium-OS.
 ```
 tritium-edge/
 ├── src/main.cpp          # Entry point, app dispatcher
-├── lib/                  # 48 HAL directories, 141 header files
+├── lib/                  # 50 HAL directories, 296 source files
 │   ├── hal_wifi/         # WiFi manager
 │   ├── hal_ble_scanner/  # BLE passive + active scanning
 │   ├── hal_mqtt/         # MQTT bridge (heartbeat/sighting/cmd)

@@ -40,17 +40,17 @@ Three git submodules, all track `dev` branch. See [docs/ARCHITECTURE.md](docs/AR
 
 | Component | Location | Language | Port | CLAUDE.md | Purpose |
 |-----------|----------|----------|------|-----------|---------|
-| **Edge Firmware** | `tritium-edge/` | C++17 | — | [CLAUDE.md](tritium-edge/CLAUDE.md) | Tritium-OS on ESP32-S3 (6 boards, 44 HALs) |
+| **Edge Firmware** | `tritium-edge/` | C++17 | — | [CLAUDE.md](tritium-edge/CLAUDE.md) | Tritium-OS on ESP32-S3 (6 boards, 50 HALs) |
 | **Fleet Server** | `tritium-edge/server/` | Python | 8080 | — | Provisioning, OTA, monitoring |
 | **Command Center** | `tritium-sc/` | Python + JS | 8000 | [CLAUDE.md](tritium-sc/CLAUDE.md) | Tactical dashboard, AI commander Amy, plugins |
 | **Shared Library** | `tritium-lib/` | Python (+ C++, JS future) | — | [CLAUDE.md](tritium-lib/CLAUDE.md) | Common code: models, MQTT topics, auth, events, test utils, themes |
 
 ### Plugin System (the growth engine)
-Plugins are how every capability gets added. Each plugin owns its own backend services, API routes, UI panels, and pub/sub topics. Current plugins (14 active):
+Plugins are how every capability gets added. Each plugin owns its own backend services, API routes, UI panels, and pub/sub topics. Current plugins (17 active):
 - **edge_tracker** — BLE/WiFi presence → TargetTracker → map, with BLE classifier
 - **meshtastic** — LoRa mesh radio bridge, GPS-equipped nodes on map
 - **camera_feeds** — multi-source camera management (synthetic/RTSP/MJPEG/MQTT/USB)
-- **fleet_dashboard** — device registry, battery, uptime, sighting counts, network topology
+- **fleet_dashboard** — device registry, battery, uptime, sighting counts, group commands, config templates
 - **yolo_detector** — YOLO object detection pipeline
 - **tak_bridge** — ATAK/CoT interoperability (multicast UDP, TCP, MQTT)
 - **gis_layers** — OSM/satellite/terrain/building map layers
@@ -61,6 +61,9 @@ Plugins are how every capability gets added. Each plugin owns its own backend se
 - **rf_motion** — passive RF-based motion detection via RSSI variance
 - **acoustic** — sound classification (gunshot, voice, vehicle, siren, glass_break)
 - **federation** — multi-site Tritium federation via MQTT bridge
+- **behavioral_intelligence** — target behavior profiling, pattern detection, anomaly alerting
+- **floorplan** — indoor floor plan management, room-level localization
+- **wifi_fingerprint** — WiFi probe request correlation, device fingerprinting
 
 ### Integration
 - MQTT broker for device telemetry, commands, and chat
