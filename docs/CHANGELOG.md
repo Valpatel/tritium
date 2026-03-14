@@ -14,6 +14,18 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 32: Security + Skepticism Audit
+
+### Command Center (tritium-sc)
+- Fixed 6 innerHTML XSS injection points across map tooltip, targets, assets, analytics, zones, war HUD (Unit Tested)
+- Upgraded `_escFx()` escape function to handle `&` and `"` characters
+- Replaced raw URL injection in assets.js with DOM API + protocol whitelist
+- Added `_esc()` to analytics.js and zones.js (legacy) which lacked it
+- 5 rate limiter HTTP tests proving 429 responses after limit exceeded (Unit Tested)
+- 5 demo mode E2E tests proving synthetic data -> targets -> dossiers pipeline works (Unit Tested)
+- 6 WebSocket load tests proving 10 concurrent connections handle 500 messages without degradation (Unit Tested)
+- Audited all 43 frontend panels: all have real API backends (36 via routers/plugins, 7 via EventBus/Store)
+
 ## 2026-03-14 — Wave 31: Target Filtering, Command Palette, WiFi Probes, API Versioning
 
 ### Shared Library (tritium-lib)
