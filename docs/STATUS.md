@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (post Wave 39 maintenance).
+Current state of all components as of 2026-03-14 (post Wave 42 security audit).
 
 ## Component Health
 
@@ -14,20 +14,36 @@ Current state of all components as of 2026-03-14 (post Wave 39 maintenance).
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 
-## Test Results (Wave 39 Baseline)
+## Test Results (Wave 42 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib pytest | 1404 passed, 0 failures | All passing |
-| tritium-sc pytest (unit) | 8352 passed, 79 skipped, 6 warnings | All passing |
-| tritium-sc JS tests | 94 tiers, ~7000+ assertions | 92 pass, 2 known failures |
+| tritium-lib pytest | 1420 passed, 29 skipped | All passing |
+| tritium-sc fast suite | 17,824 passed, 41 known failures | 95/96 tiers pass |
 | tritium-sc test infra | 120 passed | All passing |
 | tritium-sc ROS2 robot | 125 passed | All passing |
 | tritium-edge build | 47.9% RAM, 29.1% Flash | 0 warnings |
 
 **Known JS test failures (pre-existing):**
-- `test_websocket.js` — 8 failures (missing asyncio event loop)
-- `test_map_render.js` — 41 failures (map render mocks)
+- `test_menu_bar.js` — 41 failures (panel button order off-by-one after panel additions)
+
+## Codebase Metrics (Wave 42)
+
+| Component | Language | Lines of Code |
+|-----------|----------|---------------|
+| tritium-sc Python | Python | 88,871 |
+| tritium-sc JS | JavaScript | 63,993 |
+| tritium-edge firmware | C++/H | 71,206 |
+| tritium-edge fleet server | Python | 25,037 |
+| tritium-lib | Python | 16,736 |
+| **Total** | **All** | **265,843** |
+
+| Metric | Value |
+|--------|-------|
+| Total test files | 818 (634 SC + 65 lib + 119 edge) |
+| Total test assertions (SC fast) | 17,824 |
+| Test-to-code ratio (SC Python) | 1 test file per 140 LOC |
+| Test-to-code ratio (lib) | 1 test file per 257 LOC |
 
 ## Firmware (tritium-edge)
 
@@ -260,11 +276,25 @@ GET /api/docs -- auto-generated JSON catalog of all API endpoints from FastAPI O
 | Federation MQTT bridge to remote sites | Working |
 | Mesh sighting relay (leaf to gateway) | Working |
 
+## Security (Wave 42 Audit)
+
+| Area | Status | Details |
+|------|--------|---------|
+| Annotation XSS | Hardened | HTML tags stripped, entities escaped, text length limits |
+| Watchlist XSS | Hardened | HTML tags stripped, tag count limits, notes length limits |
+| Annotation type validation | Hardened | Enum validation (6 valid types only) |
+| Lat/lng range validation | Hardened | -90..90 lat, -180..180 lng |
+| Collection DoS | Hardened | Max 10,000 annotations, 5,000 watch entries |
+| WebSocket auth | Hardened | Optional token via WS_AUTH_TOKEN env var, 4003 reject |
+| WebSocket heartbeat | Hardened | Server ping every 30s, stale connections closed after 90s |
+| SQL injection | N/A | In-memory stores (no SQL), user text HTML-escaped |
+
 ## Development Velocity
 
-39 waves completed across autonomous sessions:
-- **1404 tests** in tritium-lib (0 failures)
-- **8352 pytest + ~7000 JS assertions** in tritium-sc
+42 waves completed across autonomous sessions:
+- **265,843 lines of code** across 3 repos (Python + JS + C++)
+- **818 test files** with 17,824+ assertions
+- **1,420 tests** in tritium-lib (0 failures)
 - **48 floating panels** in the command center frontend
 - **42 HALs** in tritium-edge firmware
 - **14 plugins** active in tritium-sc

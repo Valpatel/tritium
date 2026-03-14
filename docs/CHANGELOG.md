@@ -14,6 +14,20 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 42: Security Hardening + Skepticism Audit
+
+### Command Center (tritium-sc)
+- **Annotation input validation**: XSS prevention (HTML tag stripping, entity escaping), type enum validation, lat/lng range enforcement, points list limit (5000), collection limit (10,000), numeric range constraints (Unit Tested, 18 tests)
+- **Watchlist input validation**: XSS prevention on all text fields (label, notes, tags), tag count limit (50), collection limit (5,000), target_id length limit (Unit Tested, 9 tests)
+- **WebSocket authentication**: Optional token-based auth via `WS_AUTH_TOKEN` env var, query param `?token=`, reject with 4003 when invalid (Unit Tested, 6 tests)
+- **WebSocket heartbeat**: Server-side ping every 30s, stale connection cleanup after 3 missed pongs (90s), prevents zombie WebSocket accumulation (Unit Tested)
+- **Frontend pong response**: WebSocket client auto-responds to server ping frames
+
+### System
+- **Codebase metrics**: 265,843 LOC across 3 repos, 818 test files, 17,824 assertions in SC fast suite
+- **Test baseline**: tritium-lib 1,420 passed; tritium-sc 17,824 passed (41 known failures in test_menu_bar.js)
+- Updated STATUS.md with Wave 42 security audit results and codebase metrics
+
 ## 2026-03-14 — Wave 41: Annotations, Watch List, Plugin Messaging, Compass Rose, Operational Periods
 
 ### Shared Library (tritium-lib)
