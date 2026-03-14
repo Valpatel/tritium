@@ -14,6 +14,23 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 17: Production Hardening
+
+### Command Center (SC)
+- Rate limiting middleware with sliding window per-IP counters
+  (exempt: /ws, /static, /health, /api/auth/status)
+- Database migration system with 4 numbered migrations
+  (schema_version, auth_users, api_keys, audit_log)
+- Backup/restore API at `/api/backup/` (export/import ZIP archives)
+- Updated Dockerfile to Python 3.12 with health check
+- Updated docker-compose.yml with auth, TLS, and rate limit env vars
+- Migrations run automatically on startup
+
+**Verification:**
+- 19/19 tests pass (rate_limit, backup, migrations, auth)
+
+---
+
 ## 2026-03-14 — Wave 16: Hardware Enablement
 
 ### Edge Firmware
