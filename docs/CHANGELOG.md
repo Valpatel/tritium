@@ -2,6 +2,32 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 66 (2026-03-14): Maintenance — Boot Self-Test, MQTT Health, Panel Audit, Stats Update
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Boot self-test — runs all subsystem checks on server startup, logs pass/fail summary to console | Tested (27 unit tests) |
+| MQTT broker health check — TCP probe in /api/health, shows reachable/unreachable with install hint | Tested (27 unit tests) |
+| System health panel MQTT section — shows broker reachability and bridge status with install instructions | Code Reviewed |
+| Health endpoint test baselines updated to current counts (lib=1584, sc=1400+) | Tested |
+| Boot self-test result stored in app.state.boot_self_test for API access | Code Reviewed |
+
+### Docs + Agents
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated: 66 waves, 646K LOC, 822 test files, 66 panels, 71 routers, 313 model classes | Verified (wc -l, find, ls) |
+| CLAUDE.md test baselines updated to Wave 66 counts | Updated |
+| All 11 agent files updated with current counts (panels=66, routers=71, models=313, HALs=48/190) | Updated |
+| MEMORY.md test baselines updated to Wave 66 | Updated |
+
+### Analysis
+| Finding | Status |
+|---------|--------|
+| Panel redundancy audit: 66 panels, no true duplicates. fleet/fleet-dashboard serve different purposes (heartbeat vs overview). cameras/camera-feeds/multi-camera each have distinct sources and layouts. alerts/notifications/events/activity-feed each track different event types. | Documented |
+
+---
+
 ## Wave 65 (2026-03-14): Security Hardening + Meshtastic Telemetry Charts + Stats Audit
 
 ### Security

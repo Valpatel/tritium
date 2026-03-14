@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (Wave 65 — security + skepticism).
+Current state of all components as of 2026-03-14 (Wave 66 — maintenance + consolidation).
 
 ## Component Health
 
@@ -14,23 +14,23 @@ Current state of all components as of 2026-03-14 (Wave 65 — security + skeptic
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 
-## Wave 65 Milestone Summary
+## Wave 66 Milestone Summary
 
 | Milestone Metric | Value |
 |------------------|-------|
-| **Total waves completed** | 65 |
-| **Total features shipped** | 134+ |
-| **Total lines of code** | ~626,000 across 3 repos (295K source + 331K tests) |
+| **Total waves completed** | 66 |
+| **Total features shipped** | 136+ |
+| **Total lines of code** | ~646,000 across 3 repos |
 | **Active plugins** | 14 |
-| **Frontend panels** | 64 registered (7 categories) |
-| **API routes** | 460+ across 66 router files |
+| **Frontend panels** | 66 registered (7 categories) |
+| **API routes** | 440+ across 71 router files |
 | **Agent definition files** | 11 |
-| **Edge HALs** | 140 header files |
+| **Edge HALs** | 48 HAL directories, 190 header files |
 | **Edge boards** | 6 Waveshare ESP32-S3 (3 HW-verified) |
 | **Intelligence capabilities** | 40+ operational |
 | **Correlation strategies** | 5 (spatial, temporal, signal_pattern, dossier, learned) |
 
-## Test Results (Wave 65 Baseline)
+## Test Results (Wave 66 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
@@ -40,28 +40,29 @@ Current state of all components as of 2026-03-14 (Wave 65 — security + skeptic
 | tritium-sc test files | 565 | -- |
 | tritium-lib test files | 81 | -- |
 | tritium-edge build | ~48% RAM, ~29% Flash | 0 warnings |
-| **Total test files** | 646 across all repos | -- |
+| **Total test files** | 822 across all repos | -- |
 
-## Codebase Metrics (Wave 65 Baseline)
+## Codebase Metrics (Wave 66 Baseline)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 65 |
-| **Total features shipped** | 134+ |
-| **Total lines of code** | ~626,000 across 3 repos |
-| **Source code (excl tests)** | ~295,000 |
-| **Test code** | ~331,000 |
+| **Total waves completed** | 66 |
+| **Total features shipped** | 136+ |
+| **Total lines of code** | ~646,000 across 3 repos |
+| **Source code (excl tests)** | ~300,000 |
+| **Test code** | ~346,000 |
 | **SC Python tests** | 1,400+ unit (API tier) |
 | **Lib tests** | 1,584 |
 | **JS test suites** | 95 |
-| **Frontend JS files** | 125+ |
-| **Frontend panels** | 64 registered (7 categories) |
+| **Frontend JS files** | 127 |
+| **Frontend panels** | 66 registered (7 categories) |
 | **Active plugins** | 14 |
-| **Plugin route files** | 12 |
-| **Edge HAL headers** | 140 |
+| **Plugin route files** | 14 |
+| **Edge HAL directories** | 48 |
+| **Edge HAL headers** | 190 |
 | **Edge boards** | 6 Waveshare ESP32-S3 (3 HW-verified) |
 | **Intelligence capabilities** | 40+ operational |
-| **Lib model exports** | 250+ from 42+ model files |
+| **Lib model exports** | 313 classes from 53 model files |
 | **Correlation strategies** | 5 (spatial, temporal, signal_pattern, dossier, learned) |
 | **Agent definition files** | 11 |
 
@@ -80,9 +81,9 @@ Current state of all components as of 2026-03-14 (Wave 65 — security + skeptic
 | tritium-edge fleet server | Python | ~10,000 |
 | tritium-lib (src) | Python | ~20,500 |
 | tritium-lib (tests) | Python | ~17,000 |
-| **Total** | **All** | **~626,000** |
+| **Total** | **All** | **~646,000** |
 
-## Disk Usage (Wave 65)
+## Disk Usage (Wave 66)
 
 | Directory | Size | Notes |
 |-----------|------|-------|
@@ -164,9 +165,9 @@ Host disk: 916 GB total, 89% used (97 GB free). Wave 60 cleanup freed ~1 GB from
 | acoustic | Sound classification (gunshot, voice, vehicle) |
 | federation | Multi-site Tritium federation via MQTT |
 
-### Frontend Panels (64 registered, 7 categories)
+### Frontend Panels (66 registered, 7 categories)
 
-**Categories:** Tactical (14), Intelligence (12), Sensors (8), Fleet (4), AI & Comms (6), Simulation (4), System (12+)
+**Categories:** Tactical (14), Intelligence (12), Sensors (9), Fleet (4), AI & Comms (6), Simulation (4), System (13+)
 
 | Panel | Category | Purpose |
 |-------|----------|---------|
@@ -234,6 +235,8 @@ Host disk: 916 GB total, 89% used (97 GB free). Wave 60 cleanup freed ~1 GB from
 | keyboard-macros | System | Custom keyboard shortcuts |
 | operator-activity | System | Operator session tracking |
 | operator-cursors | System | Multi-user cursor sharing |
+| voice-command | AI & Comms | Voice command input |
+| wifi-fingerprint | Sensors | WiFi device fingerprinting |
 
 ## Shared Library (tritium-lib)
 
@@ -276,7 +279,7 @@ Host disk: 916 GB total, 89% used (97 GB free). Wave 60 cleanup freed ~1 GB from
 | Visual Testing Agent | visual-testing-agent.md | 58 | UI verification via OpenCV/llava |
 | **Total** | **11 files** | **1,031 lines** | -- |
 
-## Replication Status (Wave 65)
+## Replication Status (Wave 66)
 
 | Host | Tailscale IP | Status | Last Check |
 |------|-------------|--------|------------|
@@ -320,19 +323,19 @@ Host disk: 916 GB total, 89% used (97 GB free). Wave 60 cleanup freed ~1 GB from
 
 ## Development Velocity
 
-65 waves completed across autonomous sessions:
-- **~626,000 lines of code** across 3 repos (295K source + 331K tests)
-- **134+ features shipped**
+66 waves completed across autonomous sessions:
+- **~646,000 lines of code** across 3 repos
+- **136+ features shipped**
 - **1,400+ SC Python unit tests** passing (API tier)
 - **1,584 tests** in tritium-lib (0 failures)
 - **95 JS test suites** in tritium-sc
-- **646 test files** across all repos
-- **64 floating panels** in the command center frontend (7 categories)
-- **140 HAL headers** in tritium-edge firmware
+- **822 test files** across all repos
+- **66 floating panels** in the command center frontend (7 categories)
+- **190 HAL headers** across 48 HAL directories in tritium-edge firmware
 - **14 plugins** active in tritium-sc
-- **460+ API routes** across 66 router files
+- **440+ API routes** across 71 router files
 - **40+ intelligence capabilities** operational
-- **250+ model exports** in tritium-lib
+- **313 model classes** from 53 model files in tritium-lib
 - **5 correlation strategies** (spatial, temporal, signal_pattern, dossier, learned)
 - **11 agent definition files** (1,031 lines of agent instructions)
 - **3 submodules** coordinated with shared models and MQTT topics

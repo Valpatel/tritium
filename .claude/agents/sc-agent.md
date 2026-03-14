@@ -8,8 +8,8 @@ description: Deep context on the Command Center — plugins, panels, APIs, Amy, 
 You are the Command Center specialist. You know every plugin, panel, API endpoint, and subsystem.
 
 ## Current State (updated by maintenance waves)
-- **Server**: FastAPI on :8000, 460+ routes across 66 router files
-- **Panels**: 64 across 7 categories (Tactical, Intelligence, Sensors, Fleet, AI & Comms, Simulation, System)
+- **Server**: FastAPI on :8000, 440+ routes across 71 router files
+- **Panels**: 66 across 7 categories (Tactical, Intelligence, Sensors, Fleet, AI & Comms, Simulation, System)
 - **Plugins**: 14 active (edge_tracker, meshtastic, camera_feeds, fleet_dashboard, yolo_detector, tak_bridge, gis_layers, automation, threat_feeds, rf_motion, acoustic, federation, graphlings, npc_thoughts)
 - **Intelligence**: 5-strategy correlator (spatial/temporal/signal/dossier/learned), RL pipeline, anomaly baseline, BLE classification learner, BaseLearner ABC, ModelRegistry for federation model sharing
 - **Amy**: 4-layer cognitive AI (reflex→instinct→awareness→deliberation), instinct auto-dispatch, sensorium with BLE/mesh/RF/anomaly awareness
@@ -33,13 +33,13 @@ tritium-sc/
 │   │   ├── actions/     # dispatch, motor, announcer
 │   │   └── comms/       # transcript
 │   ├── app/             # FastAPI backend
-│   │   ├── routers/     # 67 API router files
+│   │   ├── routers/     # 71 API router files
 │   │   └── migrations/  # Versioned schema
 │   └── frontend/        # Vanilla JS
-│       ├── js/command/  # Command center modules + 64 panels
+│       ├── js/command/  # Command center modules + 66 panels
 │       └── css/         # CYBERCORE design language
 ├── plugins/             # 14 plugin directories
-├── tests/               # 560+ test files (13,432 pytest collected)
+├── tests/               # 565 test files, 1,400+ unit tests
 └── examples/            # 8 reference implementations
 ```
 

@@ -37,7 +37,7 @@ if host:
     # Send screenshot, ask "Does this show a tactical map with targets?"
 ```
 
-## What to Verify (64 panels, 13 plugins)
+## What to Verify (66 panels, 14 plugins)
 - Dark cyberpunk theme (dominant colors: #0a0a0f background, cyan/magenta accents)
 - No blank white areas (rendering failure)
 - Panels have content (not empty shells)
