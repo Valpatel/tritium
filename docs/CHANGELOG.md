@@ -14,6 +14,35 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 36: Maintenance — Docs, Quality, Features
+
+### Shared Library (tritium-lib)
+- Fixed `datetime.utcnow()` DeprecationWarning in `models/mission.py` — use `datetime.now(timezone.utc)` (Unit Tested)
+- Fixed JWT `InsecureKeyLengthWarning` in test keys — padded to 32+ bytes (Unit Tested)
+- Added pytest filterwarnings config in `pyproject.toml` to catch all warnings as errors (Unit Tested)
+- **Quality pass: 1357 passed, 29 skipped, 0 warnings** (was 51 warnings)
+
+### Command Center (tritium-sc)
+- Added `GET /api/docs` — auto-generated JSON catalog of all API endpoints from FastAPI OpenAPI schema (Build Verified)
+  - `/api/docs` — full catalog with parameters and request body schemas
+  - `/api/docs/summary` — compact method + path + summary listing
+  - `/api/docs/tags` — endpoints grouped by tag
+- Added investigation map layer overlay — `GET /api/investigations/{id}/map-entities` returns positioned entities for tactical map rendering (Build Verified)
+  - `GET /api/investigations/active/map-overlay` — aggregated overlay for all open investigations
+  - Entities enriched from TargetTracker positions and DossierStore metadata
+
+### Edge Firmware (tritium-edge)
+- Added startup chime on boot completion — C5-E5-G5 ascending major triad (Build Verified)
+  - Conditional on `HAS_AUDIO_CODEC` — only plays on boards with ES8311 codec
+  - Plays after `boot_sequence::showReady()` and `services_init()` complete
+
+### Documentation
+- Updated `docs/STATUS.md` — 27 capabilities, 1357+ lib tests, Wave 36 additions
+- Updated `plugins/README.md` — 14 plugins with descriptions
+- Rule system redundancy analysis: 3 rule types (AutomationRule, AlertRule, NotificationRule) serve distinct layers; shared fields documented but base class not warranted
+
+---
+
 ## 2026-03-14 — Wave 33: Maintenance — Docs, Redundancy, Features
 
 ### Shared Library (tritium-lib)

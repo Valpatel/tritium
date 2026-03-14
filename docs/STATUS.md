@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (post Wave 33 maintenance).
+Current state of all components as of 2026-03-14 (post Wave 36 maintenance).
 
 ## Component Health
 
@@ -9,16 +9,16 @@ Current state of all components as of 2026-03-14 (post Wave 33 maintenance).
 | **tritium-edge firmware** | Building | 47.9% RAM, 29.1% flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 1364+ tests passing |
+| **tritium-lib** | Stable | 1357+ tests passing, 0 warnings |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 
-## Test Results (Wave 33 Baseline)
+## Test Results (Wave 36 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib pytest | 1364+ passed, 29 skipped | All passing |
+| tritium-lib pytest | 1357 passed, 29 skipped, 0 warnings | All passing |
 | tritium-sc fast (tiers 1-3+8) | 96+ tiers | All passing |
 | tritium-edge build | 47.9% RAM, 29.1% Flash | 0 warnings |
 
@@ -40,7 +40,7 @@ Current state of all components as of 2026-03-14 (post Wave 33 maintenance).
 
 **Supported boards:** 6 Waveshare ESP32-S3 (3 hardware-verified, 1 pin-verified, 2 need verification)
 
-**Wave 33 additions:** Boot diagnostics summary (ASCII serial output with board/firmware/services status)
+**Wave 36 additions:** Startup chime on boot completion (C5-E5-G5 triad, conditional on HAS_AUDIO_CODEC)
 
 ### Known Blockers
 
@@ -63,7 +63,7 @@ Current state of all components as of 2026-03-14 (post Wave 33 maintenance).
 
 **Test suite:** 7 tiers (syntax, unit, JS, infrastructure, integration, visual quality, visual E2E)
 
-**Wave 33 additions:** WebSocket exponential backoff reconnect + DISCONNECTED banner, target pinning (right-click Pin/Unpin with map icon)
+**Wave 36 additions:** API documentation endpoint (GET /api/docs auto-catalog), investigation map layer overlay
 
 ### Plugins (14 active)
 | Plugin | Purpose |
@@ -83,7 +83,7 @@ Current state of all components as of 2026-03-14 (post Wave 33 maintenance).
 | acoustic | Sound classification (gunshot, voice, vehicle) |
 | federation | Multi-site Tritium federation via MQTT |
 
-### Intelligence Capabilities
+### Intelligence Capabilities (27)
 | Capability | Status |
 |------------|--------|
 | Multi-sensor target correlation | Active |
@@ -112,6 +112,7 @@ Current state of all components as of 2026-03-14 (post Wave 33 maintenance).
 | Event-driven alert rules | Active |
 | Target pinning (persistent, prune-protected) | Active |
 | WebSocket auto-reconnect with exponential backoff | Active |
+| Investigation map overlay (entities on tactical map) | Active |
 
 ## Shared Library (tritium-lib)
 
@@ -148,13 +149,26 @@ Current state of all components as of 2026-03-14 (post Wave 33 maintenance).
 
 ## Rule System Analysis
 
-Three rule types exist in the codebase. See docs/RULE_TYPES.md for detailed comparison.
+Three rule types exist in the codebase with deliberate separation of concerns:
 
-| Rule Type | Location | Purpose |
-|-----------|----------|---------|
-| **AutomationRule** | tritium-sc/plugins/automation/ | Execute actions (commands, tags, escalations) in response to events |
-| **AlertRule** | tritium-lib/models/alert_rules.py | Generate alerts/notifications from system events with severity routing |
-| **NotificationRule** | tritium-lib/models/notification_rules.py | Route notifications to channels (WS, MQTT, email) with severity filtering |
+| Rule Type | Location | Purpose | Common Fields |
+|-----------|----------|---------|---------------|
+| **AutomationRule** | tritium-sc/plugins/automation/ | Execute actions (commands, tags, escalations) in response to events | rule_id, name, trigger, conditions, enabled, cooldown |
+| **AlertRule** | tritium-lib/models/alert_rules.py | Generate alerts/notifications from system events with severity routing | rule_id, name, trigger, conditions, enabled, cooldown, channels |
+| **NotificationRule** | tritium-lib/models/notification_rules.py | Route notifications to channels (WS, MQTT, email) with severity filtering | rule_id, name, trigger, enabled, cooldown, channels |
+
+**Shared fields across all three:** rule_id, name, enabled, cooldown_seconds, fire_count, last_fired, to_dict/from_dict serialization.
+
+**Why not a base class:** The three types serve distinct layers (action execution vs. alert generation vs. notification routing). AlertRule and NotificationRule share channels but have different trigger semantics (AlertTrigger enum vs. string pattern). AutomationRule has multi-action lists and dot-notation field resolution. A base class would add complexity without meaningful code reuse.
+
+**Duplicate:** AutomationRule exists in both `plugins/automation/rules.py` (the canonical version with full RuleEngine) AND `src/engine/simulation/battle_integration.py` (simplified version for battle-mode scripting). The battle_integration copy is intentionally minimal for simulation-only use.
+
+## API Documentation
+
+**New:** GET /api/docs — auto-generated JSON catalog of all API endpoints from FastAPI OpenAPI schema.
+- `/api/docs` — full catalog with parameters and request body schemas
+- `/api/docs/summary` — compact method + path + summary
+- `/api/docs/tags` — endpoints grouped by tag
 
 ## Integration Points
 
@@ -175,10 +189,10 @@ Three rule types exist in the codebase. See docs/RULE_TYPES.md for detailed comp
 
 ## Development Velocity
 
-33 waves completed across autonomous sessions:
-- **1364+ tests** in tritium-lib
+36 waves completed across autonomous sessions:
+- **1357+ tests** in tritium-lib (0 warnings)
 - **96+ test tiers** in tritium-sc
 - **14 plugins** active in tritium-sc
-- **26 intelligence capabilities** operational
+- **27 intelligence capabilities** operational
 - **3 submodules** coordinated with shared models and MQTT topics
-- **Wave 33** maintenance pass: WS reconnect, target pinning, mission model, boot diagnostics
+- **Wave 36** maintenance: API docs endpoint, investigation map overlay, startup chime, lib quality pass (0 warnings), rule system analysis
