@@ -14,6 +14,25 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 41: Annotations, Watch List, Plugin Messaging, Compass Rose, Operational Periods
+
+### Shared Library (tritium-lib)
+- `models/operational.py`: OperationalPeriod, OperationalPhase, WeatherInfo, OperationalObjective (Unit Tested, 17 tests)
+- Structuring operations into defined time blocks with commander, objectives, weather, personnel count
+
+### Command Center (tritium-sc)
+- Map annotations system: text labels, arrows, circles, freehand drawings via `/api/annotations` (Unit Tested, 7 tests)
+- Target watch list: curate targets of interest, movement/state alerts via `/api/watchlist` (Unit Tested, 7 tests)
+- Inter-plugin messaging: `PluginMessageBus` for typed messages between plugins via EventBus (Unit Tested, 13 tests)
+- Map compass rose: custom canvas compass with north arrow, cardinal labels, real-time rotation
+- MapLibre scale bar: metric scale indicator with cyberpunk styling
+- Frontend panels: `panels/annotations.js`, `panels/watchlist.js` with full UI
+
+### Edge Firmware (tritium-edge)
+- SD card file browser already implemented in prior wave (API: `/api/fs/sd/list`, `/api/fs/sd/download`, `/api/fs/sd/delete`, `/api/fs/sd/info`, `/api/fs/sd/mkdir`, `/api/fs/sd/upload`)
+
+---
+
 ## 2026-03-14 — Wave 40: Panel Utils, JS Test Fixes, Heatmap Timeline, Device Identity
 
 ### Shared Library (tritium-lib)
