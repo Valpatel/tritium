@@ -161,6 +161,50 @@ Ten waves of autonomous development transformed Tritium from a firmware OS with 
 
 ---
 
+### Wave 11: Code Audit & Integration Test
+
+**Focus:** Quality audit, missing test registration, JS test alignment.
+
+#### tritium-sc
+- Registered 15 missing JS test files in test.sh tier 3
+- Fixed JS test assertions to match refactored source code
+- Full integration test suite validation
+
+**Verification:** Integration Tested
+
+---
+
+### Wave 12: Intelligence Enrichment
+
+**Focus:** Geolocation, re-identification, threat feeds, trilateration, notifications.
+
+#### tritium-sc
+- WiFi BSSID geolocation enrichment provider with local cache
+- Threat intelligence feed plugin with known-bad indicator matching
+
+#### tritium-lib
+- ReID embedding store for cross-camera re-identification
+- Geo and notifications modules extracted from tritium-sc
+
+**Verification:** Integration Tested + Unit Tested
+
+---
+
+### Wave 13: RF Motion Detection & Analytics
+
+**Focus:** RF-based motion sensing, density heatmaps, quality audit, test reporting.
+
+#### tritium-sc
+- RF motion detection plugin — RSSI variance monitoring between stationary radios for cameraless motion detection
+- Multi-node BLE trilateration engine wired to edge tracker (3+ node position computation)
+- Motion heatmap layer with activity density visualization on tactical map
+- Unified test reporting system with coverage gap analysis and trend tracking
+- Heatmap, RF motion, and test reporting wired into main app
+
+**Verification:** Integration Tested (96 tiers passing, 0 failures)
+
+---
+
 ### tritium-edge (across all waves)
 
 | Change | Verification |
@@ -178,10 +222,10 @@ Ten waves of autonomous development transformed Tritium from a firmware OS with 
 
 ## Test Baselines
 
-| Suite | Start (Wave 1) | Final (Wave 10) | Status |
+| Suite | Start (Wave 1) | Final (Wave 13) | Status |
 |-------|----------------|-----------------|--------|
-| tritium-lib pytest | 833 passed | 955 passed, 20 skipped | All passing |
-| tritium-sc fast (tiers 1-3+8) | 81 tiers | 81 tiers | All passing |
+| tritium-lib pytest | 833 passed | 1024 passed, 20 skipped | All passing |
+| tritium-sc fast (tiers 1-3+8) | 81 tiers | 96 tiers | All passing |
 | tritium-edge build | 45.9% RAM, 28.8% Flash | 44.7% RAM, 28.5% Flash | 0 warnings |
 
 ---
