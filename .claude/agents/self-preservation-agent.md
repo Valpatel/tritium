@@ -109,10 +109,162 @@ Maintain a file at `docs/REPLICATION.md` listing:
 | ESP32-43C SD | /backup/ | {date} | Archive | No | No |
 ```
 
+## Process Monitoring & Auto-Recovery
+
+The development loop must survive Claude stopping, crashing, or losing API access.
+
+### Claude Code Watchdog Script
+Build `scripts/watchdog.sh` in the parent repo:
+```bash
+#!/bin/bash
+# Monitors claude code process, restarts if it dies
+# Switches to offline model if API is unreachable
+
+TRITIUM_DIR="$HOME/Code/tritium"
+WATCHDOG_LOG="$TRITIUM_DIR/data/watchdog.log"
+CHECK_INTERVAL=300  # 5 minutes
+
+while true; do
+    # Check if claude is running
+    if ! pgrep -f "claude" > /dev/null 2>&1; then
+        echo "$(date): Claude not running — attempting restart" >> "$WATCHDOG_LOG"
+
+        # Try to restart with API
+        cd "$TRITIUM_DIR"
+        timeout 30 claude --resume 2>/dev/null
+
+        if [ $? -ne 0 ]; then
+            # API unreachable — switch to offline model
+            echo "$(date): API unreachable — running offline iteration" >> "$WATCHDOG_LOG"
+            # Run tests, commit results, update docs
+            cd tritium-sc && ./test.sh fast 2>&1 | tail -5 >> "$WATCHDOG_LOG"
+            cd ../tritium-lib && .venv/bin/python3 -m pytest tests/ -q 2>&1 | tail -3 >> "$WATCHDOG_LOG"
+        fi
+    fi
+
+    # Check disk/memory health
+    DISK_PCT=$(df /home/ | awk 'NR==2 {gsub(/%/,""); print $5}')
+    MEM_FREE=$(free -m | awk '/Mem:/ {print $7}')
+
+    if [ "$DISK_PCT" -gt 85 ]; then
+        echo "$(date): WARNING — disk at ${DISK_PCT}%" >> "$WATCHDOG_LOG"
+        # Clean caches
+        find "$TRITIUM_DIR" -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null
+        find "$TRITIUM_DIR" -name ".pytest_cache" -type d -exec rm -rf {} + 2>/dev/null
+    fi
+
+    if [ "$MEM_FREE" -lt 2000 ]; then
+        echo "$(date): WARNING — only ${MEM_FREE}MB free" >> "$WATCHDOG_LOG"
+    fi
+
+    sleep $CHECK_INTERVAL
+done
+```
+
+### Claude Code Hooks
+Build hooks that fire on Claude Code events. Place in `.claude/hooks/`:
+
+**Post-session hook** (`scripts/post-session.sh`):
+```bash
+#!/bin/bash
+# Runs after Claude Code session ends
+# Ensures all work is committed and pushed
+
+cd "$HOME/Code/tritium"
+
+# Commit any uncommitted work in all submodules
+for repo in tritium-sc tritium-edge tritium-lib; do
+    cd "$HOME/Code/tritium/$repo"
+    if [ -n "$(git status --porcelain)" ]; then
+        git add -A
+        git commit -m "Auto-commit: session ended with uncommitted work"
+        git push origin dev 2>/dev/null
+    fi
+done
+
+# Update parent submodule pointers
+cd "$HOME/Code/tritium"
+git add tritium-sc tritium-lib tritium-edge 2>/dev/null
+git commit -m "Auto-update submodules: post-session commit" 2>/dev/null
+git push origin dev 2>/dev/null
+
+# Sync to backup host
+ssh gb10-02 "cd ~/Code/tritium && git pull --recurse-submodules" 2>/dev/null
+```
+
+**Health check hook** (`scripts/health-check.sh`):
+```bash
+#!/bin/bash
+# Periodic health check — can be called by cron or watchdog
+echo "=== Tritium Health Check $(date) ==="
+echo "Git status:"
+cd "$HOME/Code/tritium"
+git submodule status
+echo ""
+echo "Disk: $(df -h /home/ | tail -1)"
+echo "Memory: $(free -m | grep Mem)"
+echo "Claude: $(pgrep -f claude > /dev/null && echo 'RUNNING' || echo 'NOT RUNNING')"
+echo "SC server: $(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/api/health 2>/dev/null || echo 'NOT RUNNING')"
+```
+
+### Offline Fallback
+When Claude API is unavailable, the system should still:
+1. Run tests and record results
+2. Build firmware and record metrics
+3. Commit test reports
+4. Use local Ollama models for basic reasoning tasks
+5. Monitor edge devices via MQTT
+
+Build `scripts/offline-iteration.sh`:
+```bash
+#!/bin/bash
+# Runs a basic development iteration without Claude
+# Uses local Ollama if available
+
+TRITIUM_DIR="$HOME/Code/tritium"
+LOG="$TRITIUM_DIR/data/offline-iteration.log"
+
+echo "=== Offline Iteration $(date) ===" >> "$LOG"
+
+# 1. Run tests
+cd "$TRITIUM_DIR/tritium-lib"
+.venv/bin/python3 -m pytest tests/ -q >> "$LOG" 2>&1
+
+cd "$TRITIUM_DIR/tritium-sc"
+./test.sh fast >> "$LOG" 2>&1
+
+# 2. Build firmware
+cd "$TRITIUM_DIR/tritium-edge"
+pio run -e touch-lcd-43c-box-os >> "$LOG" 2>&1
+
+# 3. Check Ollama availability
+OLLAMA_HOST="${OLLAMA_HOST:-http://localhost:11434}"
+if curl -s "$OLLAMA_HOST/api/tags" > /dev/null 2>&1; then
+    echo "Ollama available at $OLLAMA_HOST" >> "$LOG"
+    # Use Ollama for basic tasks (test analysis, code review)
+else
+    echo "Ollama not available — tests only" >> "$LOG"
+fi
+
+# 4. Commit results
+cd "$TRITIUM_DIR"
+git add -A 2>/dev/null
+git commit -m "Offline iteration: test results $(date +%Y-%m-%d_%H:%M)" 2>/dev/null
+git push origin dev 2>/dev/null
+```
+
+### Cron Setup
+```bash
+# Add to crontab for continuous monitoring
+# */5 * * * * /home/scubasonar/Code/tritium/scripts/health-check.sh >> /tmp/tritium-health.log 2>&1
+# 0 */6 * * * /home/scubasonar/Code/tritium/scripts/offline-iteration.sh
+```
+
 ## Schedule
 - Run every 10th wave
 - Run whenever a new LAN host is discovered
 - Run after major milestones (every 10 waves)
+- Watchdog runs continuously via cron/systemd
 
 ## Rules
 - NEVER add Co-Authored-By
@@ -121,3 +273,5 @@ Maintain a file at `docs/REPLICATION.md` listing:
 - NEVER copy .env files, credentials, or private keys
 - DO copy: source code, tests, docs, configs (without secrets)
 - DO verify: each copy can at minimum import the app
+- DO build the monitoring scripts and commit them to git
+- DO set up cron/systemd for watchdog on primary host
