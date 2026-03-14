@@ -14,6 +14,31 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 54: Maintenance + RL Enhancements
+
+### tritium-sc
+- **LearnedStrategy wired as 5th correlator strategy** — TargetCorrelator._default_strategies() now includes LearnedStrategy alongside Spatial/Temporal/SignalPattern/Dossier (Unit Tested)
+- **Auto-retrain scheduler** — daemon thread retrains correlation model every 6h or after 50 new feedback entries (Unit Tested)
+- **Amy model accuracy awareness** — sensorium push on retrain: warns at <70% accuracy, celebrates improvement (Unit Tested)
+- **Correlator.add_strategy()** — runtime method to register additional strategies with custom weights (Unit Tested)
+- **Correlator weights rebalanced** — 5 strategies: spatial=0.35, temporal=0.18, signal_pattern=0.17, dossier=0.15, learned=0.15 (Unit Tested)
+
+### tritium-lib
+- **Intelligence exports expanded** — FEATURE_NAMES and DEFAULT_WEIGHTS now importable from tritium_lib.intelligence (Unit Tested)
+
+### Documentation
+- STATUS.md updated to Wave 54 (35+ intelligence capabilities, 5 correlation strategies)
+- Iteration queue: Waves 50-53 marked DONE, Wave 54 recorded
+- Intelligence directory redundancy analysis documented
+
+### Intelligence Directory Boundaries (Task B)
+- **tritium-lib/intelligence/scorer.py** — ABCs and implementations (CorrelationScorer, StaticScorer, LearnedScorer). Pure library code, no SC dependencies. Used as the scoring interface contract.
+- **tritium-sc/engine/intelligence/correlation_learner.py** — Training pipeline: loads data from TrainingStore, trains sklearn model, saves/loads pickle. Creates LearnedStrategy adapter for correlator. SC-specific (uses TrainingStore, accesses filesystem).
+- **tritium-sc/engine/intelligence/training_store.py** — SQLite-backed training data collection (correlation decisions, classification decisions, operator feedback). SC-specific runtime storage.
+- **Relationship**: Lib provides the scorer ABCs. SC's CorrelationLearner trains models and wraps them as LearnedScorer (from lib). TrainingStore is the data source. No overlap — clean layering.
+
+---
+
 ## 2026-03-14 — Wave 53: RL Integration + Ollama Intelligence
 
 ### Cross-Submodule Features

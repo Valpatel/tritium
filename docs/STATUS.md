@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (Wave 49 — pre-Wave 50 milestone snapshot).
+Current state of all components as of 2026-03-14 (Wave 54).
 
 ## Component Health
 
@@ -37,7 +37,7 @@ Current state of all components as of 2026-03-14 (Wave 49 — pre-Wave 50 milest
 | **API endpoints** | 418+ across 56+ router files |
 | **Edge HALs** | 44 hardware abstraction layers |
 | **Edge boards** | 6 Waveshare ESP32-S3 (3 HW-verified) |
-| **Intelligence capabilities** | 30+ operational |
+| **Intelligence capabilities** | 35+ operational |
 | **Lib model exports** | 250+ from 42+ model files |
 | **Test-to-code ratio** | ~1 test per 17 LOC |
 
@@ -219,6 +219,12 @@ Current state of all components as of 2026-03-14 (Wave 49 — pre-Wave 50 milest
 | Map annotations (text, arrow, circle, freehand, polygon) | Active |
 | Target watch list with movement alerts | Active |
 | Inter-plugin messaging bus | Active |
+| RL correlation learning (logistic regression from operator feedback) | Active |
+| Auto-retrain scheduler (6h interval, 50-entry threshold) | Active |
+| LearnedStrategy as 5th correlator strategy | Active |
+| Training data dashboard (model status, retrain trigger) | Active |
+| Ollama-powered anomaly description | Active |
+| Amy model accuracy awareness (narrates retrain results) | Active |
 
 ## Shared Library (tritium-lib)
 
@@ -323,15 +329,16 @@ Settings stored in `ConfigStore` (localStorage-backed). Wizard auto-opens when n
 
 ## Development Velocity
 
-49 waves completed across autonomous sessions:
-- **~252,000 lines of code** across 3 repos (Python + JS + C++)
-- **13,302 SC Python tests** collected
-- **1,471 tests** in tritium-lib (0 failures, 29 skipped)
+54 waves completed across autonomous sessions:
+- **~255,000 lines of code** across 3 repos (Python + JS + C++)
+- **13,400+ SC Python tests** collected
+- **1,471+ tests** in tritium-lib (0 failures)
 - **92 JS test suites** in tritium-sc (0 failures)
 - **58 floating panels** in the command center frontend (7 categories)
 - **44 HALs** in tritium-edge firmware
 - **14 plugins** active in tritium-sc
-- **418+ API endpoints** across 56+ router files
-- **30+ intelligence capabilities** operational
+- **420+ API endpoints** across 56+ router files
+- **35+ intelligence capabilities** operational
 - **250+ model exports** in tritium-lib
+- **5 correlation strategies** (spatial, temporal, signal_pattern, dossier, learned)
 - **3 submodules** coordinated with shared models and MQTT topics
