@@ -14,6 +14,30 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 26: WS Compression, Clustering, Event Schemas, RSSI History
+
+### Shared Library (tritium-lib)
+- Added `models/event_schema.py` — 41 typed event schemas across 17 domains (Unit Tested)
+- All EventBus event types now have dataclass schemas with descriptions
+- `validate_event_type()`, `get_event_schema()`, `list_event_types()` helpers
+- 1273 tests passing
+
+### Command Center (tritium-sc)
+- WebSocket TargetUpdateBatcher: deduplicates target updates by target_id, 5-10x bandwidth reduction (Unit Tested)
+- Target clustering: `GET /api/targets/clusters?zoom=N` — grid-based spatial grouping for map readability (Unit Tested)
+- Frontend TargetClusterer module: client-side clustering with zoom-adaptive cell sizes
+- Ontology schema endpoint: `GET /api/v1/ontology/schema` — full JSON export of entity types, actions, events (Unit Tested)
+- Map bookmark system: `GET/POST/PUT/DELETE /api/bookmarks` with frontend panel (Unit Tested)
+- 2319 Python tests passing, 92 JS test tiers passing
+
+### Edge Firmware (tritium-edge)
+- BLE RSSI history: circular buffer of 30 readings per device with trend analysis (Build Verified)
+- Trend detection: approaching/departing/stable (3dBm threshold)
+- New serial command: `BLE_RSSI AA:BB:CC:DD:EE:FF`
+- Fleet server: `GET /api/ble/devices/{mac}/rssi_history` endpoint
+
+---
+
 ## 2026-03-14 — Wave 25: Maintenance & Quality
 
 ### Shared Library (tritium-lib)
