@@ -1,4 +1,10 @@
-# Tritium — Distributed Cybernetic Operating System
+# Tritium — Unified Operating Picture for Robotics & Security
+
+## Mission
+
+**Track, identify, and engage every target** — cars, phones, watches, computers, people, animals — using all available technologies. Every detected entity gets a unique target ID. Fuse BLE, WiFi, camera vision, LoRa mesh, acoustic, RF, and any future sensor into a single unified operating picture on a real-world tactical map.
+
+This is an ATAK-like distributed cybernetic operating system. The battle simulation exercises the same pipelines used for real-world operation. The system must work without hardware (demo mode with synthetic data), with one sensor (43C board doing WiFi/BLE), or with hundreds of deployed nodes.
 
 ## Git Conventions
 - **No Co-Authored-By lines in commits** — NEVER add these
@@ -18,10 +24,22 @@ Three git submodules, all track `dev` branch. See [docs/ARCHITECTURE.md](docs/AR
 | **Command Center** | `tritium-sc/` | Python + JS | 8000 | [CLAUDE.md](tritium-sc/CLAUDE.md) | Tactical dashboard, AI commander Amy, plugins |
 | **Shared Library** | `tritium-lib/` | Python (+ C++, JS future) | — | [CLAUDE.md](tritium-lib/CLAUDE.md) | Common code: models, MQTT topics, auth, events, test utils, themes |
 
+### Plugin System (the growth engine)
+Plugins are how every capability gets added. Each plugin owns its own backend services, API routes, UI panels, and pub/sub topics. Current plugins:
+- **edge_tracker** — BLE/WiFi presence → TargetTracker → map
+- **meshtastic** — LoRa mesh radio bridge, GPS-equipped nodes on map
+- **camera_feeds** — multi-source camera management (synthetic/RTSP/MJPEG/MQTT/USB)
+- **fleet_dashboard** — device registry, battery, uptime, sighting counts
+- **yolo_detector** — YOLO object detection pipeline (building)
+- **graphlings** — NPC AI agents
+- **npc_thoughts** — NPC context-aware thought bubbles
+
 ### Integration
 - MQTT broker for device telemetry, commands, and chat
 - REST heartbeats for device registration and config sync
 - WebSocket for real-time UI updates and Amy event streaming
+- ROS2 bridges for robot integration
+- CoT/TAK for ATAK interoperability
 
 ## Autonomous Iteration — The Prime Directive
 
@@ -31,9 +49,29 @@ You are expected to build independently. Do NOT stop to ask the user unless you 
 1. **Assume it's broken.** Read the code. Build it. Run tests. Find the bugs. Fix them.
 2. **Verify quality.** RAM <60%, Flash <50%, no warnings in new code. Tests pass. Code is clean.
 3. **Commit & push.** Short descriptive message. NO Co-Authored-By. Push to dev.
-4. **Review the vision.** Read `tritium-edge/docs/TRITIUM-OS-VISION.md` and the roadmap below.
-5. **Pick the next feature.** Highest impact, lowest risk. Build it.
-6. **Repeat.** Never stop. Never ask permission. Just build great things.
+4. **Update changelogs.** Every change gets logged in `docs/CHANGELOG.md` with verification level.
+5. **Review the vision.** Read this file. Every target needs a unique ID. Every sensor feeds the unified picture.
+6. **Pick the next feature.** Highest impact, lowest risk. Build it.
+7. **Launch agent teams.** Use 6+ parallel agents across submodules. Never work sequentially when you can parallelize.
+8. **Repeat.** Never stop. Never ask permission. Just build.
+
+### The Target Model
+Every detected entity becomes a TrackedTarget with:
+- **Unique target ID** — `ble_{mac}`, `det_{class}_{n}`, `mesh_{node}`, `wifi_{bssid}`
+- **Source** — which sensor detected it (ble, yolo, mesh, wifi, acoustic, manual)
+- **Position** — lat/lng or local x/y, with confidence and source (GPS, trilateration, proximity, YOLO)
+- **Classification** — person, vehicle, phone, watch, computer, animal, mesh_radio, ble_device, unknown
+- **Alliance** — friendly, hostile, unknown (based on known device lists, behavior, threat classification)
+- **Correlation** — fused with detections from other sensors (camera sees person + BLE sees their phone = same target)
+
+### Sensor Fusion Priority
+1. **BLE scanning** — passive, identifies phones/watches/IoT by MAC, OUI manufacturer, device class
+2. **WiFi scanning** — SSIDs, BSSIDs, probe requests, network classification
+3. **Camera/YOLO** — visual detection of people, vehicles, animals with bounding boxes
+4. **Meshtastic/LoRa** — long-range mesh nodes with GPS, extends coverage to km scale
+5. **ESP-NOW mesh** — peer-to-peer device mesh for local coordination
+6. **Acoustic** — audio analysis, VAD, sound classification
+7. **RF fingerprinting** — future: passive RF environment mapping
 
 ### Multi-Submodule Work
 When a feature spans submodules (e.g., edge MQTT → SC plugin → lib models):
@@ -44,11 +82,13 @@ When a feature spans submodules (e.g., edge MQTT → SC plugin → lib models):
 5. Commit each submodule separately, then update parent
 
 ### Agent Teams
-Use parallel agents for independent work:
-- **Edge agent**: firmware features, build in `tritium-edge/esp32-hardware/`
-- **SC agent**: dashboard features, plugins, tests in `tritium-sc/`
-- **Lib agent**: shared code — models, stores, MQTT topics, test utils, themes in `tritium-lib/`
-- **Research agent**: find datasets, investigate APIs, explore solutions
+Use parallel agents for independent work — always launch 6+ agents:
+- **Edge agent**: firmware features, HALs, sensor drivers in `tritium-edge/`
+- **SC plugin agents**: one per plugin being built/improved in `tritium-sc/`
+- **SC frontend agent**: map rendering, panels, UI in `tritium-sc/src/frontend/`
+- **Lib agent**: shared models, MQTT topics, stores in `tritium-lib/`
+- **Test agent**: run tests, fix failures, expand coverage
+- **Research agent**: investigate APIs, find datasets, explore solutions
 
 ## Build & Test Commands
 
@@ -72,54 +112,62 @@ cd tritium-lib
 pytest tests/                       # Python tests
 ```
 
-### All together
+### Demo mode
 ```bash
-./start.sh                          # Edge (:8080) + SC (:8000)
+cd tritium-sc && ./start.sh
+# Then: POST http://localhost:8000/api/demo/start
+# Synthetic BLE/Meshtastic/camera data flows through full pipeline
 ```
 
-## Feature Roadmap — What To Build Next
+## Feature Roadmap
 
-### Completed
+### Completed (Waves 1-5)
 1. SQLite sighting logger
 2. P2P mesh chat (ESP-NOW)
 3. MQTT SC bridge (heartbeat, sighting, chat, commands)
 4. Terminal app (on-device + web)
-5. OUI/MAC manufacturer lookup (IEEE CSV → SQLite on SD, LRU cache)
-6. BLE device type classifier (15 types, name+OUI+heuristics)
+5. OUI/MAC manufacturer lookup
+6. BLE device type classifier (15 types)
 7. Mesh chat → MQTT bridge
 8. Sighting/BLE stats in MQTT heartbeat
-9. GIS/map tile viewer (MBTiles on SD, LVGL canvas, pan/zoom)
-10. Power management (auto-profiles, dim/off/sleep, battery status)
-11. Lock screen (PIN entry, lockout protection)
-12. WebSocket support (ws_bridge.cpp)
-13. Web settings page (/settings)
-14. Event-driven toasts (WiFi, mesh, power events)
+9. GIS/map tile viewer (MBTiles on SD)
+10. Power management (auto-profiles)
+11. Lock screen (PIN entry)
+12. WebSocket support
+13. Web settings page
+14. Event-driven toasts
+15. Meshtastic plugin (LoRa bridge, GPS tracking, send/waypoint)
+16. Camera feeds plugin (multi-source: synthetic/RTSP/MJPEG/MQTT/USB)
+17. BLE → TargetTracker → tactical map (RSSI confidence, trilateration)
+18. Mesh radio rendering on tactical map
+19. Asset placement panel (drag cameras/sensors onto map)
+20. Fleet dashboard plugin (device registry, battery, sighting counts)
+21. Synthetic data generators (BLE, Meshtastic, camera)
+22. Demo mode (full pipeline exercise with synthetic data)
+23. WebSocket broadcast for BLE/mesh targets
+24. Camera feed panel (live MJPEG grid)
+25. YOLO detector plugin (modular detection pipeline)
+26. Target correlator (fuse camera + BLE into unified targets)
+27. BLE threat classifier (known/unknown/new/suspicious)
+28. Amy sensorium BLE/mesh awareness
+29. WiFi SSID classifier (corporate/hotspot/IoT/mesh)
+30. MQTT sighting subscription in edge tracker
+31. ROS2 camera node example
 
-### Next Up (priority order)
-15. **Meshtastic BLE bridge** — connect to Meshtastic radios via BLE, bridge their mesh to Tritium mesh and MQTT. This extends range massively via LoRa.
-16. **Camera → MQTT pipeline** — JPEG frames from ESP32 camera to SC for YOLO object detection. Wire into Amy's perception system.
-17. **Voice control** — wake word detection + audio streaming via MQTT to SC's whisper.cpp pipeline.
-18. **Sensor dashboard app** — IMU/audio/temperature live plots on LVGL
-19. **Tritium Package Manager (TPM)** — dynamic app loading from SD card
-20. **Automation engine** — if-then rules for autonomous device behavior
-
-### SD Card Datasets (expand intelligence)
-- **IEEE OUI database** ✅ DONE — 39K manufacturer entries in SQLite
-- **California map tiles** ✅ DONE — MBTiles for offline GIS
-- **BLE device fingerprints** ✅ DONE — 15 device types classified
-- **WiFi SSID patterns** — known network types (corporate, IoT, mobile hotspot)
-- **RF frequency databases** — for LoRa/Meshtastic channel identification
-- **Geolocation databases** — WiFi BSSID → approximate location
-
-### SC Integration Points
-- Edge publishes to `tritium/{device_id}/status|heartbeat|sighting|chat`
-- SC subscribes and displays in fleet tracker plugin
-- SC sends commands via `tritium/{device_id}/cmd`
-- Camera frames → `tritium/{device_id}/camera` → YOLO pipeline
-- Amy can dispatch commands to edge devices autonomously
+### Next Up
+32. **WiFi probe request tracking** — passive fingerprinting of nearby devices
+33. **Multi-node trilateration** — real position estimation from 3+ BLE nodes
+34. **Geofencing alerts** — define zones, alert when targets enter/exit
+35. **Target history/trails** — track movement over time, show paths on map
+36. **Acoustic classification plugin** — gunshot/voice/vehicle/animal sound detection
+37. **RF environment mapping** — passive spectrum analysis
+38. **TAK/CoT bridge plugin** — interop with ATAK/WinTAK devices
+39. **Video recording/playback** — store and review camera footage
+40. **Multi-site federation** — connect multiple Tritium installations
 
 ## Known Blockers
-- **NimBLE esp_bt.h not found** — BLE scanner runs stubs, WiFi/mesh alternatives work fine. This blocks Meshtastic BLE bridge. Investigate ESP-IDF 5.5.2 NimBLE component configuration.
+- **NimBLE esp_bt.h not found** — BLE scanner runs stubs, WiFi/mesh alternatives work fine
+- **BLE/WiFi coexistence** — can't run BLE scanner alongside WiFi on ESP32-S3
 
 ## Style & Conventions
 - No frontend frameworks — vanilla JavaScript only
@@ -127,3 +175,4 @@ pytest tests/                       # Python tests
 - Background: void #0a0a0f, surfaces #0e0e14/#12121a/#1a1a2e
 - C++17 for firmware, Python 3.12+ for servers, vanilla JS for frontend
 - 4-space indentation everywhere
+- Changelogs in every repo at `docs/CHANGELOG.md` with verification levels
