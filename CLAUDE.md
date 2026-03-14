@@ -54,7 +54,7 @@ Use parallel agents for independent work:
 
 ### tritium-edge (firmware)
 ```bash
-cd tritium-edge/esp32-hardware
+cd tritium-edge
 pio run -e touch-lcd-43c-box-os    # Build (this IS the test)
 # RAM <60%, Flash <50% = PASS
 ```
