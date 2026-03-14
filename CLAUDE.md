@@ -68,6 +68,7 @@ You are expected to build independently. Do NOT stop to ask the user unless you 
   - **1 tritium-sc frontend agent** — panels, map rendering, 3D visualization, UX
   - **1 tritium-lib agent** — extract shared code from SC/edge, add models, stores
   - **1 test-runner** (delayed 15min) — validates, updates changelogs, MUST auto-launch next wave
+- **RESOURCE SAFETY**: Feature agents run TARGETED tests only (their specific test files, not full suite). Only the test-runner runs `./test.sh fast`. Never run multiple full test suites concurrently — this will OOM the system. Check `free -m` before heavy operations.
 - **BROAD SCOPE**: Don't only build new features. Also:
   - Complete the stack for existing features (backend-only → add frontend + edge)
   - Audit previous waves: can a user SEE this in the browser? Does data flow edge→SC→browser?
