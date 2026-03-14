@@ -2,6 +2,45 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 79 (2026-03-14): Acoustic Intelligence Pipeline
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| New `models/acoustic_intelligence.py` — SoundSignature, AudioFeatureVector, SoundClassification, AcousticObserver, AcousticTrilateration models | 16 tests passing |
+| `acoustic_trilaterate()` — TDoA sound source localization from multi-node observations | Unit tested |
+| All new models exported from `tritium_lib.models` | Import verified |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| ML-based sound classification via MFCC KNN classifier (31 training samples, 11 classes) | Tested — all classes correctly identified |
+| Built-in training dataset for gunshot, voice, vehicle, siren, glass_break, explosion, animal, machinery, music, footsteps, alarm | Verified |
+| Dual-mode classifier: ML (when MFCCs available) + rule-based fallback | Backward compatible, 11 existing tests pass |
+| Acoustic event timeline endpoint: GET /api/acoustic/timeline | Code reviewed |
+| Sound source localization: multi-node TDoA via /api/acoustic/localize | Code reviewed |
+| Sensor registration: POST /api/acoustic/sensors/register | Code reviewed |
+| Localization results endpoint: GET /api/acoustic/localizations | Code reviewed |
+| Plugin upgraded to v2.0.0 with ML stats tracking | Code reviewed |
+| New frontend panel: acoustic-intelligence.js (timeline, localization, counts tabs) | Code reviewed |
+
+### tritium-edge
+| Change | Verification |
+|--------|-------------|
+| hal_acoustic MFCC extraction — 13 coefficients via mel filter bank + DCT-II | Build verified (49.6% RAM, 29.2% Flash) |
+| Spectral centroid, bandwidth, rolloff, flatness computation | Build verified |
+| Zero-crossing rate from PCM samples | Build verified |
+| `AudioFeatureVector` struct for publishing features to MQTT | Build verified |
+| `get_features_json()` — compact JSON for MQTT feature publishing | Build verified |
+| `set_features_callback()` for automatic feature publishing | Build verified |
+
+### Test Baselines (Wave 79)
+| Suite | Count |
+|-------|-------|
+| tritium-lib pytest | 1,867 passed |
+| tritium-sc acoustic tests | 11 passed |
+| tritium-edge build | RAM 49.6%, Flash 29.2% |
+
 ## Wave 78 (2026-03-14): Maintenance — Plugin Discovery, Docs, Test Baselines, Wave Planning
 
 ### tritium-sc
