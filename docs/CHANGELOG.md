@@ -14,6 +14,31 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 21: Deep Sensing & Recognition
+
+### Shared Library
+- LPR models: `PlateDetection`, `PlateWatchlist`, `PlateRecord`, `PlateWatchEntry`, `LPRStats`
+- Acoustic event models: `AcousticEvent`, `AcousticSpectrum`, `AcousticSensorConfig`, `classify_event_severity`
+- 29 new tests (13 LPR + 16 acoustic event)
+
+### Command Center (SC)
+- LPR plugin at `/api/lpr/` with detect, search, watchlist CRUD, stats
+- AIS/ADS-B transponder plugin at `/api/transponders/` with ADS-B flights, AIS vessels,
+  emergency squawk detection, combined stats
+- 18 new tests (8 LPR + 10 transponders)
+
+### Edge Firmware
+- Acoustic HAL: rule-based sound classifier, event counting, MQTT event callback
+- Configurable confidence threshold for event publishing
+- BUILD SUCCESS — 47.9% RAM, 29.0% Flash
+
+**Verification:**
+- tritium-lib: 29/29 new tests pass (1214 total)
+- tritium-sc: 18/18 new tests pass, 96 tiers all clear
+- tritium-edge: 47.9% RAM, 29.0% Flash
+
+---
+
 ## 2026-03-14 — Wave 20 Validation (Test Runner)
 
 ### Test Baselines
