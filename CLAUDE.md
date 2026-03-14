@@ -104,6 +104,18 @@ Every 5th wave, dedicate 2 agents to adversarial review:
 - Try demo mode end-to-end: does it actually show fusion on a map?
 - Try every frontend panel: do they load? Do they show data? Or are they just empty shells?
 
+### Local LLMs & Reinforcement Learning
+The system must eventually self-improve WITHOUT Claude. Use small local models (Ollama, 4GB) throughout:
+- **Amy's cognition**: already uses Ollama — enhance with RL on dispatch outcomes
+- **Target correlation**: train a scoring model on historical outcomes (features: distance, RSSI, co-movement → same/different entity)
+- **BLE classification**: fine-tune a small classifier on labeled advertisement data
+- **Visual testing**: llava:7b verifies panels render correctly (screenshot → "does this look right?")
+- **Anomaly detection**: unsupervised autoencoder on "normal" RF baseline — deviations = alerts
+- **Report generation**: small LLM generates natural-language SITREPs from structured data
+- **NEVER hardcode IPs/hostnames** — use env vars or OllamaFleet discovery (already built in `src/engine/inference/fleet.py`)
+- **Log every decision** with context for training — operator confirm/reject = training signal
+- **Graceful degradation** — if no Ollama available, fall back to rules. LLM enhances, never required.
+
 ### How to Continue Autonomously
 - Read `memory/project_iteration_queue.md` for the wave roadmap
 - Find the first incomplete wave
