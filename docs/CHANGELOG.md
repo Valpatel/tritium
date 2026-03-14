@@ -14,6 +14,26 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 18: Advanced Sensing
+
+### Command Center (SC)
+- Acoustic classification plugin (`engine/audio/acoustic_classifier.py`)
+  with rule-based classifier: gunshot, voice, vehicle, siren, glass_break, alarm, explosion
+- Acoustic API at `/api/acoustic/` with classify, events, and stats endpoints
+- Video recording API at `/api/recordings/` with start, stop, list, delete, status
+- Routers wired into main app
+
+### Shared Library
+- Drone/UAV models: `DroneState`, `DroneTelemetry`, `DroneCommand`, `DroneMission`,
+  `Waypoint`, `DroneRegistration`, `DroneType`
+- MQTT topic design for drone integration
+
+**Verification:**
+- 11/11 acoustic classifier tests pass
+- 11/11 drone model tests pass
+
+---
+
 ## 2026-03-14 — Wave 17: Production Hardening
 
 ### Command Center (SC)
