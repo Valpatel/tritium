@@ -14,6 +14,20 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 55: Skepticism + System Inventory + RL E2E
+
+### tritium-sc
+- **Server verified working** — 463 routes, demo mode produces 10 targets in 3s (Human Verified)
+- **GET /api/system/inventory** — complete system inventory endpoint: panels, routers, tests, models, fleet, intelligence, tracker (Unit Tested)
+- **RL pipeline E2E test** — 10 tests exercising full lifecycle: training data -> retrain -> predict -> verify learned patterns (Unit Tested)
+- **Missing routers registered** — layouts and playback routers were never included in main.py, now wired (Code Verified)
+- **Skepticism audit** — 64 panel files (60 PanelDefs + 4 utilities), 66 router files (all registered), no real mismatches
+
+### tritium-lib
+- **1537 tests passing**, 29 skipped, 0 failures (Unit Tested)
+
+---
+
 ## 2026-03-14 — Wave 54: Maintenance + RL Enhancements
 
 ### tritium-sc
