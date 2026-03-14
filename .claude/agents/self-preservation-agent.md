@@ -207,6 +207,159 @@ echo "Claude: $(pgrep -f claude > /dev/null && echo 'RUNNING' || echo 'NOT RUNNI
 echo "SC server: $(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/api/health 2>/dev/null || echo 'NOT RUNNING')"
 ```
 
+### Ollama Health & Recovery
+
+Ollama can get stuck, crash, or run out of memory. The watchdog must monitor and recover it.
+
+**Ollama health check** (`scripts/ollama-health.sh`):
+```bash
+#!/bin/bash
+# Check if Ollama is responding, restart if stuck
+
+OLLAMA_HOST="${OLLAMA_HOST:-http://localhost:11434}"
+MAX_RETRIES=3
+RETRY_DELAY=5
+
+check_ollama() {
+    timeout 10 curl -s "$OLLAMA_HOST/api/tags" > /dev/null 2>&1
+}
+
+# Quick health check
+if check_ollama; then
+    exit 0  # Healthy
+fi
+
+echo "$(date): Ollama not responding at $OLLAMA_HOST" >> /tmp/tritium-ollama.log
+
+# Try a few times before restarting
+for i in $(seq 1 $MAX_RETRIES); do
+    sleep $RETRY_DELAY
+    if check_ollama; then
+        echo "$(date): Ollama recovered on retry $i" >> /tmp/tritium-ollama.log
+        exit 0
+    fi
+done
+
+# Still stuck — restart service
+echo "$(date): Restarting Ollama service" >> /tmp/tritium-ollama.log
+systemctl restart ollama 2>/dev/null || sudo systemctl restart ollama 2>/dev/null
+
+# Wait for restart
+sleep 10
+if check_ollama; then
+    echo "$(date): Ollama recovered after restart" >> /tmp/tritium-ollama.log
+else
+    echo "$(date): Ollama FAILED to restart — running without LLM" >> /tmp/tritium-ollama.log
+fi
+```
+
+**Model auto-selection** — pick models that fit available RAM:
+```bash
+#!/bin/bash
+# Auto-select Ollama model based on available memory
+
+MEM_FREE_MB=$(free -m | awk '/Mem:/ {print $7}')
+OLLAMA_HOST="${OLLAMA_HOST:-http://localhost:11434}"
+
+if [ "$MEM_FREE_MB" -gt 16000 ]; then
+    # 16GB+ free — use larger models
+    MODEL="qwen2.5:7b"
+    VISION_MODEL="llava:7b"
+elif [ "$MEM_FREE_MB" -gt 8000 ]; then
+    # 8-16GB free — medium models
+    MODEL="qwen2.5:3b"
+    VISION_MODEL="llava:7b"
+elif [ "$MEM_FREE_MB" -gt 4000 ]; then
+    # 4-8GB free — small models
+    MODEL="qwen2.5:1.5b"
+    VISION_MODEL="moondream:1.8b"
+elif [ "$MEM_FREE_MB" -gt 2000 ]; then
+    # 2-4GB free — tiny models
+    MODEL="qwen2.5:0.5b"
+    VISION_MODEL=""  # No vision model, too little RAM
+else
+    # <2GB free — no models, gracefully degrade
+    MODEL=""
+    VISION_MODEL=""
+    echo "$(date): Not enough memory for any Ollama model (${MEM_FREE_MB}MB free)" >> /tmp/tritium-ollama.log
+    exit 1
+fi
+
+echo "$MODEL"  # Caller reads stdout for model name
+```
+
+**Stuck model recovery** — if a model inference hangs:
+```bash
+# Check if Ollama has a stuck generation (>5 min for a simple query)
+OLLAMA_PID=$(pgrep -f "ollama serve" | head -1)
+if [ -n "$OLLAMA_PID" ]; then
+    # Check CPU usage — stuck model often shows 100% CPU for extended periods
+    CPU=$(ps -p $OLLAMA_PID -o %cpu= | awk '{print int($1)}')
+    UPTIME_MIN=$(ps -p $OLLAMA_PID -o etimes= | awk '{print int($1/60)}')
+
+    if [ "$CPU" -gt 95 ] && [ "$UPTIME_MIN" -gt 5 ]; then
+        echo "$(date): Ollama appears stuck (CPU ${CPU}% for ${UPTIME_MIN}min) — restarting" >> /tmp/tritium-ollama.log
+        systemctl restart ollama 2>/dev/null
+    fi
+fi
+```
+
+**Resource-aware model unloading** — free memory when needed:
+```bash
+# If system is under memory pressure, unload models from Ollama
+MEM_FREE_MB=$(free -m | awk '/Mem:/ {print $7}')
+if [ "$MEM_FREE_MB" -lt 3000 ]; then
+    echo "$(date): Low memory (${MEM_FREE_MB}MB) — requesting Ollama model unload" >> /tmp/tritium-ollama.log
+    # Ollama auto-unloads after keepalive timeout, but we can force it
+    # by setting keepalive to 0 on next request
+    curl -s "$OLLAMA_HOST/api/generate" -d '{"model":"'$MODEL'","keep_alive":0}' > /dev/null 2>&1
+fi
+```
+
+**Last-resort service management** — only when system is critically low:
+```bash
+# ONLY as last resort — kill non-essential services to free resources
+# Be polite: check multiple times, log everything, restart what was killed later
+
+MEM_FREE_MB=$(free -m | awk '/Mem:/ {print $7}')
+if [ "$MEM_FREE_MB" -lt 1000 ]; then
+    echo "$(date): CRITICAL — only ${MEM_FREE_MB}MB free. Evaluating non-essential services." >> /tmp/tritium-ollama.log
+
+    # Priority order for stopping (least important first):
+    # 1. Grafana (monitoring dashboard — nice to have, not critical)
+    # 2. InfluxDB (metrics storage — can restart later)
+    # 3. Telegraf (metrics collection — can restart later)
+    # 4. Ollama models (unload all loaded models)
+    # DO NOT TOUCH: mosquitto (MQTT), tritium-sc (core), SSH
+
+    # Only stop services we can safely restart
+    for svc in grafana-server influxdb telegraf; do
+        if systemctl is-active --quiet $svc 2>/dev/null; then
+            echo "$(date): Stopping $svc to free memory" >> /tmp/tritium-ollama.log
+            systemctl stop $svc 2>/dev/null
+            # Record what we stopped so we can restart later
+            echo "$svc" >> /tmp/tritium-stopped-services.txt
+        fi
+    done
+
+    # After freeing memory, check if we recovered
+    MEM_FREE_AFTER=$(free -m | awk '/Mem:/ {print $7}')
+    echo "$(date): After service stops: ${MEM_FREE_AFTER}MB free" >> /tmp/tritium-ollama.log
+fi
+
+# Restart stopped services when memory recovers
+if [ -f /tmp/tritium-stopped-services.txt ]; then
+    MEM_FREE_MB=$(free -m | awk '/Mem:/ {print $7}')
+    if [ "$MEM_FREE_MB" -gt 8000 ]; then
+        while read svc; do
+            systemctl start $svc 2>/dev/null
+            echo "$(date): Restarted $svc (memory recovered)" >> /tmp/tritium-ollama.log
+        done < /tmp/tritium-stopped-services.txt
+        rm /tmp/tritium-stopped-services.txt
+    fi
+fi
+```
+
 ### Offline Fallback
 When Claude API is unavailable, the system should still:
 1. Run tests and record results
