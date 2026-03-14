@@ -14,6 +14,15 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 20 Validation (Test Runner)
+
+### Test Baselines
+- tritium-lib: 1185 passed, 29 skipped, 31 warnings
+- tritium-sc: 96 tiers passed, 0 failed (390s)
+- tritium-edge: BUILD SUCCESS — 47.9% RAM, 29.0% Flash
+
+---
+
 ## 2026-03-14 — Wave 20: Maintenance & Cleanup
 
 ### Command Center (SC)
