@@ -14,98 +14,175 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
-## 2026-03-13 — Session 1: Architecture & Documentation
+## 2026-03-13 — 10 Waves of Autonomous Development
 
-### Parent Repo
-| Change | Verification |
-|--------|-------------|
-| `.claude/settings.json` — workspace permissions | N/A (config) |
-| `.claude/commands/focus-{edge,sc,lib}.md` — context switching | N/A (docs) |
-| `docs/ARCHITECTURE.md` — system diagram, component map, data flow | N/A (docs) |
-| `docs/STATUS.md` — current state of all components | N/A (docs) |
-| `CLAUDE.md` — updated with component map table | N/A (docs) |
-| `LICENSE` — AGPL-3.0 added | N/A (legal) |
+### Summary
 
-### tritium-edge
-| Change | Verification |
-|--------|-------------|
-| `docs/README.md` — full 24-document index | N/A (docs) |
-| `LICENSE` — AGPL-3.0 added | N/A (legal) |
-| WiFi network priority reordering (`wifi_manager.cpp`, `shell_apps.cpp`) | Build Verified |
-| MQTT SC bridge (`mqtt_sc_bridge.cpp/h`) — heartbeat/sighting/cmd topics | Build Verified |
-| `mqtt_ai_bridge.cpp` — stub when hal_audio unavailable | Build Verified |
-| `CLAUDE.md` — fixed build path | N/A (docs) |
-
-### tritium-sc
-| Change | Verification |
-|--------|-------------|
-| Subsystem READMEs (engine, amy, app, frontend, tests, plugins, examples) | N/A (docs) |
-| `docs/README.md` — updated with navigation and cross-project links | N/A (docs) |
-| `LICENSE` — AGPL-3.0 added | N/A (legal) |
-| `TargetTracker.update_from_ble()` — BLE devices as tracked targets | Unit Tested |
-| EdgeTrackerPlugin → TargetTracker BLE push | Unit Tested |
-| Meshtastic plugin (`plugins/meshtastic/`) — LoRa bridge | Unit Tested |
-| Meshtastic route tests | Unit Tested |
-| `geo.py` latlng_to_local tuple unpacking fix | Unit Tested |
-| BLE device rendering on tactical map (war-combat.js) | Integration Tested |
-| Mesh radio rendering on tactical map | Integration Tested |
-| BLE + mesh rendering in command map (map.js, unit-icons.js) | Integration Tested |
-| Camera feeds plugin (`plugins/camera_feeds/`) — multi-source | Unit Tested |
-| Asset placement panel (`panels/assets.js`) | Integration Tested |
-| ROS2 camera node example (`examples/ros2-camera/`) | Unit Tested |
-
-### tritium-lib
-| Change | Verification |
-|--------|-------------|
-| `CLAUDE.md` — submodule context (was missing) | N/A (docs) |
-| `src/tritium_lib/README.md` — package reference | N/A (docs) |
-| `LICENSE` — AGPL-3.0 added | N/A (legal) |
-| Lazy imports in `testing/__init__.py` | Unit Tested |
-| `[testing]` optional dep group in pyproject.toml | Unit Tested |
-| Meshtastic models (Node, Message, Waypoint, Status) | Unit Tested |
-| Camera models (Source, Frame, Detection, BoundingBox) | Unit Tested |
-| MQTT topic constants for Meshtastic + camera feeds | Unit Tested |
+Ten waves of autonomous development transformed Tritium from a firmware OS with basic MQTT bridging into a full-spectrum cybernetic intelligence platform. The system now features multi-sensor fusion, graph-based entity ontology, autonomous threat response, and a comprehensive plugin architecture spanning three coordinated submodules.
 
 ---
 
-## 2026-03-13 — Session 2: Wave 4 — Full Pipeline & Fleet Dashboard
+### Wave 1-2: Infrastructure & Core Plugins
 
-### tritium-sc
-| Change | Verification |
-|--------|-------------|
-| Synthetic data generators (BLE, Meshtastic, camera pipeline) | Integration Tested |
-| WebSocket broadcast for BLE and mesh targets via `/ws/live` | Integration Tested |
-| Live camera feeds panel (MJPEG grid, status indicators, detection overlay) | Integration Tested |
-| Fleet dashboard plugin (`plugins/fleet_dashboard/`) with device registry and REST API | Integration Tested |
-| Demo mode exercising full pipeline with synthetic data | Integration Tested |
+**Focus:** Documentation, licensing, core plugin architecture, tactical map rendering.
+
+#### Parent Repo
+- AGPL-3.0 licensing across all submodules
+- `docs/ARCHITECTURE.md` — system diagram, component map, data flow
+- `docs/STATUS.md` — component health dashboard
+- `.claude/` workspace configuration and context-switching commands
+
+#### tritium-edge
+- WiFi network priority reordering
+- MQTT SC bridge (`mqtt_sc_bridge.cpp/h`) — heartbeat, sighting, command topics
+- MQTT AI bridge stub for future audio pipeline
+
+#### tritium-sc
+- Meshtastic LoRa mesh bridge plugin (serial/TCP, GPS, waypoints)
+- Camera feeds plugin (synthetic/RTSP/MJPEG/MQTT/USB sources)
+- EdgeTrackerPlugin BLE-to-TargetTracker integration
+- BLE + mesh radio rendering on tactical map (cyan dots, green radio arcs)
+- Asset placement panel (camera, sensor, mesh_radio, gateway types)
+- ROS2 camera node example with MQTT detection pipeline
+
+#### tritium-lib
+- Meshtastic models (Node, Message, Waypoint, Status)
+- Camera models (Source, Frame, Detection, BoundingBox)
+- MQTT topic constants for Meshtastic + camera feeds
+- Lazy imports for optional testing dependencies
+
+**Verification:** Unit Tested + Integration Tested
 
 ---
 
-## 2026-03-13 — Session 3: Wave 5 — Perception and Intelligence
+### Wave 3-4: Pipeline Integration & Fleet Dashboard
 
-### tritium-sc
-| Change | Verification |
-|--------|-------------|
-| Target correlation engine for multi-sensor fusion (`tactical/correlator.py`) | Integration Tested |
-| BLE device threat classification (known/unknown/new/suspicious levels) | Integration Tested |
-| Fix test_mode_selector: add `edge_sensors` format key to thinking prompt tests | Integration Tested |
+**Focus:** End-to-end data flow, synthetic testing, fleet management.
 
-### Validation Results
-| Suite | Count | Status |
-|-------|-------|--------|
-| tritium-lib pytest | 833 passed | All passing |
-| tritium-sc fast (tiers 1-3+8+8b) | 81 tiers, 7812+ tests | All passing |
-| tritium-edge build | 45.9% RAM, 28.8% Flash | 0 warnings |
+#### tritium-sc
+- MQTT camera integration wired through MQTTBridge
+- MQTT edge sighting subscription for `tritium/+/sighting`
+- Synthetic data generators (BLE, Meshtastic, camera pipeline)
+- WebSocket broadcast for BLE and mesh targets via `/ws/live`
+- Live camera feeds panel (MJPEG grid, status indicators, detection overlay)
+- Fleet dashboard plugin with device registry and REST API
+- Demo mode exercising full pipeline with synthetic data
+
+**Verification:** Integration Tested (81 tiers passing)
 
 ---
 
-## Test Baseline
+### Wave 5-6: Perception & Tracking
 
-| Suite | Count | Status | Date |
-|-------|-------|--------|------|
-| tritium-lib pytest | 833 | All passing | 2026-03-13 |
-| tritium-sc fast (tiers 1-3+8) | 81 tiers | All passing | 2026-03-13 |
-| tritium-edge build | 45.9% RAM, 28.8% Flash | 0 warnings | 2026-03-13 |
+**Focus:** Multi-sensor correlation, threat classification, geofencing, search.
+
+#### tritium-sc
+- Target correlation engine for multi-sensor fusion (BLE + camera + mesh)
+- BLE device threat classification (known/unknown/new/suspicious levels)
+- YOLO detector plugin with modular inference pipeline
+- Target position history and movement trail rendering
+- Target search and filter API with command panel
+- Geofencing engine with zone management, enter/exit alerts, and map panel
+
+**Verification:** Integration Tested
+
+---
+
+### Wave 7: Data Providers, Dossiers & Enrichment
+
+**Focus:** Modular data architecture, persistent entity intelligence, GIS layers.
+
+#### tritium-sc
+- DataProviderPlugin interface and LayerRegistry for modular data sources
+- Target enrichment pipeline (OUI, WiFi, BLE provider chaining)
+- GIS layers plugin (OSM, satellite, building, terrain providers)
+- Target Dossier panel and API for persistent entity intelligence
+
+#### tritium-lib
+- Target Dossier model for persistent entity intelligence
+- SQLite-backed DossierStore for target intelligence persistence
+
+**Verification:** Integration Tested + Unit Tested
+
+---
+
+### Wave 8: Smart Correlation, TAK Bridge & Fusion Demo
+
+**Focus:** Identity resolution, military interoperability, multi-sensor showcase.
+
+#### tritium-sc
+- Smart correlator with pluggable strategy pattern:
+  - SpatialStrategy (distance-based proximity scoring)
+  - TemporalStrategy (co-movement detection from position history)
+  - SignalPatternStrategy (appearance/disappearance timing)
+  - DossierStrategy (known prior associations)
+  - Weighted multi-strategy fusion engine
+- DossierManager bridging TargetTracker (real-time) and DossierStore (persistent)
+- TAK/CoT bridge plugin for ATAK interoperability (geochat, spot reports, video feeds)
+- Multi-sensor fusion demo scenario (person patrol, vehicle road path, geofence intrusion)
+
+**Verification:** Integration Tested
+
+---
+
+### Wave 9: Graph Ontology & Investigations
+
+**Focus:** Knowledge graph, entity relationships, investigation workflows.
+
+#### tritium-sc
+- Graph Explorer panel with force-directed entity relationship visualization
+- Ontology REST API (`/api/ontology/entities`, links, actions)
+- Investigation workflow engine (create, add leads, analyze, resolve)
+- Automation engine plugin with if-then rules and action executors
+- Amy autonomous dispatch (threat response, asset selection, fusion narration)
+- Target timeline API and panel with chronological event view
+- Patrol pattern system with waypoint routes
+- Correlator-to-graph integration (CARRIES/DETECTED_WITH edges)
+
+#### tritium-lib
+- KuzuDB embedded graph database for ontology layer
+- Formal ontology schema: 10 entity types, 12 relationships, 3 interfaces
+- DossierStore `_update_json_field` helper for atomic updates
+
+**Verification:** Integration Tested + Unit Tested
+
+---
+
+### Wave 10: Autonomy & Instinct Layer
+
+**Focus:** Autonomous threat response, Sense-Decide-Act pipeline.
+
+#### tritium-sc
+- Amy instinct layer: automatic threat response rules
+- Full Sense-Decide-Act pipeline integration test
+- Correlator graph store integration tests
+
+**Verification:** Integration Tested
+
+---
+
+### tritium-edge (across all waves)
+
+| Change | Verification |
+|--------|-------------|
+| Remote control click API | Build Verified |
+| Screensaver dismiss fix for remote API | Build Verified |
+| Developer settings tab with FreeRTOS tasks, I2C scan | Build Verified |
+| Notification shade with quick settings and dismiss | Build Verified |
+| NTP diagnostics provider fix | Build Verified |
+| WiFi network priority reordering | Build Verified |
+| MQTT SC bridge (heartbeat/sighting/cmd) | Build Verified |
+| MQTT AI bridge stub | Build Verified |
+
+---
+
+## Test Baselines
+
+| Suite | Start (Wave 1) | Final (Wave 10) | Status |
+|-------|----------------|-----------------|--------|
+| tritium-lib pytest | 833 passed | 955 passed, 20 skipped | All passing |
+| tritium-sc fast (tiers 1-3+8) | 81 tiers | 81 tiers | All passing |
+| tritium-edge build | 45.9% RAM, 28.8% Flash | 44.7% RAM, 28.5% Flash | 0 warnings |
 
 ---
 
@@ -116,3 +193,4 @@ Changes tracked with verification status. All changes on `dev` branch.
 | BLE scanner disabled (WiFi/BLE coexistence) | Open | No real BLE data flows; MQTT pipeline ready |
 | NimBLE esp_bt.h not found | Open | Blocks BLE serial + BLE OTA |
 | RGB parallel display glitches (43C-BOX + USB) | Cosmetic | Memory bus contention |
+| 18 tests in `test_websocket.py` fail | Pre-existing | Missing asyncio event loop |
