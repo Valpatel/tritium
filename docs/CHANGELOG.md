@@ -340,11 +340,11 @@ Ten waves of autonomous development transformed Tritium from a firmware OS with 
 
 ## Test Baselines
 
-| Suite | Start (Wave 1) | Current (Wave 19) | Status |
+| Suite | Start (Wave 1) | Current (Wave 20) | Status |
 |-------|----------------|-------------------|--------|
-| tritium-lib pytest | 833 passed | 1049 passed, 29 skipped | All passing |
-| tritium-sc fast (tiers 1-3+8) | 81 tiers | 96+ tiers | All passing |
-| tritium-edge build | 45.9% RAM, 28.8% Flash | 47.4% RAM, 28.9% Flash | 0 warnings |
+| tritium-lib pytest | 833 passed | 1185 passed, 29 skipped | All passing |
+| tritium-sc fast (tiers 1-3+8) | 81 tiers | 96 tiers (375s) | All passing |
+| tritium-edge build | 45.9% RAM, 28.8% Flash | 47.9% RAM, 29.0% Flash | 0 warnings |
 
 ---
 
