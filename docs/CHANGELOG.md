@@ -14,6 +14,23 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 45: Activity Feed, MQTT Inspector, Scenarios, BLE Multi-Vendor, Responsive
+
+### Command Center (tritium-sc)
+- **Target Activity Feed panel**: Live scrolling feed of all target events — sightings, classifications, geofence events, correlations, enrichments (Syntax Verified)
+- **MQTT Message Inspector panel**: Live MQTT message viewer with topic filtering, pause/resume, JSON detail view (Syntax Verified)
+- **Enhanced Map Screenshot**: Ctrl+Shift+P captures map with annotations, SVG overlays, markers, timestamp watermark, classification banner (Syntax Verified)
+- **Responsive layout**: CSS breakpoints for tablet (1024px), phone (768px), small phone (480px) — compact headers, scrollable menus, full-width panels (Syntax Verified)
+
+### Shared Library (tritium-lib)
+- **TacticalScenario model**: Structured test scenarios with actors, events, timeline, objectives — for training exercises and regression testing (Unit Tested, 12 tests)
+
+### Edge Firmware (tritium-edge)
+- **Multi-vendor BLE ad parsing**: Samsung, Google Fast Pair, Microsoft CDP, Fitbit manufacturer-specific advertising data classification (Code Review Verified)
+- New `manufacturer` field in BLE device JSON output
+
+---
+
 ## 2026-03-14 — Wave 44: Maintenance — Panel Utils, Categorized Menu, Setup Wizard
 
 ### Command Center (tritium-sc)
