@@ -14,6 +14,41 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 30: Maintenance — Docs, Redundancy Audit, Features
+
+### Shared Library (tritium-lib)
+- Added `models/summary.py` — SystemSummary, TargetCounts, FleetSummary (Unit Tested)
+  - Point-in-time system state snapshot for /api/health and dashboards
+  - Target counts by alliance (friendly/hostile/unknown) and source (ble/yolo/mesh/wifi/rf_motion)
+  - Fleet summary, plugin status, alert counts, investigation counts
+  - 12 tests, all passing
+  - 1348 total tests passing
+
+### Command Center (tritium-sc)
+- Real-time target counter widget in header bar (Build Verified)
+  - Live count of total targets with alliance breakdown (friendly/hostile/unknown)
+  - Color-coded chips: green=friendly, red=hostile, yellow=unknown
+  - Updates via TritiumStore subscription with requestAnimationFrame debounce
+- Dark/light theme toggle (Build Verified)
+  - Toggle button in header bar, persisted to localStorage
+  - Light theme: slate/teal color palette for outdoor visibility
+  - Removes scanline overlay and grid background in light mode
+
+### Edge Firmware (tritium-edge)
+- Diagnostic self-test: `run_self_test()` and `/api/diag/selftest` endpoint (Build Verified)
+  - 7 checks: WiFi connectivity, MQTT reachability, NTP sync, SD card, free heap, PSRAM, uptime/reboot info
+  - JSON output with per-check pass/fail and detail strings
+  - Firmware: 47.9% RAM, 29.1% Flash (within budget)
+
+### Documentation
+- Updated `docs/STATUS.md` — current state at Wave 29 (24 capabilities, 14 plugins, 1348 tests)
+- Updated `CLAUDE.md` feature roadmap — 60 completed items through Wave 29
+- Added `docs/RULE_TYPES.md` — redundancy analysis of AlertRule vs AutomationRule vs NotificationRule
+  - Three types serve distinct pipeline stages: action execution, alert generation, notification routing
+  - Shared base not recommended yet due to different responsibilities
+
+---
+
 ## 2026-03-14 — Wave 29: Coverage Layers, Target Detail, Alert Rules, Mesh Sighting Relay
 
 ### Shared Library (tritium-lib)
@@ -529,11 +564,11 @@ Ten waves of autonomous development transformed Tritium from a firmware OS with 
 
 ## Test Baselines
 
-| Suite | Start (Wave 1) | Current (Wave 20) | Status |
+| Suite | Start (Wave 1) | Current (Wave 30) | Status |
 |-------|----------------|-------------------|--------|
-| tritium-lib pytest | 833 passed | 1185 passed, 29 skipped | All passing |
+| tritium-lib pytest | 833 passed | 1348 passed, 29 skipped | All passing |
 | tritium-sc fast (tiers 1-3+8) | 81 tiers | 96 tiers (375s) | All passing |
-| tritium-edge build | 45.9% RAM, 28.8% Flash | 47.9% RAM, 29.0% Flash | 0 warnings |
+| tritium-edge build | 45.9% RAM, 28.8% Flash | 47.9% RAM, 29.1% Flash | 0 warnings |
 
 ---
 

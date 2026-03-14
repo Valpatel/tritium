@@ -192,7 +192,7 @@ cd tritium-sc && ./start.sh
 
 ## Feature Roadmap
 
-### Completed (Waves 1-5)
+### Completed (Waves 1-29)
 1. SQLite sighting logger
 2. P2P mesh chat (ESP-NOW)
 3. MQTT SC bridge (heartbeat, sighting, chat, commands)
@@ -224,17 +224,40 @@ cd tritium-sc && ./start.sh
 29. WiFi SSID classifier (corporate/hotspot/IoT/mesh)
 30. MQTT sighting subscription in edge tracker
 31. ROS2 camera node example
+32. Geofencing alerts (Wave 6)
+33. Target history/trails (Wave 6)
+34. TAK/CoT bridge (Wave 8)
+35. Graph ontology + investigations (Wave 9)
+36. Automation engine (Wave 9)
+37. Multi-node trilateration (Wave 13)
+38. RF motion detection (Wave 13)
+39. Multi-site federation (Wave 14+)
+40. Radio scheduler HAL (Wave 16)
+41. JWT authentication (Wave 16)
+42. Rate limiting + DB migrations + backup (Wave 17)
+43. Acoustic classification (Wave 18)
+44. Video recording/playback (Wave 18)
+45. Drone/UAV models (Wave 18)
+46. LPR + AIS/ADS-B transponder plugins (Wave 21)
+47. Security audit (Wave 22)
+48. Terrain analysis + RF propagation (Wave 23)
+49. Behavior analysis + correlation scoring (Wave 24)
+50. Store consolidation (BaseStore) (Wave 25)
+51. WebSocket batching + target clustering (Wave 26)
+52. Event schemas (41 typed events) (Wave 26)
+53. BLE RSSI history + trend detection (Wave 26)
+54. Audit middleware + security hardening (Wave 27)
+55. Map measurement tool + fleet sparklines (Wave 28)
+56. MAC randomization detection (Wave 28)
+57. BLE/WiFi coverage layers + target detail modal (Wave 29)
+58. Target export (CSV/JSON/GeoJSON) (Wave 29)
+59. Mesh sighting relay (Wave 29)
+60. Alert rules + event-driven alert generation (Wave 29)
 
 ### Next Up
-32. **WiFi probe request tracking** — passive fingerprinting of nearby devices
-33. **Multi-node trilateration** — real position estimation from 3+ BLE nodes
-34. **Geofencing alerts** — define zones, alert when targets enter/exit
-35. **Target history/trails** — track movement over time, show paths on map
-36. **Acoustic classification plugin** — gunshot/voice/vehicle/animal sound detection
-37. **RF environment mapping** — passive spectrum analysis
-38. **TAK/CoT bridge plugin** — interop with ATAK/WinTAK devices
-39. **Video recording/playback** — store and review camera footage
-40. **Multi-site federation** — connect multiple Tritium installations
+61. **WiFi probe request tracking** — passive fingerprinting of nearby devices
+62. **RF environment mapping** — passive spectrum analysis beyond motion detection
+63. **Multi-camera re-identification** — cross-camera person tracking via embeddings
 
 ## Known Blockers
 - **NimBLE esp_bt.h not found** — BLE scanner runs stubs, WiFi/mesh alternatives work fine

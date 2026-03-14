@@ -1,26 +1,26 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (post Wave 19, entering Wave 20 maintenance).
+Current state of all components as of 2026-03-14 (post Wave 29, Wave 30 maintenance).
 
 ## Component Health
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| **tritium-edge firmware** | Building | 47.4% RAM, 28.9% flash (within budget) |
+| **tritium-edge firmware** | Building | 47.9% RAM, 29.1% flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 1049+ tests passing |
+| **tritium-lib** | Stable | 1348+ tests passing |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 
-## Test Results (Wave 19 Baseline)
+## Test Results (Wave 29 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib pytest | 1049 passed, 29 skipped | All passing |
+| tritium-lib pytest | 1348 passed, 29 skipped | All passing |
 | tritium-sc fast (tiers 1-3+8) | 96+ tiers | All passing |
-| tritium-edge build | 47.4% RAM, 28.9% Flash | 0 warnings |
+| tritium-edge build | 47.9% RAM, 29.1% Flash | 0 warnings |
 
 ## Firmware (tritium-edge)
 
@@ -36,11 +36,13 @@ Current state of all components as of 2026-03-14 (post Wave 19, entering Wave 20
 
 **Notification shade:** Quick settings toggles, dismiss gestures
 
-**Remote API:** Click simulation, screensaver control, settings access
+**Remote API:** Click simulation, screensaver control, settings access, diagnostic self-test
 
 **Supported boards:** 6 Waveshare ESP32-S3 (3 hardware-verified, 1 pin-verified, 2 need verification)
 
-**Wave 16 additions:** Radio scheduler HAL (BLE/WiFi time-division), Camera MQTT publisher HAL
+**Wave 29 additions:** Mesh sighting relay (multi-hop BLE/WiFi forwarding via mesh)
+
+**Wave 30 additions:** Diagnostic self-test (/api/diag/selftest — WiFi, NTP, heap, PSRAM, SD, uptime)
 
 ### Known Blockers
 
@@ -52,7 +54,7 @@ Current state of all components as of 2026-03-14 (post Wave 19, entering Wave 20
 
 **Server:** FastAPI on :8000
 
-**Frontend:** Vanilla JS command center with tactical map, 26+ floating panels
+**Frontend:** Vanilla JS command center with tactical map, 30+ floating panels
 
 **AI Commander Amy:** 4-layer cognitive AI (reflex, instinct, awareness, deliberation)
 - Instinct layer: automatic threat response rules
@@ -63,9 +65,11 @@ Current state of all components as of 2026-03-14 (post Wave 19, entering Wave 20
 
 **Test suite:** 7 tiers (syntax, unit, JS, infrastructure, integration, visual quality, visual E2E)
 
-**Wave 17 additions:** Rate limiting, database migrations, backup/restore API, Docker production config
+**Wave 28 additions:** Map measurement tool, automation export/import, fleet sparklines
 
-**Wave 18 additions:** Acoustic classification plugin, video recording API
+**Wave 29 additions:** BLE/WiFi coverage layers, target detail modal, target export, investigation graph
+
+**Wave 30 additions:** Real-time target counter widget, dark/light theme toggle
 
 ### Plugins (14 active)
 | Plugin | Purpose |
@@ -106,18 +110,26 @@ Current state of all components as of 2026-03-14 (post Wave 19, entering Wave 20
 | Rate limiting | Active |
 | Database migrations | Active |
 | Backup/restore | Active |
+| Behavior pattern analysis | Active |
+| Terrain/RF propagation modeling | Active |
+| Target export (CSV/JSON/GeoJSON) | Active |
+| BLE/WiFi coverage visualization | Active |
+| Target clustering for map readability | Active |
+| Event-driven alert rules | Active |
 
 ## Shared Library (tritium-lib)
 
-**Models:** 116+ Pydantic models covering device, firmware, mesh, BLE, CoT, alerts, topology, diagnostics, transport, sensor, acoustic, seed, provision, correlation, timeseries, trilateration, dossier, ontology, federation, drone/UAV, radio scheduler, camera MQTT
+**Models:** 130+ dataclass models covering device, firmware, mesh, BLE, CoT, alerts, topology, diagnostics, transport, sensor, acoustic, seed, provision, correlation, timeseries, trilateration, dossier, ontology, federation, drone/UAV, radio scheduler, camera MQTT, behavior, terrain, event schemas, export/import, alert rules, notification rules, system summary
 
 **Graph:** KuzuDB embedded graph store with formal ontology schema
 
-**Stores:** SQLite-backed DossierStore, BleStore, TargetStore, ReIDStore, AuditStore
+**Stores:** SQLite-backed DossierStore, BleStore, TargetStore, ReIDStore, AuditStore (all using BaseStore)
 
 **MQTT:** Standardized topic hierarchy `tritium/{site}/{domain}/{device}/{type}`
 
 **Geo:** Coordinate transforms, camera projection, haversine distance (shared with SC)
+
+**Classifier:** Multi-signal BLE/WiFi device classifier with 11 fingerprint databases
 
 **Packages:** models, mqtt, events, auth, config, store, cot, web, testing, graph, ontology, geo, notifications, classifier
 
@@ -138,6 +150,16 @@ Current state of all components as of 2026-03-14 (post Wave 19, entering Wave 20
 | 39 | Video recording/playback | Done (Wave 18) |
 | 40 | Multi-site federation | Done (Wave 14+) |
 
+## Rule System Analysis
+
+Three rule types exist in the codebase. See docs/RULE_TYPES.md for detailed comparison.
+
+| Rule Type | Location | Purpose |
+|-----------|----------|---------|
+| **AutomationRule** | tritium-sc/plugins/automation/ | Execute actions (commands, tags, escalations) in response to events |
+| **AlertRule** | tritium-lib/models/alert_rules.py | Generate alerts/notifications from system events with severity routing |
+| **NotificationRule** | tritium-lib/models/notification_rules.py | Route notifications to channels (WS, MQTT, email) with severity filtering |
+
 ## Integration Points
 
 | Flow | Status |
@@ -153,13 +175,14 @@ Current state of all components as of 2026-03-14 (post Wave 19, entering Wave 20
 | Geofence alerts via EventBus | Working |
 | DossierManager periodic flush to SQLite | Working |
 | Federation MQTT bridge to remote sites | Working |
+| Mesh sighting relay (leaf to gateway) | Working |
 
 ## Development Velocity
 
-19 waves completed across autonomous sessions:
-- **1049+ tests** in tritium-lib
+29 waves completed across autonomous sessions:
+- **1348+ tests** in tritium-lib
 - **96+ test tiers** in tritium-sc
 - **14 plugins** active in tritium-sc
-- **18 intelligence capabilities** operational
+- **24 intelligence capabilities** operational
 - **3 submodules** coordinated with shared models and MQTT topics
-- **Wave 20** maintenance pass: redundancy audit, dead code removal, store consolidation
+- **Wave 30** maintenance pass: docs, redundancy audit, target counter, theme toggle, self-test, system summary model
