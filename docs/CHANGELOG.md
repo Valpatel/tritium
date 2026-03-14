@@ -14,6 +14,25 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 23: Geospatial Intelligence
+
+### Shared Library
+- Terrain models: `ElevationPoint`, `ElevationProfile`, `CoverageAnalysis`, `CoverageCell`,
+  `SensorPlacement`, `WeatherConditions`, `TerrainType`
+- RF propagation functions: `free_space_path_loss_db`, `terrain_path_loss_db`, `estimate_signal_strength`
+- 19 terrain model tests passing
+
+### Command Center (SC)
+- Terrain API at `/api/terrain/` with propagation, coverage, line-of-sight, terrain types
+- Coverage grid computation with cell-level signal strength estimates (capped at 10K cells)
+- 9 terrain router tests passing
+
+**Verification:**
+- tritium-lib: 19/19 terrain tests pass (1233 total)
+- tritium-sc: 9/9 terrain tests pass
+
+---
+
 ## 2026-03-14 — Wave 22: Security & Performance Audit
 
 ### Command Center (SC)
