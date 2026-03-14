@@ -192,7 +192,7 @@ cd tritium-sc && ./start.sh
 
 ## Feature Roadmap
 
-### Completed (Waves 1-29)
+### Completed (Waves 1-39)
 1. SQLite sighting logger
 2. P2P mesh chat (ESP-NOW)
 3. MQTT SC bridge (heartbeat, sighting, chat, commands)
@@ -253,11 +253,32 @@ cd tritium-sc && ./start.sh
 58. Target export (CSV/JSON/GeoJSON) (Wave 29)
 59. Mesh sighting relay (Wave 29)
 60. Alert rules + event-driven alert generation (Wave 29)
+61. WiFi probe request tracking (Wave 31)
+62. Config sync HAL (Wave 32)
+63. Notification preferences + rules (Wave 30)
+64. Heatmap visualization (Wave 30)
+65. Graph explorer panel (Wave 30)
+66. Target timeline panel (Wave 30)
+67. Quick-start panel (Wave 33)
+68. System health panel (Wave 33)
+69. Device manager panel + remote OTA (Wave 34)
+70. Testing dashboard panel (Wave 34)
+71. Mission management panel (Wave 35)
+72. Target comparison panel (Wave 35)
+73. Multi-camera panel (Wave 35)
+74. Target merge workflow (Wave 35)
+75. Amy conversation panel (Wave 37)
+76. Export scheduler panel (Wave 37)
+77. Bookmarks panel (Wave 37)
+78. RF monitor HAL (Wave 38)
+79. WiFi probe HAL (Wave 38)
+80. Power saver HAL (Wave 38)
+81. Panel search with Ctrl+/ shortcut (Wave 39)
 
 ### Next Up
-61. **WiFi probe request tracking** — passive fingerprinting of nearby devices
-62. **RF environment mapping** — passive spectrum analysis beyond motion detection
-63. **Multi-camera re-identification** — cross-camera person tracking via embeddings
+82. **RF environment mapping** — passive spectrum analysis beyond motion detection
+83. **Multi-camera re-identification** — cross-camera person tracking via embeddings
+84. **Shared panel utilities** — extract _esc(), _timeAgo() from 30+ panels into panel-utils.js
 
 ## Known Blockers
 - **NimBLE esp_bt.h not found** — BLE scanner runs stubs, WiFi/mesh alternatives work fine

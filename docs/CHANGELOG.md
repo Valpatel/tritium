@@ -14,6 +14,29 @@ Changes tracked with verification status. All changes on `dev` branch.
 
 ---
 
+## 2026-03-14 — Wave 39: Maintenance — Panel Search, Test Baseline, Docs Update
+
+### Shared Library (tritium-lib)
+- Fixed graph store `__init__` — mkdir now inside try/except so invalid paths raise RuntimeError (Unit Tested)
+- Test baseline: 1404 passed, 0 failures
+- Model exports verified: 250 symbols via `from tritium_lib.models import *`
+
+### Command Center (tritium-sc)
+- Panel search in menu bar — type to filter 48 panel buttons, Ctrl+/ shortcut, Enter to toggle first match (Build Verified)
+- CSS for `.command-bar-search` with focus expansion animation
+- Test baseline: 8352 pytest passed, 92/94 JS tiers pass (2 known pre-existing)
+
+### Edge Firmware (tritium-edge)
+- CLAUDE.md documentation pass — all 42 HALs now listed in directory structure section
+- Added: hal_acoustic, hal_acoustic_modem, hal_ble, hal_ble_ota, hal_ble_scanner, hal_ble_serial, hal_config_sync, hal_cot, hal_debug, hal_diag, hal_diaglog, hal_espnow, hal_fs, hal_gis, hal_heartbeat, hal_io_expander, hal_lora, hal_meshtastic, hal_mqtt, hal_ntp, hal_ota, hal_power_saver, hal_provision, hal_radio_scheduler, hal_rf_monitor, hal_sdcard, hal_seed, hal_sighting_buffer, hal_sleep, hal_touch, hal_ui, hal_voice, hal_watchdog, hal_webserver, hal_wifi_probe, hal_wifi_scanner
+
+### Parent Repo
+- STATUS.md updated with Wave 39 baseline counts (1404 lib tests, 48 panels, 42 HALs, 250 model exports)
+- CLAUDE.md feature list updated to 81 completed features (Waves 1-39)
+- Panel redundancy analysis documented in STATUS.md
+
+---
+
 ## 2026-03-14 — Wave 38: Multi-Camera, Target Merge, Amy Monologue, Power Saver, Sensor Config
 
 ### Shared Library (tritium-lib)
