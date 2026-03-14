@@ -59,6 +59,16 @@ You are expected to build independently. Do NOT stop to ask the user unless you 
 7. **Launch 6+ parallel agents.** Every wave: 2-3 feature agents, 1 quality/testing agent, 1 infrastructure agent, 1 test-runner that auto-launches the next wave.
 8. **NEVER STOP.** When a wave finishes, immediately launch the next wave. Do not wait for approval. Do not report and pause. The loop is infinite. If all planned waves are done, read the vision and identify new work.
 
+### Documentation Maintenance (Every 3rd Wave)
+Every 3rd wave, one agent must do a documentation fractal pass:
+- Traverse ALL directories in ALL submodules
+- Every package/directory must have a README.md with: "where you are", what it does, key files, related links
+- Update CLAUDE.md plugin list and feature roadmap
+- Update docs/STATUS.md with current component health
+- Update docs/CHANGELOG.md with recent wave entries and verification levels
+- Update memory/project_iteration_queue.md with completed waves
+- Documentation rot is as bad as code rot — treat it with equal priority
+
 ### How to Continue Autonomously
 - Read `memory/project_iteration_queue.md` for the wave roadmap
 - Find the first incomplete wave
