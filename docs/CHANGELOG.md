@@ -2,6 +2,42 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 69 (2026-03-14): Maintenance — Wave 70 Prep, Test Fixes, Baseline Recording
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Fixed health router test: mock Ollama urllib.request.urlopen for "healthy" status assertion | Tested |
+| Fixed meshtastic test: version 0.1.0 -> 0.2.0, battery 0.85 -> 85 (raw int), routes 5 -> 8 | Tested |
+| All 4 test failures resolved: 97 tiers, 0 failures | Verified |
+
+### Docs + Agents
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated: 68 waves, 640K LOC, 826 test files, 67 panels, 483 routes, 321 model classes, 54 model files | Verified (wc -l, find, grep) |
+| Iteration queue: Waves 58-68 marked DONE, Waves 70-75 planned | Updated |
+| CHANGELOG.md Wave 69 entry added | Updated |
+
+### Test Baselines (Wave 69 — Definitive for Wave 70 Milestone)
+| Suite | Count |
+|-------|-------|
+| tritium-lib pytest | 1,748 passed, 0 failures |
+| tritium-sc Python (unit) | 8,582 passed, 97 tiers |
+| tritium-sc JS | 93 test suites |
+| tritium-sc test files | 725 (626 py + 99 js) |
+| tritium-lib test files | 84 |
+| tritium-edge build | 49.6% RAM, 29.2% Flash, 0 warnings |
+| Total test files | 826 |
+
+### Infrastructure
+| Change | Verification |
+|--------|-------------|
+| Cleaned __pycache__ and .pytest_cache across repo | Verified |
+| Disk: 89% used (97 GB free on 916 GB) | Verified |
+| Host: gb10-01, 108 GB RAM available | Verified |
+
+---
+
 ## Wave 68 (2026-03-14): Picture of Day, Nearby Targets, Time Slider, Heartbeat Compression
 
 ### tritium-sc
