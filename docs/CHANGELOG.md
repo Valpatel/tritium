@@ -2,6 +2,25 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 91 (2026-03-14): Swarm Intelligence + Edge Autonomy
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| models/autonomous.py — AutonomousDecision, AutonomousDecisionLog, EdgeAlertRule, OverrideState + 6 decision types, 9 triggers | Unit Tested (15 tests) |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Swarm coordination plugin — multi-robot formations (line/wedge/circle/diamond/column), waypoint patrol, unit loss recovery | Unit Tested (14 tests) |
+| Edge autonomy plugin — process/confirm/override autonomous edge decisions, per-device accuracy tracking | Unit Tested (9 tests) |
+| Swarm visualization panel — canvas formation rendering, waypoint display, map overlay | Created |
+
+### tritium-edge
+| Change | Verification |
+|--------|-------------|
+| hal_autonomous_alert — NVS-backed threshold rules, BLE/motion/acoustic feeds, MQTT alert publishing | Code Review |
+
 ## Wave 90 (2026-03-14): MILESTONE + Maintenance + Security
 
 ### docs
