@@ -1,6 +1,6 @@
 # Tritium Data Library Catalog
 
-Last updated: 2026-03-15 (Wave 155 audit)
+Last updated: 2026-03-15 (Wave 155 audit, video dataset catalog expansion)
 
 Datasets discovered for Tritium's sensing pipelines. Relevance scored 0.0-1.0 based on
 how directly the dataset supports our detection, classification, and tracking pipelines.
@@ -16,21 +16,89 @@ how directly the dataset supports our detection, classification, and tracking pi
 | No WiFi probe request fingerprint DB | HIGH | No database mapping probe request patterns to device types/OS versions. Would improve passive WiFi tracking. |
 | No acoustic model weights | MEDIUM | ESC-50 downloaded but no trained classifier weights. Need to train or find pretrained model. |
 | No YOLO test images | LOW | COCO val2017 not yet downloaded. Synthetic data works for now. |
+| No ReID test data | HIGH | No person re-identification dataset for cross-camera tracking validation. |
+| No vehicle tracking video | MEDIUM | No dedicated vehicle tracking dataset for UA-DETRAC-style benchmarks. |
+| No multi-camera surveillance video | HIGH | No multi-view video for testing sensor fusion across camera feeds. |
 
 ## Video Datasets (Person/Vehicle Detection)
+
+### Detection Benchmarks (Still Images + Short Clips)
 
 | Dataset | Size | License | Relevance | URL | Downloaded |
 |---------|------|---------|-----------|-----|-----------|
 | COCO val2017 | ~1 GB (images) + 241 MB (annotations) | CC-BY-4.0 | 0.9 | http://images.cocodataset.org/zips/val2017.zip | No |
-| MOT17 (Multi-Object Tracking) | ~5 GB | Research-only | 0.8 | https://motchallenge.net/data/MOT17/ | No |
-| PETS2009 | ~500 MB (est.) | Free for research | 0.7 | http://ftp.cs.rdg.ac.uk/PETS2009/ | No |
 | VisDrone (drone-view detection) | 2.3 GB | Research-only | 0.7 | https://github.com/VisDrone/VisDrone-Dataset | No |
 | Vehicle Dataset for YOLO | 379 MB | Supervisely | 0.6 | https://datasetninja.com/vehicle-dataset-for-yolo | No |
 
-### Notes
+### Multi-Object Tracking (MOT)
+
+| Dataset | Size | License | Relevance | URL | Downloaded |
+|---------|------|---------|-----------|-----|-----------|
+| MOT17 | ~5 GB | CC-BY-NC-SA-3.0 | 0.8 | https://motchallenge.net/data/MOT17/ | No |
+| MOT20 | ~5 GB | CC-BY-NC-SA-3.0 | 0.85 | https://motchallenge.net/data/MOT20/ | No |
+| PETS2009 | ~500 MB (est.) | Free for research | 0.7 | http://ftp.cs.rdg.ac.uk/PETS2009/ | No |
+
+### Surveillance Video (Ground + Aerial)
+
+| Dataset | Size | License | Relevance | URL | Downloaded |
+|---------|------|---------|-----------|-----|-----------|
+| VIRAT Ground 2.0 | ~35 GB | Research/gov (DARPA-funded, free download) | 0.95 | https://viratdata.org/ | No |
+| VIRAT Aerial | ~5 GB (est.) | Research/gov (DARPA-funded, free download) | 0.7 | https://viratdata.org/ | No |
+| PNNL Parking Lot | ~2 GB (est.) | Research (free download) | 0.8 | https://www.crcv.ucf.edu/data/ParkingLOT/ | No |
+
+### Vehicle Detection and Tracking
+
+| Dataset | Size | License | Relevance | URL | Downloaded |
+|---------|------|---------|-----------|-----|-----------|
+| UA-DETRAC | ~10 GB (images) | CC-BY-NC-SA-3.0 | 0.85 | https://detrac-db.rit.albany.edu/ | No |
+| KITTI Tracking | ~15 GB (left color) | CC-BY-NC-SA-3.0 | 0.75 | https://www.cvlibs.net/datasets/kitti/eval_tracking.php | No |
+| BDD100K (images) | ~7 GB | BSD-like (research + limited commercial) | 0.7 | https://doc.bdd100k.com/download.html | No |
+| Waymo Open (Perception) | ~1 TB (full), subsets available | Non-commercial only | 0.6 | https://waymo.com/open/download | No |
+
+### Person Re-Identification (ReID)
+
+| Dataset | Size | License | Relevance | URL | Downloaded |
+|---------|------|---------|-----------|-----|-----------|
+| Market-1501 | ~1 GB | Research (free, attribution required) | 0.9 | https://www.kaggle.com/datasets/pengcw1/market-1501 | No |
+| DukeMTMC-reID | ~2.5 GB | WITHDRAWN (ethics concerns) | 0.8 | N/A (see notes) | No |
+
+### Notes — Detection Benchmarks
 - **COCO val2017** is the top pick: 5K images, 80 object classes including person/vehicle/animal, YOLO-native annotations available via Ultralytics. Standard benchmark for detection.
+
+### Notes — Multi-Object Tracking
 - **MOT17** provides multi-camera pedestrian tracking sequences with ground truth bounding boxes -- ideal for testing our TargetTracker correlation.
+- **MOT20** focuses on extremely crowded scenes (up to 246 pedestrians/frame). 2M+ bounding boxes, 3833 tracks. Indoor and outdoor, day and night. More challenging than MOT17 and better for stress-testing our tracker.
 - **PETS2009** is small, focused on surveillance-style pedestrian tracking from fixed cameras -- closest to our deployment scenario.
+
+### Notes — Surveillance Video
+- **VIRAT** is the single most relevant dataset for Tritium. It is a DARPA-funded surveillance benchmark with 8.6 hours of HD ground camera video across 16 real-world scenes (parking lots, building exteriors, roads). Annotations include person and vehicle activities: walking, running, loading vehicles, entering/exiting facilities. The aerial subset adds UAV-perspective video. This directly maps to our fixed-camera + drone use case.
+- **PNNL Parking Lot** contains 1080p surveillance footage of a parking lot with pedestrians and vehicles. Two sequences (1000 and 1500 frames). Small but realistic for testing our camera feeds plugin with real security camera footage.
+
+### Notes — Vehicle Tracking
+- **UA-DETRAC** is the best vehicle-specific dataset: 100 videos from 24 real roads in Beijing/Tianjin, 140K+ frames, 1.21M labeled vehicle bounding boxes. Covers sunny/rainy/cloudy/night conditions. Annotations include vehicle type and occlusion level.
+- **KITTI Tracking** provides synchronized stereo camera + LiDAR + GPS/IMU data from real driving. 15 GB for left color images alone; 180 GB for the full raw dataset. Useful for vehicle tracking and 3D position estimation. Can selectively download just the tracking subset.
+- **BDD100K** contains 100K 40-second driving video clips at 720p/30fps from 50K+ rides. Annotations for detection, tracking, segmentation, lane marking, and drivable area. Research and limited commercial use allowed. The 10K subset (1 GB) is a good starting point.
+- **Waymo Open** is the largest and highest-quality autonomous driving dataset (~1 TB full). 2030 segments with synchronized cameras + LiDAR. Non-commercial license. Overkill for our needs but useful if we expand to autonomous vehicle integration. Selective download is possible.
+
+### Notes — Person ReID
+- **Market-1501** is the standard ReID benchmark: 32,668 bounding boxes of 1,501 identities captured by 6 cameras at a supermarket. Directly useful for testing our cross-camera person re-identification pipeline (camera A sees person, camera B confirms same person). Available on Kaggle.
+- **DukeMTMC-reID** was a leading multi-camera tracking dataset from Duke University but was **withdrawn in June 2019** due to ethical concerns (filmed students without consent). The original site is down. Copies exist on Kaggle and Academic Torrents but using this dataset is ethically problematic. **Recommendation: Do not use.** Market-1501 is sufficient for our ReID testing needs.
+
+### Notes — Parking Lot / Security Camera
+- For realistic security camera testing, **VIRAT** and **PNNL Parking Lot** are the best options. Both feature fixed overhead cameras watching outdoor areas with natural pedestrian and vehicle traffic.
+- The **PKLot** dataset (695K parking space images, available on Hugging Face) is useful for parking occupancy detection but not for person/vehicle tracking.
+
+### License Summary for Video Datasets
+
+| License Type | Datasets | Commercial Use? |
+|-------------|----------|-----------------|
+| CC-BY-4.0 | COCO val2017 | YES |
+| CC-BY-NC-SA-3.0 | MOT17, MOT20, UA-DETRAC, KITTI | NO (research only) |
+| Research/Gov | VIRAT, PNNL, PETS2009 | Contact authors |
+| BSD-like | BDD100K | Limited commercial |
+| Non-commercial | Waymo Open | NO |
+| Research (attribution) | Market-1501 | Contact authors |
+| WITHDRAWN | DukeMTMC | DO NOT USE |
 
 ## Audio Datasets (Acoustic Classification)
 
@@ -143,10 +211,17 @@ how directly the dataset supports our detection, classification, and tracking pi
 Ordered by value-per-byte for our pipelines:
 
 1. ~~**ESC-50**~~ DOWNLOADED (1.4 GB, CC-BY-NC) -- at `data/library/audio/ESC-50/`, 2000 clips, 50 classes
-2. **Mini LibriSpeech** (458 MB, CC-BY-4.0) -- STT regression testing
-3. **BLEBeacon Dataset** (888 MB full, 920 KB sample downloaded) -- BLE tracker testing
-4. **COCO val2017** (~1.2 GB, CC-BY-4.0) -- YOLO detection benchmark
-5. **Gunshot Audio** (1.6 GB, CC-BY-4.0) -- security-relevant acoustic
-6. **PETS2009** (~500 MB, Research) -- surveillance pedestrian tracking
-7. **UrbanSound8K** (5.6 GB, CC-BY-NC) -- broad urban sound classification
-8. **MOT17** (~5 GB, Research) -- multi-object tracking benchmark
+2. **COCO val2017** (~1.2 GB, CC-BY-4.0) -- YOLO detection benchmark, commercial OK
+3. **Market-1501** (~1 GB, Research) -- ReID testing for cross-camera person tracking
+4. **PNNL Parking Lot** (~2 GB, Research) -- realistic security camera footage
+5. **Mini LibriSpeech** (458 MB, CC-BY-4.0) -- STT regression testing
+6. **BLEBeacon Dataset** (888 MB full, 920 KB sample downloaded) -- BLE tracker testing
+7. **PETS2009** (~500 MB, Research) -- surveillance pedestrian tracking
+8. **Gunshot Audio** (1.6 GB, CC-BY-4.0) -- security-relevant acoustic
+9. **MOT20** (~5 GB, CC-BY-NC-SA) -- crowded scene multi-object tracking
+10. **UA-DETRAC** (~10 GB, CC-BY-NC-SA) -- vehicle detection and tracking
+11. **VIRAT Ground 2.0** (~35 GB, Research/gov) -- THE surveillance benchmark, closest to Tritium's use case
+12. **BDD100K 10K subset** (~1 GB, BSD-like) -- driving video with detection/tracking labels
+13. **MOT17** (~5 GB, CC-BY-NC-SA) -- multi-object tracking benchmark
+14. **UrbanSound8K** (5.6 GB, CC-BY-NC) -- broad urban sound classification
+15. **KITTI Tracking** (~15 GB, CC-BY-NC-SA) -- driving video with stereo + LiDAR

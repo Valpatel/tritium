@@ -37,31 +37,145 @@
   ],
   "queued": [
     {
-      "name": "Mini LibriSpeech",
-      "category": "audio",
-      "size_human": "458 MB",
-      "license": "CC-BY-4.0",
-      "source_url": "https://www.openslr.org/31/",
-      "relevance": 0.8,
-      "use_case": "stt_testing"
-    },
-    {
       "name": "COCO val2017",
       "category": "video",
       "size_human": "~1.2 GB",
       "license": "CC-BY-4.0",
+      "commercial_ok": true,
       "source_url": "http://images.cocodataset.org/zips/val2017.zip",
       "relevance": 0.9,
-      "use_case": "yolo_detection"
+      "use_case": "yolo_detection",
+      "description": "5K images, 80 object classes (person, vehicle, animal). Standard YOLO benchmark."
+    },
+    {
+      "name": "Market-1501",
+      "category": "video",
+      "size_human": "~1 GB",
+      "license": "Research (attribution required)",
+      "commercial_ok": false,
+      "source_url": "https://www.kaggle.com/datasets/pengcw1/market-1501",
+      "relevance": 0.9,
+      "use_case": "person_reid",
+      "description": "32,668 bboxes of 1,501 identities from 6 cameras. Standard ReID benchmark for cross-camera person tracking."
+    },
+    {
+      "name": "PNNL Parking Lot",
+      "category": "video",
+      "size_human": "~2 GB",
+      "license": "Research (free download)",
+      "commercial_ok": false,
+      "source_url": "https://www.crcv.ucf.edu/data/ParkingLOT/",
+      "relevance": 0.8,
+      "use_case": "surveillance_testing",
+      "description": "1080p parking lot surveillance footage with pedestrians and vehicles. 2 sequences, 2500 total frames."
+    },
+    {
+      "name": "Mini LibriSpeech",
+      "category": "audio",
+      "size_human": "458 MB",
+      "license": "CC-BY-4.0",
+      "commercial_ok": true,
+      "source_url": "https://www.openslr.org/31/",
+      "relevance": 0.8,
+      "use_case": "stt_testing"
     },
     {
       "name": "Gunshot/Gunfire Audio",
       "category": "audio",
       "size_human": "1.6 GB",
       "license": "CC-BY-4.0",
+      "commercial_ok": true,
       "source_url": "https://zenodo.org/records/7004819",
       "relevance": 0.8,
       "use_case": "threat_acoustic"
+    },
+    {
+      "name": "PETS2009",
+      "category": "video",
+      "size_human": "~500 MB",
+      "license": "Research (free download)",
+      "commercial_ok": false,
+      "source_url": "http://ftp.cs.rdg.ac.uk/PETS2009/",
+      "relevance": 0.7,
+      "use_case": "pedestrian_tracking",
+      "description": "Surveillance-style pedestrian tracking from fixed cameras. Closest to our deployment scenario."
+    },
+    {
+      "name": "MOT20",
+      "category": "video",
+      "size_human": "~5 GB",
+      "license": "CC-BY-NC-SA-3.0",
+      "commercial_ok": false,
+      "source_url": "https://motchallenge.net/data/MOT20/",
+      "relevance": 0.85,
+      "use_case": "multi_object_tracking",
+      "description": "Crowded scene tracking: 2M+ bboxes, 3833 tracks, up to 246 pedestrians/frame. Indoor+outdoor, day+night."
+    },
+    {
+      "name": "MOT17",
+      "category": "video",
+      "size_human": "~5 GB",
+      "license": "CC-BY-NC-SA-3.0",
+      "commercial_ok": false,
+      "source_url": "https://motchallenge.net/data/MOT17/",
+      "relevance": 0.8,
+      "use_case": "multi_object_tracking",
+      "description": "Multi-camera pedestrian tracking with ground truth bounding boxes."
+    },
+    {
+      "name": "UA-DETRAC",
+      "category": "video",
+      "size_human": "~10 GB",
+      "license": "CC-BY-NC-SA-3.0",
+      "commercial_ok": false,
+      "source_url": "https://detrac-db.rit.albany.edu/",
+      "relevance": 0.85,
+      "use_case": "vehicle_tracking",
+      "description": "100 videos from 24 real roads, 140K+ frames, 1.21M vehicle bboxes. Sunny/rainy/cloudy/night."
+    },
+    {
+      "name": "VIRAT Ground 2.0",
+      "category": "video",
+      "size_human": "~35 GB",
+      "license": "Research/gov (DARPA-funded, free download)",
+      "commercial_ok": false,
+      "source_url": "https://viratdata.org/",
+      "relevance": 0.95,
+      "use_case": "surveillance_benchmark",
+      "description": "8.6 hours HD surveillance video across 16 scenes. Person+vehicle activities. THE surveillance benchmark."
+    },
+    {
+      "name": "BDD100K 10K subset",
+      "category": "video",
+      "size_human": "~1 GB",
+      "license": "BSD-like (research + limited commercial)",
+      "commercial_ok": true,
+      "source_url": "https://doc.bdd100k.com/download.html",
+      "relevance": 0.7,
+      "use_case": "driving_detection",
+      "description": "10K driving video subset with detection, tracking, segmentation, lane, drivable area labels."
+    },
+    {
+      "name": "KITTI Tracking (left color)",
+      "category": "video",
+      "size_human": "~15 GB",
+      "license": "CC-BY-NC-SA-3.0",
+      "commercial_ok": false,
+      "source_url": "https://www.cvlibs.net/datasets/kitti/eval_tracking.php",
+      "relevance": 0.75,
+      "use_case": "vehicle_tracking",
+      "description": "Synchronized stereo camera + LiDAR + GPS/IMU driving data. Selective download by sensor type."
+    },
+    {
+      "name": "Waymo Open (Perception subset)",
+      "category": "video",
+      "size_human": "~1 TB (full), subsets available",
+      "license": "Non-commercial (Waymo Dataset License)",
+      "commercial_ok": false,
+      "source_url": "https://waymo.com/open/download",
+      "relevance": 0.6,
+      "use_case": "autonomous_driving",
+      "description": "2030 segments with synchronized cameras + LiDAR. Highest quality but very large. Selective download possible."
     }
   ],
   "device_intelligence": {
@@ -119,6 +233,24 @@
       "severity": "medium",
       "description": "130 of 3000+ BT SIG company IDs mapped",
       "recommended_action": "Import from bluetooth-SIG assigned_numbers YAML or NordicSemiconductor DB"
+    },
+    {
+      "name": "Person ReID Test Data",
+      "severity": "high",
+      "description": "No person re-identification dataset for cross-camera tracking validation",
+      "recommended_action": "Download Market-1501 (~1 GB) from Kaggle"
+    },
+    {
+      "name": "Vehicle Tracking Video",
+      "severity": "medium",
+      "description": "No dedicated vehicle tracking dataset for benchmarking",
+      "recommended_action": "Download UA-DETRAC (~10 GB) or KITTI tracking subset (~15 GB)"
+    },
+    {
+      "name": "Surveillance Video Benchmark",
+      "severity": "high",
+      "description": "No multi-camera surveillance video for testing sensor fusion across camera feeds",
+      "recommended_action": "Download VIRAT Ground 2.0 (~35 GB) — most relevant dataset for Tritium's use case"
     }
   ]
 }
