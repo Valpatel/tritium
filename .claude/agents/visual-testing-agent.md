@@ -96,6 +96,62 @@ See `tests/ui/vlm_sweep_wave4.py` for the real VLM pattern using `requests` + ba
 - Notification bell is present in header
 - Menu bar is functional
 
+## CRITICAL: The Visual Gate (Run EVERY Wave)
+
+**Wave 158 revealed the frontend was a blank black screen for 60+ waves.** CSP blocked CDN resources, a JS crash killed init. 93 panels existed as dead code. This must NEVER happen again.
+
+### Minimum Visual Gate (30 seconds, every wave):
+```bash
+cd /home/scubasonar/Code/tritium/tritium-sc
+# 1. Start server
+./start.sh &
+sleep 10
+# 2. Start demo mode
+curl -s -X POST http://localhost:8000/api/demo/start
+# 3. Open headed browser and screenshot
+.venv/bin/python3 -c "
+from playwright.sync_api import sync_playwright
+import time
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=False)
+    page = browser.new_page(viewport={'width':1920,'height':1080})
+    errors = []
+    page.on('pageerror', lambda e: errors.append(e.message))
+    page.goto('http://localhost:8000', timeout=20000)
+    time.sleep(8)
+    page.screenshot(path='tests/.baselines/visual_gate.png')
+    has_map = page.query_selector('.maplibregl-map') is not None
+    print(f'MAP: {has_map}')
+    print(f'JS ERRORS: {len(errors)}')
+    for e in errors[:5]: print(f'  {e}')
+    assert has_map, 'MAP NOT VISIBLE — FRONTEND IS BROKEN'
+    assert len(errors) == 0, f'JS ERRORS: {errors}'
+    browser.close()
+"
+# 4. Kill server
+pkill -f uvicorn
+```
+
+### Pass criteria:
+- Map tiles visible (not black void)
+- `.maplibregl-map` container exists
+- Zero JS `pageerror` events
+- Header shows target counts (not all zeros after demo start)
+- At least one panel openable
+
+### If gate fails:
+1. **STOP all feature work**
+2. Debug the JS console errors
+3. Fix the root cause
+4. Re-run the gate
+5. Only then resume normal waves
+
+### Common failure modes:
+- **CSP blocking CDN** — check `src/app/security_headers.py`, add new domains
+- **JS import crash** — one bad import kills the entire ES module. Check browser console for `pageerror`
+- **Store API mismatch** — `.subscribe()` vs `.on()`, check `store.js` API
+- **Map tile 403/404** — check CSP `img-src` and `connect-src` include tile servers
+
 ## Running Visual Tests
 ```bash
 cd /home/scubasonar/Code/tritium/tritium-sc
