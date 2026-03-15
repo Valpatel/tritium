@@ -27,8 +27,9 @@ Changes tracked with verification status. All changes on `dev` branch.
 ### test baselines
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib | 2,062 | All passing |
-| tritium-lib (gb10-02) | 2,062 | All passing |
+| tritium-lib | 2,062 | All passing (11.6s) |
+| tritium-lib (gb10-02) | 2,062 | All passing (20.5s) |
+| tritium-sc test.sh fast | 97 tiers, 0 failures | All passing (397s) |
 | tritium-sc annotations | 22 (up from 8) | All passing |
 
 ## Wave 92 (2026-03-14): Security Hardening + Threat Model + API Scoping

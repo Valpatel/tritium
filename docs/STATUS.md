@@ -68,7 +68,7 @@ Current state of all components as of 2026-03-14 (Wave 93 — Maintenance).
 |-------|-------|--------|
 | tritium-lib pytest | 2,062 passed | All passing (11.6s) |
 | tritium-lib on gb10-02 | 2,062 passed | All passing (20.5s) |
-| tritium-sc test.sh fast | Running | Collecting baseline |
+| tritium-sc test.sh fast | 97 tiers passed, 0 failures | All passing (397s) |
 | tritium-edge build | 49.6% RAM, 29.2% Flash | 0 warnings, SUCCESS |
 
 ## Architecture
