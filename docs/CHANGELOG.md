@@ -2,6 +2,29 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 126 (2026-03-15): RL Feature Expansion + WiFi Probe Correlation
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| tritium-lib: intelligence/feature_engineering.py — 5 reusable feature functions (device_type_match, co_movement_score, time_similarity, source_diversity, wifi_probe_temporal_correlation) | 34 pytest passing |
+| tritium-lib: FEATURE_NAMES expanded from 6 to 10 in scorer.py — co_movement_duration, time_of_day_similarity, source_diversity_score, wifi_probe_correlation | 121 tests passing |
+| tritium-sc: CorrelationLearner expanded to 10 features (was 6) — addresses 50.5% accuracy drop | Import verified, 12 tests passing |
+| tritium-sc: WiFiProbeStrategy — new 6th correlation strategy for BLE+WiFi probe temporal matching | Import verified, 65 tests passing |
+| tritium-sc: RL training generator updated to produce all 10 features in synthetic data | Syntax verified |
+| tritium-sc: DEFAULT_WEIGHTS rebalanced for 6 strategies (spatial 0.30, wifi_probe 0.15, temporal 0.15, signal_pattern 0.14, dossier 0.13, learned 0.13) | Import verified |
+| tritium-edge: WiFi probe sighting JSON includes last_seen_us (microsecond) and last_seen_ntp (epoch) timestamps for precise SC-side temporal correlation | Syntax verified |
+| Discovery: acoustic_classifier.py in engine/audio is well-tested (2 test files); nodes/virtual.py exists but no dedicated tests; engine/scenarios/ has 10 files with 15 test files — healthy coverage | Explored |
+
+### RL Model Analysis
+Expanded from 6 to 10 features to address the accuracy drop from 76.7% to 50.5%:
+- **device_type_match**: Now uses semantic compatibility table (phone+person=1.0, watch+person=0.95)
+- **co_movement_duration**: Trail-based co-located movement duration with interpolation
+- **time_of_day_similarity**: Circular time-of-day matching (wraps around midnight)
+- **source_diversity_score**: Cross-category sensor diversity bonus (RF+visual > RF+RF)
+- **wifi_probe_correlation**: Temporal match between WiFi probe requests and BLE advertisements
+Static weights rebalanced, synthetic data generator updated. Next retrain should improve accuracy.
+
 ## Wave 125 (2026-03-15): Acoustic TDoA + RL Prediction Cones
 
 ### Changes
