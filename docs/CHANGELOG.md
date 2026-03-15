@@ -2,6 +2,19 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 123 (2026-03-15): Prediction Confidence Ellipses + Federation Site Status Panel
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| tritium-sc: PredictionEllipseManager — directional confidence ellipses on the map | Syntax + Unit tests |
+| tritium-sc: Ellipses stretch along heading, compress with speed, scale with confidence | Syntax + Unit tests |
+| tritium-sc: FederationPanelDef — site status panel with add/remove, connection health, sync stats | Syntax + Unit tests |
+| tritium-sc: Federation panel in Fleet menu, auto-refresh 10s, MQTT config form | Syntax + Unit tests |
+| tritium-sc: Map quick toggle (ELP) for prediction ellipses | Syntax |
+| Visual re-verification: 26 targets, 20 dossiers, RL model trained at 76.7% accuracy | Server-verified |
+| RL model status: 61,908 correlation observations, 188 confirmed, 60 training examples | Server-verified |
+
 ## Wave 122 (2026-03-15): Camera-Target Linking, Reappearance Notifications, Investigation Timeline, BLE Scan Stats
 
 ### Changes
