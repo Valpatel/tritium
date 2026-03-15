@@ -2,6 +2,21 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 94 (2026-03-14): Analytics Dashboard Widgets
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| models/analytics_dashboard.py — DashboardWidget, WidgetType, WidgetConfig, DEFAULT_WIDGETS | Import verified |
+| tests/models/test_analytics_dashboard.py — 9 tests | Written |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| GET /api/analytics/widgets + POST /api/analytics/widgets/layout — widget config API | Import verified |
+| Analytics dashboard panel — drag/drop widget grid with counter/chart/table/timeline renderers | Written |
+| CSS styles for analytics dashboard | Written |
+
 ## Wave 93 (2026-03-14): Maintenance — Docs, Tests, Plugin Audit
 
 ### tritium-sc
