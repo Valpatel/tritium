@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (Wave 78 — Maintenance).
+Current state of all components as of 2026-03-14 (Wave 84 — Maintenance).
 
 ## Component Health
 
@@ -9,85 +9,86 @@ Current state of all components as of 2026-03-14 (Wave 78 — Maintenance).
 | **tritium-edge firmware** | Building | 49.6% RAM, 29.2% flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 1,822 tests passing, 0 failures |
+| **tritium-lib** | Stable | 1,957 tests passing, 0 failures |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
-| **Intelligence pipeline** | Active | 7 modules: training_store, correlation_learner, ble_classification_learner, anomaly_baseline, feature_aggregator, classification_feedback, base_learner |
+| **Intelligence pipeline** | Active | 7 modules, all learners using BaseLearner ABC |
 | **Plugin system** | Active | 17 plugins (16 directory + 1 built-in), auto-discovery with boot report |
 
-## Wave 77 Features (Fleet Operations + Multi-Node Coordination)
+## Wave 81-83 Features
 
 | Feature | Component | Tests | Status |
 |---------|-----------|-------|--------|
-| Fleet coordination commands (reboot, scan_burst, ota_update, etc.) | tritium-sc | 20 tests | Complete |
-| Device group management | tritium-sc | Unit tested | Complete |
-| Config template system (3 built-in + custom CRUD) | tritium-sc | Unit tested | Complete |
-| Fleet analytics dashboard + history | tritium-sc | Unit tested | Complete |
-| Coverage map endpoint | tritium-sc | Unit tested | Complete |
+| History analytics API | tritium-sc | Unit tested | Complete |
+| Weather overlay API | tritium-sc | Unit tested | Complete |
+| AR export API | tritium-sc | Unit tested | Complete |
+| Amy briefing API | tritium-sc | Unit tested | Complete |
+| Movement analytics API | tritium-sc | Unit tested | Complete |
+| Ollama health endpoint | tritium-sc | Unit tested | Complete |
+| Nearby targets API | tritium-sc | Unit tested | Complete |
+| Picture of day API | tritium-sc | Unit tested | Complete |
 
-## Wave 78 Features (Maintenance)
+## Wave 84 Features (Maintenance + Operational Readiness)
 
 | Feature | Component | Tests | Status |
 |---------|-----------|-------|--------|
-| Plugin auto-discovery verification on boot | tritium-sc | 10 tests (2 new) | Complete |
-| Plugin discovery report endpoint (`/api/plugins/discovery`) | tritium-sc | 2 tests | Complete |
-| Boot self-test enhanced with plugin discovery details | tritium-sc | Integrated | Complete |
-| Health endpoint updated with discovery report + baselines | tritium-sc | Verified | Complete |
-| Agent files updated with current counts | docs | -- | Complete |
-| STATUS.md, CHANGELOG.md, iteration queue updated | docs | -- | Complete |
+| CorrelationLearner refactored to extend BaseLearner | tritium-sc | 10 tests | Complete |
+| BLEClassificationLearner refactored to extend BaseLearner | tritium-sc | 10 tests | Complete |
+| Operational readiness checklist (`/api/system/readiness`) | tritium-sc | 10 tests | Complete |
+| Unified event feed (`/api/events/unified`) | tritium-sc | 10 tests | Complete |
+| STATUS.md updated to Wave 84 state | docs | -- | Complete |
 
-## Codebase Metrics (Wave 78 Baseline)
+## Codebase Metrics (Wave 84 Baseline)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 78 |
-| **Total features shipped** | 175+ |
-| **Total lines of code** | ~535,000 across 3 repos |
-| **SC Python source** | ~99,700 lines |
-| **SC Python tests** | ~253,400 lines |
-| **SC JS (frontend)** | ~70,300 lines |
-| **SC CSS** | ~13,500 lines |
-| **Lib Python** | ~22,500 lines |
-| **Edge C++/H** | ~75,500 lines (296 files) |
-| **Frontend JS files** | 133 |
-| **Frontend panels** | 71 registered |
+| **Total waves completed** | 84 |
+| **Total features shipped** | 195+ |
+| **Total lines of code** | ~619,000 across 3 repos |
+| **SC Python source** | ~101,800 lines |
+| **SC Python tests** | ~254,600 lines |
+| **SC JS (frontend)** | ~72,100 lines |
+| **SC CSS** | ~13,800 lines |
+| **Lib Python source** | ~24,500 lines |
+| **Lib Python tests** | ~19,800 lines |
+| **Edge C++/H** | ~62,500 lines (222 project files) |
+| **Frontend JS files** | 139 |
+| **Frontend panels** | 74 registered |
 | **Active plugins** | 17 (16 directory + 1 built-in NPC Intelligence) |
-| **API routers** | 78 router files |
-| **API routes** | 598+ (463 core + 135 plugin) |
-| **Lib model files** | 61 |
+| **API routers** | 81 router files |
+| **API routes** | 501+ |
+| **Lib model files** | 66 |
 | **HALs** | 50 |
 | **Correlation strategies** | 5 (spatial, temporal, signal_pattern, dossier, learned) |
-| **Intelligence modules** | 7 (2,667 lines) |
-| **Agent definition files** | 11 |
-| **Total test files** | 840 (672 SC + 89 lib + 79 edge) |
+| **Intelligence modules** | 7 (all using BaseLearner ABC) |
+| **Total test files** | 880 (743 SC + 97 lib + 39 edge) |
 
-## Test Results (Wave 78 Baseline)
+## Test Results (Wave 84 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib pytest | 1,822 passed, 29 skipped | All passing |
-| tritium-sc test.sh fast | 97 tiers passed, 0 failed | All passing |
-| tritium-sc plugin API tests | 10 passed | All passing |
-| tritium-sc test files | 672 (577 py + 95 js) | -- |
-| tritium-lib test files | 89 | -- |
+| tritium-lib pytest | 1,957 passed | All passing |
+| tritium-sc new tests (Wave 84) | 30 passed | All passing |
+| tritium-sc test files | 743 (644 py + 99 js) | -- |
+| tritium-lib test files | 97 | -- |
 | tritium-edge build | 49.6% RAM, 29.2% Flash | 0 warnings, SUCCESS |
-| **Total test files** | **840** across all repos | -- |
+| **Total test files** | **880** across all repos | -- |
 
 ## Architecture
 
 ```
   tritium-edge (C++17)     tritium-sc (Python+JS)     tritium-lib (Python)
   ==================       =====================       ===================
-  ESP32-S3 firmware        FastAPI :8000               61 model files
-  6 board types            17 plugins                  324+ dataclasses
-  296 source files         78 routers                  89 test files
-  50 HALs                  598+ routes                 Graph DB, Auth
+  ESP32-S3 firmware        FastAPI :8000               66 model files
+  6 board types            17 plugins                  340+ dataclasses
+  222 source files         81 routers                  97 test files
+  50 HALs                  501+ routes                 Graph DB, Auth
   MQTT, BLE, WiFi          AI Commander Amy            Events, MQTT topics
   LoRa, ESP-NOW            YOLO, WebSocket             Geo, Notifications
   hal_ble_features         Canvas 2D/3D map            Classifier, COT
-  Fleet server :8080       7 intelligence modules      FeatureVector models
-  Intelligence pipeline    71 frontend panels          1,822 tests
+  Fleet server :8080       7 intelligence modules      BaseLearner ABC
+  Intelligence pipeline    74 frontend panels          1,957 tests
 ```
 
 ## Plugins (17 active)
@@ -134,6 +135,8 @@ Current state of all components as of 2026-03-14 (Wave 78 — Maintenance).
 | SC classification feedback to edge via MQTT | Working |
 | Fleet coordination commands to device groups | Working |
 | Plugin auto-discovery with boot report | Working |
+| Operational readiness checklist | Working |
+| Unified event feed | Working |
 
 ## Known Blockers
 

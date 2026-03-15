@@ -2,6 +2,24 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 84 (2026-03-14): Maintenance — Learner Consolidation, Readiness Checklist, Unified Events
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| `CorrelationLearner` refactored to extend `BaseLearner` from tritium-lib — eliminates duplicated persistence/status tracking logic | Unit tested (10 tests) |
+| `BLEClassificationLearner` refactored to extend `BaseLearner` from tritium-lib — uses `_serialize`/`_deserialize` instead of custom `_load_model`/`_save_model` | Unit tested (10 tests) |
+| All 3 learners (Correlation, BLE Classification, Pattern) now share `BaseLearner` ABC | Verified |
+| `/api/system/readiness` — operational readiness checklist with green/yellow/red per item: MQTT, demo mode, auth, plugins, stores, Meshtastic, Ollama, Amy, database | Unit tested (10 tests) |
+| `/api/events/unified` — unified event feed combining tactical events, notifications, audit log, Amy thoughts into one chronological stream with source/since/limit filters | Unit tested (10 tests) |
+| Both new routers registered in `main.py` | Verified |
+
+### docs
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated to Wave 84 baseline: 84 waves, ~619K LOC, 1957 lib tests, 74 panels, 81 routers | Verified |
+| CHANGELOG.md updated | Verified |
+
 ## Wave 83 (2026-03-14): Event Store Persistence, History Analytics, Pattern Learning, Morning Briefing
 
 ### tritium-sc
