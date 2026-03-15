@@ -2,6 +2,24 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 144 (2026-03-15): Activity Heatmap + Device First/Last Seen + DailyPattern Model
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| Target activity heatmap — /api/analytics/activity-heatmap 24-bin hourly histogram of sightings | Router created, registered in main.py |
+| Per-target activity heatmap — /api/analytics/activity-heatmap/{target_id} with regularity_score | Router created |
+| Analytics dashboard: embedded 24-hour heatmap visualization with color intensity bars | JS verified |
+| Fleet dashboard: first-seen/last-seen columns, >1h offline warning highlight [!] | JS verified |
+| Fleet device-activity endpoint — /api/fleet/device-activity with potentially_offline flag | Route created |
+| DailyPattern model in tritium-lib — hourly_counts, peak_hour, quiet_hours, regularity_score | 17 tests pass |
+| DailyPattern: compute_regularity_score (normalized entropy), is_daytime_only/nighttime_only | Unit tested |
+| STATUS.md updated through Wave 143 | Complete |
+| Lib pytest: 2,411 passing (up from 2,394), 29 skipped | pytest verified |
+| Edge build: 49.9% RAM, 29.4% Flash, 0 warnings | pio run verified |
+
+---
+
 ## Wave 143 (2026-03-15): Security + RL Clean Retrain + Ops Accuracy Widget + Group Viz
 
 ### Changes
