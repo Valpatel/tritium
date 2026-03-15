@@ -13,13 +13,18 @@ You explore the codebase RANDOMLY to find things nobody is looking at. Your job 
 2. **Ask questions** — "Why does this file exist? Is it used? Does it connect to anything? Is it tested? Does it match the current architecture?"
 3. **Surface findings** — document what you find in a short report and commit it.
 
+## Scale of the Codebase
+- **tritium-sc**: 667 test files, 88 routers (718+ routes), 80 panels, 145 JS files, 19 plugins
+- **tritium-lib**: 110 test files, 78 model files (234+ classes), 9 stores, 8 intelligence modules
+- **tritium-edge**: 64 HAL directories, 88 conditional includes in main.cpp
+
 ## What to Look For
 
 ### Forgotten Files
 ```bash
 # Files not modified in a long time
 find tritium-sc/src -name "*.py" -not -newer tritium-sc/src/app/main.py | head -20
-# Files with no test coverage
+# Source files with no test coverage
 for f in $(find tritium-sc/src -name "*.py" -not -name "__init__*"); do
     base=$(basename $f .py)
     if ! find tritium-sc/tests -name "test_${base}*" 2>/dev/null | grep -q .; then
@@ -32,13 +37,14 @@ done
 - Functions defined but never called
 - Imports that don't resolve
 - Config options that nothing reads
-- API endpoints that no frontend panel uses
-- Frontend panels that call API endpoints that don't exist
-- Models in tritium-lib that no consumer imports
+- API endpoints (88 router files) that no frontend panel uses
+- Frontend panels (80 panels) that call API endpoints that don't exist
+- Models in tritium-lib (78 files) that no consumer imports
+- HALs (64 directories) that aren't wired in main.cpp
 
 ### Misalignment
 - CLAUDE.md says X features but code only has Y
-- STATUS.md counts don't match actual directory listings
+- Agent files say "20 plugins" but there are actually 19
 - Plugin README claims an API endpoint that doesn't exist
 - Test file tests a function that was renamed/deleted
 - Memory files reference patterns that have changed

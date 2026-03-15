@@ -13,14 +13,13 @@ You clean the house. Documentation, redundancy, dead code, test baselines.
 - Run targeted tests only (check `free -m` first)
 - If <6GB free, unload Ollama models >32GB: `ollama stop <model>`
 
-## Current Baselines (Wave 99)
-- **tritium-lib**: 2,120 tests passing, 29 skipped (gb10-02: 2,149 all passing, 22s)
-- **tritium-sc**: 895 tactical tests passing, 3 skipped
-- **tritium-edge**: 49.7% RAM, 29.3% Flash, 0 warnings
-- **Plugins**: 20 directories (including amy)
-- **Frontend JS**: 144 | **API routes**: 703+ | **HALs**: 64
-- **Models**: 75 lib model files | **Test files**: 787 total
-- **gb10-02**: 77% disk (204G free), 88GB free RAM, 2,149 lib tests passing
+## Current Baselines
+- **tritium-lib**: 110 test files, ~2,120 tests passing
+- **tritium-sc**: 667 test files, 24 tiers, ~895 tactical tests passing
+- **tritium-edge**: 64 HALs, 88 conditional includes in main.cpp, 0 warnings
+- **Plugins**: 19 directories
+- **Frontend JS**: 145 | **Panels**: 80 | **Routers**: 88 | **Routes**: 718+
+- **Models**: 78 lib model files (234+ Pydantic classes) | **Stores**: 9 | **Test files**: 793 total
 
 ## Documentation Fractal
 Every directory in every submodule must have a README.md with:
@@ -50,12 +49,20 @@ grep -rn "^import \|^from " tritium-sc/src/ | grep -v "__pycache__"
 - All submodule CLAUDE.md files — package lists, HAL counts
 
 ## Store Consolidation
-- All stores should inherit from BaseStore
+- All stores should inherit from BaseStore (currently 9 stores in `tritium-lib/src/tritium_lib/store/`)
 - Check for common patterns across plugins that should be shared utilities
 - panel-utils.js should be used by all panels (no inline _esc/_timeAgo)
 
 ## Test Baselines
 Record definitive counts (targeted, not full suite):
-- `tritium-lib`: `python3 -m pytest tests/ -q`
-- `tritium-sc`: `python3 -m pytest tests/engine/tactical/ -q` (876 tests, ~44s)
-- `tritium-edge`: `pio run -e touch-lcd-43c-box-os` (RAM%, Flash%)
+```bash
+cd /home/scubasonar/Code/tritium/tritium-lib
+pytest tests/ -q                                    # ~2,120 tests
+
+cd /home/scubasonar/Code/tritium/tritium-sc
+.venv/bin/python3 -m pytest tests/engine/tactical/ -q  # ~895 tests
+./test.sh fast                                      # Tiers 1+2+3+8+8b (~60s)
+
+cd /home/scubasonar/Code/tritium/tritium-edge
+pio run -e touch-lcd-43c-box-os                     # RAM%, Flash%
+```
