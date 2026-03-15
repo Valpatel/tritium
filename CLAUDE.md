@@ -81,11 +81,43 @@ You are expected to build independently. Do NOT stop to ask the user unless you 
 
 **If you need information from the user:** Do NOT stop and wait. Save the question to `docs/QUESTIONS.md` (append, don't overwrite), then continue working on other tasks. The user will answer when they see it. Meanwhile, make your best judgment and keep building. There is ALWAYS other work to do — pick a different task, run quality checks, do maintenance, explore the codebase, refactor. Stopping to ask is never acceptable when you can do something else productive.
 
+### VISUAL VERIFICATION GATE — NON-NEGOTIABLE
+
+**Before launching ANY wave**, run this 30-second check. If it fails, fix it before doing anything else.
+
+```bash
+cd tritium-sc
+./start.sh &                           # Start server
+sleep 10
+curl -s -X POST http://localhost:8000/api/demo/start  # Start demo data
+# Then run headed Playwright check:
+.venv/bin/python3 -c "
+from playwright.sync_api import sync_playwright
+import time
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=False)
+    page = browser.new_page(viewport={'width':1920,'height':1080})
+    page.goto('http://localhost:8000', timeout=20000)
+    time.sleep(8)
+    page.screenshot(path='tests/.baselines/visual_gate.png')
+    # Check: map visible? targets? not black screen?
+    has_map = page.query_selector('.maplibregl-map') is not None
+    errors = []
+    page.on('pageerror', lambda e: errors.append(e.message))
+    print(f'MAP: {has_map}, ERRORS: {len(errors)}')
+    browser.close()
+"
+```
+
+**If the screenshot shows a black screen, stop everything.** The frontend is broken. Fix it first. No new features until the user can see the product.
+
+**Why this exists:** Wave 158 revealed that the frontend was a blank black screen for 60+ waves. CSP blocked all CDN resources, a subscribe crash killed init. 93 panels were built that nobody could see. Unit tests proved nothing. Only a headed browser catches rendering failures.
+
 ### The Loop
-1. **Assume it's broken.** Tests passing does NOT mean it works. Code compiling does NOT mean it's correct. Features existing does NOT mean they integrate. Assume massive gaps in testing, architectural flaws, and untested edge cases.
+1. **Assume it's broken.** Tests passing does NOT mean it works. Code compiling does NOT mean it's correct. Features existing does NOT mean they integrate. **A black screen with passing tests is still a black screen.**
 2. **Push the vision.** Read this file. Every target needs a unique UUID. Every sensor feeds the unified picture. Ask: what's the biggest gap between where we are and the vision?
 3. **Build features AND quality.** Every wave must include vision advancement (new capabilities) AND quality improvement (find what's actually broken, add missing tests, run visual validation).
-4. **Verify.** RAM <60%, Flash <50%, no warnings. Run tests. But also: start the server, hit the API, verify the frontend renders, check that demo mode actually shows fusion.
+4. **Verify with your eyes.** RAM <60%, Flash <50%, no warnings. Run tests. **Start the server. Open a browser. Look at it. Screenshot it.** If the map doesn't show, if targets don't appear, if panels are blank — the feature is not done.
 5. **Commit & push.** Short descriptive message. NO Co-Authored-By. Push to dev.
 6. **Update changelogs.** Every change logged in `docs/CHANGELOG.md` with verification level.
 7. **Launch 6+ parallel agents.** Every wave: 2-3 feature agents, 1 quality/testing agent, 1 infrastructure agent, 1 test-runner that auto-launches the next wave.
