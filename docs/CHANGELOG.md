@@ -2,6 +2,31 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 88 (2026-03-14): Collaboration + Edge Autonomy
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| models/collaboration.py — SharedWorkspace, WorkspaceEvent, OperatorAction, MapDrawing, OperatorChatMessage models | 13 tests passing |
+| Registered in models/__init__.py with full __all__ exports | Import test passing |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Collaboration router — shared investigation workspaces with WebSocket broadcast (join/leave/entity/annotate/status) | 12 tests passing |
+| Map drawing collaboration — create/update/delete drawings, real-time WS broadcast to all operators | 8 tests passing |
+| Operator chat panel — text chat between operators with audit logging, channel support | 6 tests passing |
+| WebSocket handlers for live drawing strokes (drawing_update) and inline chat (chat_message) | Code review |
+| Router registered in main.py | Verified |
+
+### tritium-edge
+| Change | Verification |
+|--------|-------------|
+| hal_scan_optimizer — autonomous BLE/WiFi scan interval adjustment based on sighting rates | Code review |
+| Activity levels: quiet/normal/busy/spike with configurable thresholds | Code review |
+| Spike detection with cooldown, oscillation prevention with hold time | Code review |
+| JSON status output for heartbeat payload | Code review |
+
 ## Wave 87 (2026-03-14): Maintenance — HAL Wiring, Agent Updates, Test Baselines
 
 ### tritium-edge
