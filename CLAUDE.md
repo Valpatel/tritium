@@ -155,6 +155,13 @@ The system must eventually self-improve WITHOUT Claude. Use small local models (
   - On security waves: **1 security agent** (read `.claude/agents/security-agent.md`)
   - On RL waves: **1 RL agent** (read `.claude/agents/rl-agent.md`)
 - **RESOURCE SAFETY**: Feature agents run TARGETED tests only (their specific test files, not full suite). Only the test-runner runs `./test.sh fast`. Never run multiple full test suites concurrently — this will OOM the system. Check `free -m` before heavy operations.
+- **HEADED TESTS**: Prefer visible output the user can watch:
+  - Run servers in foreground (`./start.sh` not backgrounded) so the user sees logs
+  - Run Playwright tests headed (`--headed`) so the browser is visible
+  - Show build output live (don't redirect to /dev/null)
+  - Run pytest with `-v` not `-q` when the user might be watching
+  - Start demo mode visibly — the user seeing targets appear on the map IS verification
+  - The user watching and commenting in real time is the highest-value testing
 - **BROAD SCOPE**: Don't only build new features. Also:
   - Complete the stack for existing features (backend-only → add frontend + edge)
   - Audit previous waves: can a user SEE this in the browser? Does data flow edge→SC→browser?
