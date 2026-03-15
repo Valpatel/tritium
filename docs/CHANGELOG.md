@@ -2,6 +2,19 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 137 (2026-03-15): WAV-Trained Acoustic Classifier, Amy Vehicle Awareness, GeoJSON Trails, Auto-Gain
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| tritium-sc: WAV-based acoustic classifier training — `train_from_wavs()`, `train_from_wav_directory()`, ESC-50 category map, MFCCClassifier v2 | 16 tests passing |
+| tritium-sc: Amy vehicle behavior awareness — instinct layer polls VehicleTrackingManager, narrates loitering/crawling/erratic movement | 13 tests passing |
+| tritium-sc: GeoJSON trail export — direct `/targets/{id}/trail/export?format=geojson` with FeatureCollection, start/end markers, speed/heading metadata | Code review |
+| tritium-lib: AcousticTrainingSet model — AcousticTrainingExample, add/remove/split/balance/export, TrainingSource enum | 22 tests passing |
+| tritium-edge: Microphone auto-gain control — EMA-smoothed RMS tracking, clipping detection, self-calibrating gain, GainStats diagnostics | Firmware builds: RAM 49.9%, Flash 29.4% |
+
+---
+
 ## Wave 136 (2026-03-15): Maintenance — STATUS Update + Plugin Audit + Agent Refiner
 
 ### Changes
