@@ -2,6 +2,27 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 125 (2026-03-15): Acoustic TDoA + RL Prediction Cones
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| tritium-lib: TDoAObservation, TDoAResult, compute_tdoa_position models for standardized TDoA computation | 16 pytest passing |
+| tritium-sc: Acoustic plugin TDoA endpoint — buffers edge observations, localizes when 3+ sensors report | Syntax + import verified |
+| tritium-sc: POST /api/acoustic/tdoa/submit + GET /api/acoustic/tdoa/results API routes | Syntax verified |
+| tritium-sc: Target prediction cones scaled by RL model confidence (0.6x high, 1.8x low, 1.0x default) | Import + function verified |
+| tritium-edge: NTP-synced microsecond timestamps for acoustic TDoA — get_tdoa_timestamp() + get_tdoa_event_json() | Build verified: 49.9% RAM, 29.4% Flash |
+| RL model retrained: accuracy dropped to 50.5% (was 76.7% at Wave 123) with 596 examples (was 60) — overfitting on small dataset exposed | Server-verified |
+| Training data growth: 62,316 correlation observations, 596 confirmed (was 188), 5,736 classifications | Server-verified |
+
+### RL Model Analysis
+The correlation model accuracy dropped from 76.7% (60 examples) to 50.5% (596 examples).
+This indicates the initial high accuracy was overfitting on a very small dataset.
+With 10x more data, the model reveals that the current 6 features (distance, rssi_delta,
+co_movement, device_type_match, time_gap, signal_pattern) are insufficient for reliable
+correlation. Next steps: add more features (velocity similarity, temporal pattern matching),
+try gradient boosting, or collect higher quality labeled data.
+
 ## Wave 124 (2026-03-15): Maintenance + Agent Refiner
 
 ### Changes
