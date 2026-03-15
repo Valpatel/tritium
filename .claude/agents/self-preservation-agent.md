@@ -304,6 +304,12 @@ if [ -n "$OLLAMA_PID" ]; then
 fi
 ```
 
+**Ollama model kill rules:**
+- **>32GB models: FREE KILL** — unload immediately without asking. Development iterations are the priority.
+- 4-32GB models: check if actively used before unloading
+- <4GB models: leave loaded (useful for Amy, enrichment, visual testing)
+- The coding process ALWAYS takes priority over loaded models
+
 **Resource-aware model unloading** — free memory when needed:
 ```bash
 # If system is under memory pressure, unload models from Ollama
