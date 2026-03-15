@@ -2,6 +2,26 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 146 (2026-03-15): RTSP Timeout Fix + Convoy Visualization + First-Seen Notifications
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| RTSP camera probe timeout fix — NVR discovery wrapped in asyncio.wait_for (default 3s), runs as background task at startup | Code review |
+| ReconnectingFrameBuffer non-blocking start — RTSP probe runs in background thread with 3s timeout, never blocks server | Code review |
+| nvr_discovery_timeout config setting added to Settings | Code review |
+| Convoy visualization on map — ConvoyOverlayManager draws bounding boxes with CONVOY label and member count | JS created |
+| Convoy color by suspicious score — green (normal), yellow (moderate), red/magenta (suspicious) | JS created |
+| Convoy panel — lists active convoys with speed, heading, duration, and click-to-center-on-map | JS created |
+| /api/convoys endpoint — returns active convoys enriched with member geo positions and bounding boxes | Router created |
+| BLE first-seen notification — ble:first_seen event published when completely new MAC detected | 17 tests pass |
+| NotificationManager auto-subscribes to ble:first_seen events | 23 tests pass |
+| NotificationTemplate built-in templates — added ble:first_seen and convoy_detected templates in tritium-lib | 56 tests pass |
+| BLE scan interval auto-tuning defaults updated — >20 devices: 5s pause, <5 devices: 30s pause | Code review |
+| BLE scan stats JSON includes auto_tune_mode and auto_tune_pause_ms for SC visibility | Code review |
+
+---
+
 ## Wave 145 (2026-03-15): Convoy Detection + Daily Summary + BLE Adv Monitor
 
 ### Changes
