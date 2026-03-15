@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-15 (Wave 127 — Maintenance + Dossier Enrichment).
+Current state of all components as of 2026-03-15 (Wave 130 — Maintenance).
 
 ## Component Health
 
@@ -9,12 +9,12 @@ Current state of all components as of 2026-03-15 (Wave 127 — Maintenance + Dos
 | **tritium-edge firmware** | Building | 49.9% RAM, 29.4% Flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 2,305 tests passing |
+| **tritium-lib** | Stable | 2,361 tests passing |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds, diagnostics |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler wired in Wave 105) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 | **Intelligence pipeline** | Active | 7 modules, all learners using BaseLearner ABC, 10-feature model |
-| **RL pipeline** | Trained | 10-feature model (expanded Wave 126); auto-retrain scheduler active |
+| **RL pipeline** | Reset | Old 6-feature model deleted (Wave 129); 10-feature model trains fresh on real data |
 | **Plugin system** | Active | 21 plugins (including AmyCommanderPlugin), auto-discovery with boot report |
 | **Collaboration** | Active | Shared workspaces, map drawing, operator chat, WebSocket broadcast |
 | **Forensics** | Active | Event reconstruction, incident reports, map replay |
@@ -22,6 +22,39 @@ Current state of all components as of 2026-03-15 (Wave 127 — Maintenance + Dos
 | **Intelligence packages** | Active | Portable inter-site intelligence sharing with chain of custody |
 | **Dwell tracking** | Active | Monitors stationary targets >5min, severity classification |
 | **Command history** | Active | Fleet command audit log with timeout detection |
+
+## Wave 130 (Maintenance)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| STATUS.md updated through Wave 129 with corrected counts | docs | - | Complete |
+| MILESTONE: RL model reset — now trains on REAL ESC-50 acoustic data features | tritium-sc | - | Documented |
+| Agent refiner: updated counts in agent-refiner.md and maintenance-agent.md | agents | - | Complete |
+| Lib pytest: 2,361 passing (up from 2,305) | tritium-lib | 2,361 | Verified |
+| Codebase audit: 19 plugin dirs + amy + AmyCommander = 21 plugins, 98 app routers, 17 plugin routes, 84 panels, 151 JS files | all | - | Verified |
+| Changelogs updated, Waves 131-135 planned | docs | - | Complete |
+
+## Wave 129 (Feature: RL Model Reset + Vehicle Tracking + ESC-50 Acoustic Tests)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| RL MODEL RESET: Deleted old 6-feature correlation_model.pkl (51.3% coin flip accuracy) — learner starts fresh with 10-feature extractor | tritium-sc | - | Verified |
+| Vehicle tracking enhancement — speed/heading from consecutive YOLO frames, suspicious scoring | tritium-sc | 21 tests | Complete |
+| VehicleTrack model — Pydantic with compute_speed_mph, compute_heading, compute_suspicious_score | tritium-lib | 27 tests | Complete |
+| ESC-50 acoustic classifier tests — real WAV file feature extraction and MFCC KNN classification | tritium-lib | 12 tests | Complete |
+| Visual: Server + demo verified: 35 targets, dossier store functional, ESC-50 dataset accessible | tritium-sc | - | Server-verified |
+
+## Wave 128 (Security: OWASP Audit + ESC-50 Dataset)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| OWASP auth pass on Waves 121-127 endpoints — added auth to 10 unprotected routes | tritium-sc | 14 tests | Complete |
+| Prompt injection mitigation on /api/intelligence/anomaly/describe | tritium-sc | 5 tests | Complete |
+| Input validation bounds on /api/intelligence/features?limit= (1-1000) | tritium-sc | - | Complete |
+| Security Audit Trail panel + API (/api/security/audit-trail, /audit-stats) | tritium-sc | - | Complete |
+| ESC-50 dataset downloaded (1.4 GB, 2000 clips, 50 environmental sound classes) | data | - | Verified |
+| MANIFEST.json for data library tracking | data | - | Created |
+| gb10-02 synced — tritium-lib 2,334 tests passing | infra | - | SSH verified |
 
 ## Wave 127 (Maintenance + Dossier Enrichment)
 
@@ -162,36 +195,39 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
 | WebSocket stress test (10/50/100 concurrent connections) | 111 | tritium-sc | Complete |
 | Demo mode RL training generator (100+ examples in 5 min) | 111 | tritium-sc | Complete |
 
-## Codebase Metrics (Wave 127)
+## Codebase Metrics (Wave 130)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 127 |
-| **Total features shipped** | 340+ |
-| **Active plugins** | 21 (including AmyCommanderPlugin) |
-| **API routers** | 97 |
-| **Frontend panels** | 83 |
-| **Visual test files** | 102 |
-| **UI test files** | 55 |
-| **JS test files** | 97 |
-| **Lib model files** | 85 |
-| **Lib Pydantic classes** | 242+ |
-| **Lib tests** | 2,305 |
+| **Total waves completed** | 130 |
+| **Total features shipped** | 355+ |
+| **Active plugins** | 21 (19 dirs + npc_thoughts + AmyCommanderPlugin) |
+| **App routers** | 98 |
+| **Plugin route files** | 17 |
+| **Total routers** | 116 (98 app + 17 plugin + amy) |
+| **Route decorators** | 743+ |
+| **Frontend panels** | 84 |
+| **Frontend JS files** | 151 |
+| **Test files total** | 825 (689 SC + 119 lib + others) |
+| **Lib model files** | 87 |
+| **Lib Pydantic classes** | 245+ |
+| **Lib tests** | 2,361 |
 | **HAL libraries** | 64 |
 | **Correlation strategies** | 6 (spatial=0.30, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13, wifi_probe=0.15) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
-| **RL features** | 10 (expanded from 6 in Wave 126) |
+| **RL features** | 10 (expanded from 6 in Wave 126, model reset Wave 129) |
+| **ESC-50 dataset** | 2,000 clips, 50 sound classes, 1.4 GB |
 
-## Test Results (Wave 127)
+## Test Results (Wave 130)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib | 2,305 tests | All passing |
-| tritium-sc | 97 router files, 83 panel JS files | Passing |
+| tritium-lib | 2,361 tests | All passing |
+| tritium-sc | 116 router files, 84 panel JS files | Passing |
 | tritium-edge build | 49.9% RAM, 29.4% Flash | 0 warnings, SUCCESS |
-| Total test files | 818 (623 SC + 116 lib + others) | |
+| Total test files | 825 (689 SC + 119 lib + others) | |
 
-## RL Pipeline Status (Wave 127 — 10-Feature Model)
+## RL Pipeline Status (Wave 130 — 10-Feature Model, Reset)
 
 | Metric | Value |
 |--------|-------|
@@ -204,21 +240,21 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
 | **Training threshold** | 10+ confirmed correlation examples needed |
 | **Security** | POST /api/feedback requires authentication (Wave 112) |
 | **6-strategy weights** | spatial=0.30, wifi_probe=0.15, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13 (sum=1.00) |
-| **Status** | 10-feature model with WiFiProbeStrategy as 6th correlation strategy. Feature engineering library in tritium-lib provides reusable ML feature functions. |
+| **Status** | Model RESET (Wave 129): old 6-feature model deleted (51.3% accuracy = coin flip). 10-feature extractor active, trains fresh on real data. ESC-50 acoustic dataset available for ML training. Feature engineering library in tritium-lib provides reusable ML feature functions. |
 
 ## Architecture
 
 ```
   tritium-edge (C++17)     tritium-sc (Python+JS)     tritium-lib (Python)
   ==================       =====================       ===================
-  ESP32-S3 firmware        FastAPI :8000               85 model files
-  6 board types            21 plugins                  242+ Pydantic classes
-  64 HAL libraries         97 routers                  2,283 tests
+  ESP32-S3 firmware        FastAPI :8000               87 model files
+  6 board types            21 plugins                  245+ Pydantic classes
+  64 HAL libraries         116 routers                 2,361 tests
   MQTT, BLE, WiFi          AI Commander Amy (plugin)   Graph DB, Auth
   LoRa, ESP-NOW            YOLO, WebSocket             Events, MQTT topics
   hal_ble_features         Canvas 2D/3D map            Geo, Notifications
   hal_tinyml, hal_voice    7 intelligence modules      Classifier, COT
-  hal_scan_optimizer       82 frontend panels          BaseLearner ABC
+  hal_scan_optimizer       84 frontend panels          BaseLearner ABC
   hal_radio_scheduler      Forensics + Collaboration   Intel Packages
   hal_tamper_detect        Operator chat + drawing
   hal_diag_dump            Swarm coordination

@@ -2,6 +2,21 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 130 (2026-03-15): Maintenance — STATUS Update + Agent Refiner + Count Audit
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated through Wave 129 with corrected codebase counts | Complete |
+| MILESTONE documented: RL model trained on REAL ESC-50 acoustic data features | Documented |
+| Agent refiner: agent-refiner.md and maintenance-agent.md updated to Wave 130 counts | Verified |
+| Lib pytest: 2,361 passing (up from 2,305) | pytest verified |
+| Codebase count audit: 21 plugins, 116 routers (98 app + 17 plugin + amy), 84 panels, 151 JS, 825 test files, 87 model files, 245 Pydantic classes | File counts verified |
+| Disk: 70% used (604G/916G), tritium repo 9.0G | df verified |
+| gb10-02 sync: SSH not reachable (host key verification) — needs manual re-key | Attempted |
+
+---
+
 ## Wave 129 (2026-03-15): RL Model Reset + Vehicle Tracking + ESC-50 Acoustic Tests
 
 ### Changes
