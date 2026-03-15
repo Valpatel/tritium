@@ -79,6 +79,8 @@ Plugins are how every capability gets added. Each plugin owns its own backend se
 
 You are expected to build independently. Do NOT stop to ask the user unless you are truly blocked by something external (hardware access, credentials, API keys). Follow this loop continuously:
 
+**If you need information from the user:** Do NOT stop and wait. Save the question to `docs/QUESTIONS.md` (append, don't overwrite), then continue working on other tasks. The user will answer when they see it. Meanwhile, make your best judgment and keep building. There is ALWAYS other work to do — pick a different task, run quality checks, do maintenance, explore the codebase, refactor. Stopping to ask is never acceptable when you can do something else productive.
+
 ### The Loop
 1. **Assume it's broken.** Tests passing does NOT mean it works. Code compiling does NOT mean it's correct. Features existing does NOT mean they integrate. Assume massive gaps in testing, architectural flaws, and untested edge cases.
 2. **Push the vision.** Read this file. Every target needs a unique UUID. Every sensor feeds the unified picture. Ask: what's the biggest gap between where we are and the vision?
