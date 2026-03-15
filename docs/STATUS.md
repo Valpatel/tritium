@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (Wave 103 — Maintenance + Features).
+Current state of all components as of 2026-03-14 (Wave 106 — Maintenance).
 
 ## Component Health
 
@@ -11,7 +11,7 @@ Current state of all components as of 2026-03-14 (Wave 103 — Maintenance + Fea
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
 | **tritium-lib** | Stable | 2,152+ tests passing |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds, diagnostics |
-| **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
+| **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler wired in Wave 105) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 | **Intelligence pipeline** | Active | 7 modules, all learners using BaseLearner ABC |
 | **Plugin system** | Active | 20 plugins (including AmyCommanderPlugin), auto-discovery with boot report |
@@ -19,6 +19,17 @@ Current state of all components as of 2026-03-14 (Wave 103 — Maintenance + Fea
 | **Forensics** | Active | Event reconstruction, incident reports, map replay |
 | **Fleet management** | Active | Device lifecycle, health summary, remote diagnostics |
 | **Intelligence packages** | Active | Portable inter-site intelligence sharing with chain of custody |
+
+## Wave 105 Features
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| Radio scheduler (hal_radio_scheduler) wired into main.cpp — BLE/WiFi coex blocker resolved | tritium-edge | Build Verified | Complete |
+| Tamper detection (hal_tamper_detect) wired with conditional compilation | tritium-edge | Build Verified | Complete |
+| Radio scheduler + tamper detect status in boot summary | tritium-edge | Build Verified | Complete |
+| Threat level history — 24h ring buffer + GET /api/threat-level/history | tritium-sc | Unit Tested | Complete |
+| Security audit: 6 tests verifying threat calculator integrity | tritium-sc | Unit Tested | Complete |
+| Amy Commander Plugin verified (Phase 4 — EventBus + WarAnnouncer plugin-owned) | tritium-sc | Unit Tested | Complete |
 
 ## Wave 103 Features
 
@@ -30,12 +41,12 @@ Current state of all components as of 2026-03-14 (Wave 103 — Maintenance + Fea
 | Edge diagnostics frontend panel | tritium-sc | JS panel | Complete |
 | STATUS.md update to Wave 103 | docs | - | Complete |
 
-## Codebase Metrics (Wave 103)
+## Codebase Metrics (Wave 106)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 103 |
-| **Total features shipped** | 260+ |
+| **Total waves completed** | 106 |
+| **Total features shipped** | 270+ |
 | **Active plugins** | 20 (including AmyCommanderPlugin) |
 | **API routes** | 715+ |
 | **Frontend JS files** | 145 |
@@ -44,13 +55,13 @@ Current state of all components as of 2026-03-14 (Wave 103 — Maintenance + Fea
 | **Correlation strategies** | 5 (spatial, temporal, signal_pattern, dossier, learned) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
 
-## Test Results (Wave 103)
+## Test Results (Wave 106)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib new tests | 32 passed | All passing |
-| tritium-sc new plugin tests | 29 passed | All passing |
-| tritium-edge build | 49.7% RAM, 29.3% Flash | 0 warnings, SUCCESS |
+| tritium-lib | 2,152+ tests | All passing |
+| tritium-sc mesh layer tests | Updated for neighbor-based links | Passing |
+| tritium-edge build | 49.8% RAM, 29.4% Flash | 0 warnings, SUCCESS |
 
 ## Architecture
 
@@ -133,5 +144,5 @@ Current state of all components as of 2026-03-14 (Wave 103 — Maintenance + Fea
 ## Known Blockers
 
 - **NimBLE esp_bt.h not found** -- blocks BLE serial + BLE OTA. WiFi/mesh/SD alternatives work.
-- **BLE/WiFi coexistence** -- can't run BLE scanner alongside WiFi. Radio scheduler HAL ready for testing.
+- **BLE/WiFi coexistence** -- can't run BLE scanner alongside WiFi. Radio scheduler HAL wired (Wave 105), needs serial verification.
 - **RGB parallel display glitches** -- 43C-BOX cosmetic issue when USB connected.

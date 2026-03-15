@@ -2,6 +2,20 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 106 (2026-03-14): Maintenance — Real Mesh Links + MQTT Security + Auth Fix
+
+### Features
+| Change | Verification |
+|--------|-------------|
+| Removed fake 10km LoRa coverage circles from mesh-layer.js | 34 JS tests passing |
+| Mesh links now based on real neighbor data only (metadata.neighbors, rssi_map) | 34 JS tests passing |
+| Link lines colored by actual per-link SNR, hop count labels at midpoints | 34 JS tests passing |
+| Node icons sized by real SNR (6-12px range) | JS tests passing |
+| Mosquitto ACL config template at conf/mosquitto/acl.conf (role-based topic access) | Created |
+| MQTT security deployment guide at docs/MQTT_SECURITY.md | Created |
+| Target classify API (POST /{id}/classify) now requires authentication | Code change |
+| STATUS.md updated with Wave 105 achievements (radio scheduler, tamper detect, Amy plugin) | Updated |
+
 ## Wave 104 (2026-03-14): Threat Level Calculator + GPX Export + Amy Phase 4
 
 ### Features
