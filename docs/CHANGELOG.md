@@ -2,6 +2,19 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 121 (2026-03-15): Multi-Node Trilateration Demo + Target Handoff Visualization
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| TrilaterationDemoGenerator: 3 fixed edge nodes + 3 moving BLE targets with path-loss RSSI model | Code review |
+| Demo mode wires TrilaterationDemoGenerator alongside existing generators | Code review |
+| HandoffLineManager: animated arc visualization on MapLibre map for target handoffs | Code review |
+| WS bridge forwards edge:target_handoff and trilat:position_update to frontend | Code review |
+| Orphan routers registered: dwell.py, mesh_environment.py (created but never wired) | Code review |
+| STATUS.md updated through Wave 121 | Complete |
+| tritium-lib: 2,272 tests passing (up from 2,265) | pytest |
+
 ## Wave 120 (2026-03-15): Security Audit + WebSocket Token Refresh + Security Status
 
 ### Changes
