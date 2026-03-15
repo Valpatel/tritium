@@ -1,0 +1,45 @@
+{
+  "step1": {
+    "map_visible": true,
+    "marker_count": 8,
+    "js_errors": 0
+  },
+  "step2": {
+    "geofence_elements_found": 1,
+    "geofence_details": [
+      {
+        "selector": "[title*='Draw']",
+        "text": "",
+        "visible": true
+      }
+    ],
+    "nav_items": [],
+    "clicked_geofence_panel": false
+  },
+  "step3": {
+    "draw_buttons_found": [],
+    "note": "Geofence panel not opened"
+  },
+  "step4_api": {
+    "geofences_api": {
+      "error": "Failed to fetch"
+    }
+  },
+  "step4_auto": {
+    "automation_api": {
+      "error": "Failed to fetch"
+    }
+  },
+  "step4_notif": "{'error': 'Failed to fetch'}",
+  "step5_create": "{'error': 'Failed to fetch'}",
+  "step5_toasts": [
+    "\ud83d\udd14\n159",
+    "\ud83d\udd14",
+    "159",
+    "100"
+  ],
+  "step5_notif_after": "{'error': 'Failed to fetch'}",
+  "step5_events": "{'error': 'Failed to fetch'}",
+  "step6_geofences": "{'error': 'Failed to fetch'}",
+  "js_errors": []
+}
