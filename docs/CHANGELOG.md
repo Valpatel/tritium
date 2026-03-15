@@ -2,6 +2,39 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 85 (2026-03-14): Security Audit + Geofence Intelligence + Fusion Dashboard
+
+### Security
+| Change | Verification |
+|--------|-------------|
+| `/api/events/unified` now requires `require_auth` — prevents unauthenticated access to audit log, tactical events, Amy thoughts | Verified (server test) |
+| `/api/audit` and `/api/audit/stats` now require `require_auth` — protects client IPs and request paths | Verified |
+| Unified event feed redacts `ip_address`, `client_ip`, `remote_addr` fields from audit entries | Verified |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| `engine/tactical/geofence_intelligence.py` — GeofenceIntelligence auto-starts investigations when targets enter geofenced zones with threat_score > 0.5; adds nearby targets as related entities | Unit tested (8 tests) |
+| `/api/fusion/status` — fusion pipeline health: total fusions, confirmation rate, hourly rate, source pairs, active correlations, strategy weights | Verified (server test) |
+| `/api/fusion/strategies` — per-strategy performance metrics | Verified |
+| `/api/fusion/pairs` — fusion counts by source pair | Verified |
+| `/api/fusion/weights` — recommended strategy weights from operator feedback | Verified |
+| `frontend/js/command/panels/fusion-dashboard.js` — fusion pipeline health panel with source pair bars, strategy table, weight recommendation visualization | Created |
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| `intelligence/fusion_metrics.py` — FusionMetrics: thread-safe correlation success tracking, per-strategy accuracy, source pair counting, rolling hourly rates, RL weight recommendations | Unit tested (17 tests) |
+
+### Demo Mode Verification
+| Check | Result |
+|-------|--------|
+| Server starts cleanly | 18 plugins, 8/8 boot self-test |
+| `POST /api/demo/start` | 5 generators active (BLE, Meshtastic, 2x Camera, Fusion) |
+| `GET /api/targets` | 13 targets (BLE + YOLO sources) |
+| `GET /api/fusion/status` | Returns valid JSON |
+| `GET /api/events/unified` | Returns audit events |
+
 ## Wave 84 (2026-03-14): Maintenance — Learner Consolidation, Readiness Checklist, Unified Events
 
 ### tritium-sc
