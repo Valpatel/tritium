@@ -2,6 +2,31 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 99 (2026-03-14): Maintenance — Wave 100 Prep
+
+### Documentation & Agent Files
+| Change | Verification |
+|--------|-------------|
+| STATUS.md comprehensive update to Wave 99 (250+ features, 20 plugins, 703+ routes) | Updated |
+| CLAUDE.md test baselines updated to Wave 99 (2,120 lib, 895 SC tactical) | Updated |
+| All 12 agent files updated with Wave 98 counts + AmyCommanderPlugin | Updated |
+| Iteration queue: Waves 97-98 marked DONE, Wave 100 planned | Updated |
+
+### Infrastructure
+| Change | Verification |
+|--------|-------------|
+| Disk cleanup: __pycache__, .pytest_cache, .test-results removed | Verified |
+| gb10-02 synced: pull + pip install, 2,149 lib tests passing (22s) | Verified |
+| Disk: gb10-01 72% (246G free), gb10-02 77% (204G free) | Verified |
+
+### Test Baselines (Wave 99)
+| Suite | Count | Status |
+|-------|-------|--------|
+| tritium-lib | 2,120 passed, 29 skipped | All passing (3.2s) |
+| tritium-lib on gb10-02 | 2,149 passed | All passing (22s) |
+| tritium-sc tactical | 895 passed, 3 skipped | All passing (48s) |
+| tritium-edge build | 49.7% RAM, 29.3% Flash | 0 warnings, SUCCESS |
+
 ## Wave 98 (2026-03-14): Fleet Management & Amy Plugin Architecture
 
 ### Features

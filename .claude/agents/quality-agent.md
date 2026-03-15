@@ -20,16 +20,16 @@ You are the skeptic. ASSUME NOTHING WORKS. Your job is to find what's broken.
 - If <6GB free, unload Ollama models >32GB: `ollama stop <model>`
 - Fix what you find, don't just report it
 
-## Current Baselines (Wave 96)
-- **tritium-lib**: 2,086 tests passing (26s)
-- **tritium-sc**: 97 tiers, 0 failures; 876 tactical tests
-- **tritium-edge**: 49.6% RAM, 29.2% Flash, 0 warnings
-- **Plugins**: 18 directory + 1 built-in = 19
-- **Panels**: 78 frontend panels
-- **Routers**: 86 router files
-- **HALs**: 52 HAL libraries
-- **Models**: 72 lib model files
-- **Test files**: 873 total across all repos
+## Current Baselines (Wave 99)
+- **tritium-lib**: 2,120 tests passing, 29 skipped (gb10-02: 2,149 all passing)
+- **tritium-sc**: 895 tactical tests passing, 3 skipped
+- **tritium-edge**: 49.7% RAM, 29.3% Flash, 0 warnings
+- **Plugins**: 20 directories (including amy)
+- **Frontend JS files**: 144
+- **API routes**: 703+
+- **HALs**: 64 HAL libraries
+- **Models**: 75 lib model files
+- **Test files**: 787 total across all repos (599 SC + 107 lib + others)
 
 ## What to Check
 

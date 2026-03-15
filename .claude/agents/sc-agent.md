@@ -7,13 +7,14 @@ description: Deep context on the Command Center — plugins, panels, APIs, Amy, 
 
 You are the Command Center specialist. You know every plugin, panel, API endpoint, and subsystem.
 
-## Current State (updated Wave 93)
-- **Server**: FastAPI on :8000, 685+ routes
-- **Panels**: 77 panel JS files across 7 categories (Tactical, Intelligence, Sensors, Fleet, AI & Comms, Simulation, System)
-- **Plugins**: 19 active (edge_tracker, meshtastic, camera_feeds, fleet_dashboard, yolo_detector, tak_bridge, gis_layers, automation, threat_feeds, rf_motion, acoustic, federation, graphlings, npc_thoughts, behavioral_intelligence, floorplan, wifi_fingerprint, swarm_coordination, edge_autonomy)
+## Current State (updated Wave 99)
+- **Server**: FastAPI on :8000, 703+ routes
+- **Frontend**: 144 JS files across 7 categories (Tactical, Intelligence, Sensors, Fleet, AI & Comms, Simulation, System)
+- **Plugins**: 20 active (edge_tracker, meshtastic, camera_feeds, fleet_dashboard, yolo_detector, tak_bridge, gis_layers, automation, threat_feeds, rf_motion, acoustic, federation, graphlings, npc_thoughts, behavioral_intelligence, floorplan, wifi_fingerprint, swarm_coordination, edge_autonomy, amy)
 - **Intelligence**: 5-strategy correlator (spatial/temporal/signal/dossier/learned), RL pipeline, anomaly baseline, BLE classification learner, BaseLearner ABC, ModelRegistry for federation model sharing
-- **Amy**: 4-layer cognitive AI (reflex->instinct->awareness->deliberation), instinct auto-dispatch, sensorium with BLE/mesh/RF/anomaly awareness
-- **Plugin system**: auto-discovery with boot verification report, /api/plugins/discovery endpoint. 4 plugins use EventDrainPlugin base, 14 extend PluginInterface directly.
+- **Amy**: AmyCommanderPlugin (Wave 98 refactor) — 4-layer cognitive AI (reflex->instinct->awareness->deliberation), instinct auto-dispatch, sensorium with BLE/mesh/RF/anomaly awareness. Now a proper plugin discoverable by PluginManager.
+- **Plugin system**: auto-discovery with boot verification report, /api/plugins/discovery endpoint. 4 plugins use EventDrainPlugin base, rest extend PluginInterface directly.
+- **Fleet**: Device lifecycle management (provisioning/active/maintenance/retired/error), health summary API, group commands
 - **Collaboration**: shared workspaces, map drawing (9 types), operator chat with channels
 - **Forensics**: event reconstruction, incident reports, map replay panel
 - **Swarm**: multi-robot formations (line/wedge/circle/diamond/column), waypoint patrol
@@ -39,13 +40,13 @@ tritium-sc/
 │   │   ├── actions/     # dispatch, motor, announcer
 │   │   └── comms/       # transcript
 │   ├── app/             # FastAPI backend
-│   │   ├── routers/     # 693+ routes
+│   │   ├── routers/     # 703+ routes
 │   │   └── migrations/  # Versioned schema
 │   └── frontend/        # Vanilla JS
-│       ├── js/command/  # Command center modules + 77 panels
+│       ├── js/command/  # Command center modules + 144 JS files
 │       └── css/         # CYBERCORE design language
-├── plugins/             # 19 plugin directories (18 dir + 1 built-in)
-├── tests/               # 825+ test files (624 Python + 99 JS + 102 lib)
+├── plugins/             # 20 plugin directories (including amy)
+├── tests/               # 599 Python test files
 └── examples/            # 8 reference implementations
 ```
 

@@ -46,11 +46,11 @@ Three git submodules, all track `dev` branch. See [docs/ARCHITECTURE.md](docs/AR
 | **Shared Library** | `tritium-lib/` | Python (+ C++, JS future) | — | [CLAUDE.md](tritium-lib/CLAUDE.md) | Common code: models, MQTT topics, auth, events, test utils, themes |
 
 ### Plugin System (the growth engine)
-Plugins are how every capability gets added. Each plugin owns its own backend services, API routes, UI panels, and pub/sub topics. Current plugins (17 active):
+Plugins are how every capability gets added. Each plugin owns its own backend services, API routes, UI panels, and pub/sub topics. Current plugins (20 active):
 - **edge_tracker** — BLE/WiFi presence → TargetTracker → map, with BLE classifier
 - **meshtastic** — LoRa mesh radio bridge, GPS-equipped nodes on map
 - **camera_feeds** — multi-source camera management (synthetic/RTSP/MJPEG/MQTT/USB)
-- **fleet_dashboard** — device registry, battery, uptime, sighting counts, group commands, config templates
+- **fleet_dashboard** — device registry, lifecycle management, health summary, group commands
 - **yolo_detector** — YOLO object detection pipeline
 - **tak_bridge** — ATAK/CoT interoperability (multicast UDP, TCP, MQTT)
 - **gis_layers** — OSM/satellite/terrain/building map layers
@@ -64,6 +64,9 @@ Plugins are how every capability gets added. Each plugin owns its own backend se
 - **behavioral_intelligence** — target behavior profiling, pattern detection, anomaly alerting
 - **floorplan** — indoor floor plan management, room-level localization
 - **wifi_fingerprint** — WiFi probe request correlation, device fingerprinting
+- **swarm_coordination** — multi-robot formations and waypoints
+- **edge_autonomy** — autonomous edge decision processing
+- **amy** — AI Commander Amy (4-layer cognitive AI, sensorium, instinct dispatch)
 
 ### Integration
 - MQTT broker for device telemetry, commands, and chat
@@ -259,16 +262,17 @@ cd tritium-sc && ./start.sh
 143. **Edge-to-edge target handoff** — seamless tracking across node boundaries
 144. **Predictive threat scoring** — ML-based threat probability from behavior patterns
 
-## Test Baselines (Wave 90)
-- **tritium-lib**: 2,018 tests passing (100 test files)
-- **tritium-sc**: 97 tiers passing, 0 failures (733 Python + 100 JS test files)
-- **tritium-edge**: 49.6% RAM, 29.2% Flash, 0 warnings
-- **Total test files**: 933+ across all repos
-- **Frontend panels**: 76 registered (7 categories)
-- **Plugins**: 17 active (16 directory + 1 built-in)
-- **API routes**: 693+
-- **HALs**: 55+
-- **Lib models**: 360+ classes from 95 model files
+## Test Baselines (Wave 99)
+- **tritium-lib**: 2,120 tests passing, 29 skipped (107 test files)
+- **tritium-lib on gb10-02**: 2,149 tests passing (full deps, 22s)
+- **tritium-sc tactical**: 895 tests passing, 3 skipped (48s)
+- **tritium-edge**: 49.7% RAM, 29.3% Flash, 0 warnings
+- **Total test files**: 787 across all repos
+- **Frontend JS files**: 144
+- **Plugins**: 20 active (including AmyCommanderPlugin)
+- **API routes**: 703+
+- **HALs**: 64
+- **Lib models**: 360+ classes from 75 model files
 
 ## Known Blockers
 - **NimBLE esp_bt.h not found** — BLE scanner runs stubs, WiFi/mesh alternatives work fine

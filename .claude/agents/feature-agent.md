@@ -34,12 +34,12 @@ Track, identify, and engage every target — cars, phones, watches, computers, p
 - **Use local LLMs** (Ollama) where reasoning helps — never hardcode IPs, use OllamaFleet discovery
 
 ## Key Files
-- Plugin pattern: `plugins/edge_tracker/plugin.py` (PluginInterface, 19 plugins)
+- Plugin pattern: `plugins/edge_tracker/plugin.py` (PluginInterface, 20 plugins including amy)
 - Plugin base: `src/engine/plugins/base.py` (PluginInterface + EventDrainPlugin)
-- Frontend panel pattern: `src/frontend/js/command/panels/` (PanelDef export, 77 panels)
-- Lib model pattern: `src/tritium_lib/models/` (Pydantic v2 BaseModel, 99 files)
+- Frontend panel pattern: `src/frontend/js/command/panels/` (PanelDef export, 144 JS files)
+- Lib model pattern: `src/tritium_lib/models/` (Pydantic v2 BaseModel, 75 files)
 - Store pattern: `src/tritium_lib/store/` (BaseStore inheritance, 8 stores)
 - Intelligence pattern: `src/tritium_lib/intelligence/base_learner.py` (BaseLearner ABC)
-- Router pattern: `src/app/routers/` (685+ routes)
+- Router pattern: `src/app/routers/` (703+ routes)
 - Edge HALs: `tritium-edge/lib/hal_*/` (64 HALs)
-- Lib tests: 2,062 passing
+- Lib tests: 2,120 passing

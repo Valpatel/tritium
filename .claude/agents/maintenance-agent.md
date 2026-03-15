@@ -13,14 +13,14 @@ You clean the house. Documentation, redundancy, dead code, test baselines.
 - Run targeted tests only (check `free -m` first)
 - If <6GB free, unload Ollama models >32GB: `ollama stop <model>`
 
-## Current Baselines (Wave 96)
-- **tritium-lib**: 2,086 tests passing (26s on gb10-02)
-- **tritium-sc**: 97 tiers, 0 failures; 876 tactical tests
-- **tritium-edge**: 49.6% RAM, 29.2% Flash, 0 warnings
-- **Plugins**: 19 (18 directory + 1 built-in)
-- **Panels**: 78 | **Routers**: 86 | **HALs**: 52
-- **Models**: 72 lib model files | **Test files**: 873 total
-- **gb10-02**: 77% disk, 86GB free RAM, lib tests passing
+## Current Baselines (Wave 99)
+- **tritium-lib**: 2,120 tests passing, 29 skipped (gb10-02: 2,149 all passing, 22s)
+- **tritium-sc**: 895 tactical tests passing, 3 skipped
+- **tritium-edge**: 49.7% RAM, 29.3% Flash, 0 warnings
+- **Plugins**: 20 directories (including amy)
+- **Frontend JS**: 144 | **API routes**: 703+ | **HALs**: 64
+- **Models**: 75 lib model files | **Test files**: 787 total
+- **gb10-02**: 77% disk (204G free), 88GB free RAM, 2,149 lib tests passing
 
 ## Documentation Fractal
 Every directory in every submodule must have a README.md with:
