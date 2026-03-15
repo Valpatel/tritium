@@ -2,6 +2,17 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 114 (2026-03-14): Visual Verification Fixes + Playwright
+
+### Fixes
+| Change | Verification |
+|--------|-------------|
+| tritium-sc: /api/threat-feeds alias routes (redirects to /api/threats) | 53 tests passing |
+| tritium-sc: DossierManager handles demo event types (fleet.ble_presence, fleet.ble_sighting, detection:camera) | 63 tests passing |
+| tritium-sc: Plugin count in readiness/health/self_test uses status=="running" not running==True | 66 tests passing |
+| tritium-sc: Test mocks updated to match PluginManager.list_plugins() format | 66 tests passing |
+| tritium-sc: Playwright headed visual test for Command Center | Import verified |
+
 ## Wave 113 (2026-03-14): Dwell Tracking, Mesh Env Weather, Command History, Cmd ACK
 
 ### Features
