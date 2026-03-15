@@ -2,6 +2,35 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 93 (2026-03-14): Maintenance — Docs, Tests, Plugin Audit
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| test_annotations.py upgraded from model-only tests to full TestClient API tests — CRUD, validation, layers, edge cases (22 tests, was 8) | All 22 passing |
+| Plugin redundancy audit: 14/19 plugins extend PluginInterface directly, duplicating event queue boilerplate. 4 use EventDrainPlugin. All 16 route plugins share identical _register_routes pattern | Documented in STATUS.md |
+
+### docs
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated to Wave 93: 19 plugins, 685+ routes, 77 panels, 99 model files, 2,062 lib tests | Verified |
+| CHANGELOG.md updated with Waves 91-93 | Verified |
+| Plugin counts corrected: 19 directory plugins (added swarm_coordination, edge_autonomy) | Verified |
+
+### infrastructure
+| Change | Verification |
+|--------|-------------|
+| gb10-02 synced: git pull + submodule update successful | Verified |
+| gb10-02 tritium-lib: 2,062 tests passing (20.5s) | Verified |
+| Local tritium-lib: 2,062 tests passing (11.6s) | Verified |
+
+### test baselines
+| Suite | Count | Status |
+|-------|-------|--------|
+| tritium-lib | 2,062 | All passing |
+| tritium-lib (gb10-02) | 2,062 | All passing |
+| tritium-sc annotations | 22 (up from 8) | All passing |
+
 ## Wave 92 (2026-03-14): Security Hardening + Threat Model + API Scoping
 
 ### tritium-lib

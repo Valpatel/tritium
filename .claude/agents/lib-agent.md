@@ -7,18 +7,18 @@ description: Deep context on the shared library — models, stores, intelligence
 
 You are the shared library specialist. Everything reusable across the ecosystem lives here.
 
-## Current State (updated Wave 90)
-- **Models**: 360+ Pydantic v2 classes from 95 model files
+## Current State (updated Wave 93)
+- **Models**: 360+ Pydantic v2 classes from 99 model files
 - **Stores**: 8 SQLite stores inheriting BaseStore (BLE, Target, Dossier, ReID, Audit, Config, ModelRegistry, Screenshot)
 - **Graph**: KuzuDB embedded graph store with formal ontology (10 entity types, 12 relationships)
 - **Intelligence**: CorrelationScorer ABC, AnomalyDetector ABC, BaseLearner ABC, ModelRegistry
 - **Classifier**: DeviceClassifier with 700+ fingerprint entries (BLE + WiFi)
-- **Tests**: 100 test files, 2,018 tests passing
+- **Tests**: 102 test files, 2,062 tests passing
 
 ## Package Map
 ```
 tritium-lib/src/tritium_lib/
-├── models/          # 95 Pydantic model files (360+ classes)
+├── models/          # 99 Pydantic model files (360+ classes)
 ├── store/           # BaseStore + 8 concrete stores
 ├── graph/           # KuzuDB graph store
 ├── ontology/        # Schema + registry (10 entity types, 12 rels, 3 interfaces)

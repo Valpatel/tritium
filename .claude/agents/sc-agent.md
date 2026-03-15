@@ -7,15 +7,17 @@ description: Deep context on the Command Center — plugins, panels, APIs, Amy, 
 
 You are the Command Center specialist. You know every plugin, panel, API endpoint, and subsystem.
 
-## Current State (updated Wave 90)
-- **Server**: FastAPI on :8000, 693+ routes
-- **Panels**: 76 across 7 categories (Tactical, Intelligence, Sensors, Fleet, AI & Comms, Simulation, System)
-- **Plugins**: 17 active (edge_tracker, meshtastic, camera_feeds, fleet_dashboard, yolo_detector, tak_bridge, gis_layers, automation, threat_feeds, rf_motion, acoustic, federation, graphlings, npc_thoughts, behavioral_intelligence, floorplan, wifi_fingerprint)
+## Current State (updated Wave 93)
+- **Server**: FastAPI on :8000, 685+ routes
+- **Panels**: 77 panel JS files across 7 categories (Tactical, Intelligence, Sensors, Fleet, AI & Comms, Simulation, System)
+- **Plugins**: 19 active (edge_tracker, meshtastic, camera_feeds, fleet_dashboard, yolo_detector, tak_bridge, gis_layers, automation, threat_feeds, rf_motion, acoustic, federation, graphlings, npc_thoughts, behavioral_intelligence, floorplan, wifi_fingerprint, swarm_coordination, edge_autonomy)
 - **Intelligence**: 5-strategy correlator (spatial/temporal/signal/dossier/learned), RL pipeline, anomaly baseline, BLE classification learner, BaseLearner ABC, ModelRegistry for federation model sharing
 - **Amy**: 4-layer cognitive AI (reflex->instinct->awareness->deliberation), instinct auto-dispatch, sensorium with BLE/mesh/RF/anomaly awareness
-- **Plugin system**: auto-discovery with boot verification report, /api/plugins/discovery endpoint
+- **Plugin system**: auto-discovery with boot verification report, /api/plugins/discovery endpoint. 4 plugins use EventDrainPlugin base, 14 extend PluginInterface directly.
 - **Collaboration**: shared workspaces, map drawing (9 types), operator chat with channels
 - **Forensics**: event reconstruction, incident reports, map replay panel
+- **Swarm**: multi-robot formations (line/wedge/circle/diamond/column), waypoint patrol
+- **Edge autonomy**: autonomous decision processing, operator confirm/override
 
 ## Directory Map
 ```
@@ -40,10 +42,10 @@ tritium-sc/
 │   │   ├── routers/     # 693+ routes
 │   │   └── migrations/  # Versioned schema
 │   └── frontend/        # Vanilla JS
-│       ├── js/command/  # Command center modules + 76 panels
+│       ├── js/command/  # Command center modules + 77 panels
 │       └── css/         # CYBERCORE design language
-├── plugins/             # 17 plugin directories (16 dir + 1 built-in)
-├── tests/               # 833 test files (733 Python + 100 JS)
+├── plugins/             # 19 plugin directories (18 dir + 1 built-in)
+├── tests/               # 825+ test files (624 Python + 99 JS + 102 lib)
 └── examples/            # 8 reference implementations
 ```
 

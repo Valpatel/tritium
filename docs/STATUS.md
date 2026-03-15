@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (Wave 90 — Milestone).
+Current state of all components as of 2026-03-14 (Wave 93 — Maintenance).
 
 ## Component Health
 
@@ -9,92 +9,88 @@ Current state of all components as of 2026-03-14 (Wave 90 — Milestone).
 | **tritium-edge firmware** | Building | 49.6% RAM, 29.2% flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 2,018 tests passing, 0 failures |
+| **tritium-lib** | Stable | 2,062 tests passing, 0 failures |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds, diagnostics |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 | **Intelligence pipeline** | Active | 7 modules, all learners using BaseLearner ABC |
-| **Plugin system** | Active | 17 plugins (16 directory + 1 built-in), auto-discovery with boot report |
+| **Plugin system** | Active | 19 plugins (18 directory + 1 built-in), auto-discovery with boot report |
 | **Collaboration** | Active | Shared workspaces, map drawing, operator chat, WebSocket broadcast |
 | **Forensics** | Active | Event reconstruction, incident reports, map replay |
 
-## Wave 88-89 Features
+## Wave 91-92 Features
 
 | Feature | Component | Tests | Status |
 |---------|-----------|-------|--------|
-| Shared investigation workspaces | tritium-sc | 12 tests | Complete |
-| Map drawing collaboration (9 types) | tritium-sc | 8 tests | Complete |
-| Operator chat with channels | tritium-sc | 6 tests | Complete |
-| Collaboration models | tritium-lib | 13 tests | Complete |
-| Edge scan optimizer | tritium-edge | Code review | Complete |
-| Forensic reconstructor | tritium-sc | 12 tests | Complete |
-| Incident report generator | tritium-sc | 4 tests | Complete |
-| Map replay controls panel | tritium-sc | Code review | Complete |
-| Edge diagnostic dump (MQTT) | tritium-edge | Code review | Complete |
-| Forensic/incident models | tritium-lib | 15 tests | Complete |
+| Swarm coordination plugin | tritium-sc | Tests passing | Complete |
+| Edge autonomy plugin | tritium-sc | Tests passing | Complete |
+| Mission target binder | tritium-sc | Tests passing | Complete |
+| Cross-camera ReID (YOLO) | tritium-sc | Code review | Complete |
+| Per-user rate limits | tritium-sc | Tests passing | Complete |
+| API key scoping | tritium-sc | Tests passing | Complete |
+| Plugin auth middleware | tritium-sc | Tests passing | Complete |
+| Swarm/autonomy models | tritium-lib | Tests passing | Complete |
+| Swarm coordination panel | tritium-sc frontend | Code review | Complete |
 
-## Wave 90 Features (Milestone)
+## Wave 93 Features (Maintenance)
 
 | Feature | Component | Tests | Status |
 |---------|-----------|-------|--------|
-| 90-wave milestone report | docs | -- | Complete |
-| OWASP security audit (Waves 86-89) | docs | -- | Complete |
-| STATUS.md comprehensive update | docs | -- | Complete |
-| Agent files updated to Wave 90 counts | docs | -- | Complete |
-| Lib test baseline: 2,018 passing | tests | -- | Complete |
-| Iteration queue: Waves 88-89 DONE, 91-95 planned | docs | -- | Complete |
+| STATUS.md update (Waves 88-93) | docs | -- | Complete |
+| Annotations test upgrade (TestClient) | tritium-sc | 22 tests | Complete |
+| Plugin redundancy audit | tritium-sc | -- | Complete |
+| Lib test baseline: 2,062 passing | tests | -- | Complete |
+| gb10-02 sync verified | infrastructure | -- | Complete |
+| Agent files updated | docs | -- | In Progress |
+| Changelogs updated | docs | -- | In Progress |
 
-## Codebase Metrics (Wave 90 Baseline)
+## Codebase Metrics (Wave 93 Baseline)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 90 |
-| **Total features shipped** | 220+ |
-| **SC Python (all)** | ~409,300 lines |
-| **SC Python source** | ~136,100 lines |
-| **SC Python tests** | ~273,200 lines |
-| **SC JS (all)** | ~136,300 lines |
-| **SC CSS** | ~13,800 lines |
-| **Lib Python source** | ~25,600 lines |
-| **Lib Python tests** | ~20,400 lines |
-| **Frontend JS files** | 141 |
-| **Frontend panels** | 76 registered |
-| **Active plugins** | 17 (16 directory + 1 built-in NPC Intelligence) |
-| **API routes** | 693+ |
-| **Lib model files** | 95 |
-| **HALs** | 55+ |
+| **Total waves completed** | 93 |
+| **Total features shipped** | 230+ |
+| **Active plugins** | 19 (18 directory + 1 built-in NPC Intelligence) |
+| **API routes** | 685+ |
+| **Frontend panel files** | 77 |
+| **Lib model files** | 99 |
+| **Lib test files** | 102 |
+| **HAL libraries** | 64 |
+| **SC Python test files** | 624 |
+| **SC JS test files** | 99 |
 | **Correlation strategies** | 5 (spatial, temporal, signal_pattern, dossier, learned) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
-| **Total test files** | 933+ (733 SC Python + 100 SC JS + 100 lib) |
+| **Total test files** | 825+ (624 SC Python + 99 SC JS + 102 lib) |
 
-## Test Results (Wave 90 Baseline)
+## Test Results (Wave 93 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib pytest | 2,018 passed | All passing |
-| tritium-sc test.sh fast | 97 tiers passed, 0 failures | All passing (405s) |
-| tritium-lib on gb10-02 | Needs sync | -- |
+| tritium-lib pytest | 2,062 passed | All passing (11.6s) |
+| tritium-lib on gb10-02 | 2,062 passed | All passing (20.5s) |
+| tritium-sc test.sh fast | Running | Collecting baseline |
 | tritium-edge build | 49.6% RAM, 29.2% Flash | 0 warnings, SUCCESS |
-| **Total test files** | **933+** across all repos | -- |
 
 ## Architecture
 
 ```
   tritium-edge (C++17)     tritium-sc (Python+JS)     tritium-lib (Python)
   ==================       =====================       ===================
-  ESP32-S3 firmware        FastAPI :8000               95 model files
-  6 board types            17 plugins                  360+ dataclasses
-  55+ HALs                 693+ routes                 100 test files
+  ESP32-S3 firmware        FastAPI :8000               99 model files
+  6 board types            19 plugins                  360+ dataclasses
+  64 HAL libraries         685+ routes                 102 test files
   MQTT, BLE, WiFi          AI Commander Amy            Graph DB, Auth
   LoRa, ESP-NOW            YOLO, WebSocket             Events, MQTT topics
   hal_ble_features         Canvas 2D/3D map            Geo, Notifications
   hal_tinyml, hal_voice    7 intelligence modules      Classifier, COT
-  hal_scan_optimizer       76 frontend panels          BaseLearner ABC
-  hal_diag_dump            Forensics + Collaboration   2,018 tests
+  hal_scan_optimizer       77 frontend panels          BaseLearner ABC
+  hal_diag_dump            Forensics + Collaboration   2,062 tests
   Fleet server :8080       Operator chat + drawing
+                           Swarm coordination
+                           Edge autonomy mgmt
 ```
 
-## Plugins (17 active)
+## Plugins (19 active)
 
 | Plugin | Purpose |
 |--------|---------|
@@ -115,6 +111,25 @@ Current state of all components as of 2026-03-14 (Wave 90 — Milestone).
 | wifi_fingerprint | WiFi device fingerprinting |
 | behavioral_intelligence | Pattern detection, anomaly alerting |
 | floorplan | Indoor floor plan + localization |
+| swarm_coordination | Multi-robot formations and waypoints |
+| edge_autonomy | Autonomous edge decision processing |
+
+## Plugin Redundancy Audit (Wave 93)
+
+14 of 19 plugins extend `PluginInterface` directly, duplicating ~30 lines of
+event queue boilerplate each. Only 4 use `EventDrainPlugin`. All 16 plugins
+with routes use the same `_register_routes` pattern:
+
+```python
+def _register_routes(self):
+    from .routes import router
+    self._app.include_router(router)
+```
+
+**Recommendation**: Create a `RoutedPlugin(EventDrainPlugin)` base that adds
+`_register_routes()` as a default implementation. Would eliminate ~20 lines
+per plugin for the 14 non-EventDrainPlugin plugins. Not urgent — current
+pattern works, just verbose.
 
 ## Integration Points
 
@@ -144,6 +159,8 @@ Current state of all components as of 2026-03-14 (Wave 90 — Milestone).
 | Operator collaboration (workspaces + chat + drawing) | Working |
 | Forensic reconstruction + incident reports | Working |
 | Edge diagnostic dump via MQTT cmd | Working |
+| Swarm coordination commands | Working |
+| Edge autonomy decision pipeline | Working |
 
 ## Known Blockers
 
