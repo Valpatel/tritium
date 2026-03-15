@@ -17,8 +17,8 @@ You build firmware for ESP32-S3 Waveshare boards running Tritium-OS.
 ## Architecture
 ```
 tritium-edge/
-├── src/main.cpp          # Entry point (88 conditional includes, app dispatcher)
-├── lib/                  # 64 HAL directories
+├── src/main.cpp          # Entry point (app dispatcher)
+├── lib/                  # 66 HAL directories
 │   ├── BatteryMonitor/   # Battery voltage reading
 │   ├── BatteryWidget/    # Battery UI widget
 │   ├── board_fingerprint/ # Board identification

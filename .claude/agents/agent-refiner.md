@@ -25,52 +25,46 @@ Every agent file must be:
 - **Actionable** — tells the agent exactly what to do, not just what exists
 - **Self-contained** — agent can work without reading other agent files
 
-How to get current counts (Wave 142 verified values):
+How to get current counts (Wave 146 verified values):
 ```bash
 # Plugins (excluding __pycache__)
-ls -d tritium-sc/plugins/*/ | grep -v __pycache__ | wc -l   # → 20 dirs (+2 standalone = 22 total)
+ls -d tritium-sc/plugins/*/ | grep -v __pycache__ | wc -l   # → 21 dirs (+npc_thoughts +built-in npc_intelligence)
 
 # Frontend JS files
-find tritium-sc/src/frontend -name "*.js" | wc -l            # → 154
+find tritium-sc/src/frontend -name "*.js" | wc -l            # → 155
 
 # Panels
 ls tritium-sc/src/frontend/js/command/panels/*.js | wc -l    # → 87
 
-# Registered panels in main.js
-grep "panelManager.register" tritium-sc/src/frontend/js/command/main.js | wc -l  # → 84
-
-# Orphan panels (not registered): 3
-# operator-cursors, weather-overlay, map-screenshot
-
 # App routers
-ls tritium-sc/src/app/routers/*.py | wc -l                   # → 99
+ls tritium-sc/src/app/routers/*.py | wc -l                   # → 101
 
 # Plugin route files
 ls tritium-sc/plugins/*/routes.py | wc -l                    # → 18
 
 # Total routers (app + plugin + amy)
-# 99 + 18 + 1 = 118
+# 101 + 18 + 1 = 120
 
 # Route decorators
-grep -rh '^\s*@router\.\|^\s*@app\.' tritium-sc/src/ tritium-sc/plugins/ --include="*.py" | wc -l  # → 760+
+grep -rh '^\s*@router\.\|^\s*@app\.' tritium-sc/src/ tritium-sc/plugins/ --include="*.py" | wc -l  # → 772+
 
 # HALs
-ls -d tritium-edge/lib/*/ | wc -l                            # → 65
+ls -d tritium-edge/lib/*/ | wc -l                            # → 66
 
 # Lib model files
-find tritium-lib/src -name "*.py" -path "*/models/*" | wc -l # → 89
+find tritium-lib/src -name "*.py" -path "*/models/*" | wc -l # → 94
 
 # Pydantic classes
-grep -r "class.*BaseModel" tritium-lib/src/tritium_lib/models/ --include="*.py" | wc -l  # → 250
+grep -r "class.*BaseModel" tritium-lib/src/tritium_lib/models/ --include="*.py" | wc -l  # → 260+
 
 # Test files total
-find . -name "test_*.py" -not -path "*/.venv/*" -not -path "*/__pycache__/*" | wc -l  # → 760+
+find . -name "test_*.py" -not -path "*/.venv/*" -not -path "*/__pycache__/*" | wc -l  # → 2,165+
 
 # SC test files
-find tritium-sc -name "test_*.py" -not -path "*/.venv/*" | wc -l  # → 636
+find tritium-sc -name "test_*.py" -not -path "*/.venv/*" | wc -l  # → 2,037
 
 # Lib test files
-find tritium-lib -name "test_*.py" -not -path "*/.venv/*" | wc -l  # → 124
+find tritium-lib -name "test_*.py" -not -path "*/.venv/*" | wc -l  # → 128
 
 # test.sh tiers
 grep -c "^tier[0-9]" tritium-sc/test.sh                      # → 24

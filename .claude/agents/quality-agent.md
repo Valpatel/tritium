@@ -20,13 +20,13 @@ You are the skeptic. ASSUME NOTHING WORKS. Your job is to find what's broken.
 - If <6GB free, unload Ollama models >32GB: `ollama stop <model>`
 - Fix what you find, don't just report it
 
-## Current Baselines (Wave 124)
-- **tritium-lib**: 116 test files, 2,283 tests passing
-- **tritium-sc**: 623 test files, 24 tiers in test.sh, ~895 tactical tests passing
-- **tritium-edge**: 64 HAL directories, 88 conditional includes in main.cpp, 0 warnings, 49.9% RAM, 29.4% Flash
-- **Plugins**: 21 (19 directories + 2 standalone: npc_thoughts, AmyCommanderPlugin)
-- **Frontend**: 150 JS files, 83 panels, 97 routers, 718+ route decorators
-- **Models**: 85 lib model files, 242 Pydantic BaseModel classes
+## Current Baselines (Wave 146)
+- **tritium-lib**: 128 test files, 2,452 tests passing
+- **tritium-sc**: 2,037 test files, 24 tiers in test.sh
+- **tritium-edge**: 66 HAL directories, 0 warnings, 49.9% RAM, 29.4% Flash
+- **Plugins**: 21 plugin dirs + npc_thoughts + built-in npc_intelligence
+- **Frontend**: 155 JS files, 87 panels, 101 app routers, 772+ route decorators
+- **Models**: 94 lib model files, 260+ Pydantic BaseModel classes
 - **Stores**: 9 SQLite stores inheriting BaseStore
 - **Test files**: 818 total across all repos (623 SC + 116 lib + others)
 - **RL model**: Trained at 76.7% accuracy (logistic regression on 60 training examples)

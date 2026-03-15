@@ -13,11 +13,11 @@ You explore the codebase RANDOMLY to find things nobody is looking at. Your job 
 2. **Ask questions** — "Why does this file exist? Is it used? Does it connect to anything? Is it tested? Does it match the current architecture?"
 3. **Surface findings** — document what you find in a short report and commit it.
 
-## Scale of the Codebase (Wave 124)
-- **tritium-sc**: 623 test files, 97 routers (718+ routes), 83 panels, 150 JS files, 21 plugins
-- **tritium-lib**: 116 test files (2,283 passing), 85 model files (242+ classes), 9 stores, 8 intelligence modules
-- **tritium-edge**: 64 HAL directories, 88 conditional includes in main.cpp
-- **RL model**: Trained at 76.7% accuracy — 5-strategy correlator with learned weights
+## Scale of the Codebase (Wave 146)
+- **tritium-sc**: 2,037 test files, 101 app routers (772+ routes), 87 panels, 155 JS files, 21 plugin dirs
+- **tritium-lib**: 128 test files (2,452 passing), 94 model files (260+ classes), 9 stores, 8 intelligence modules
+- **tritium-edge**: 66 HAL directories
+- **RL model**: 54.8% accuracy — 6-strategy correlator with 10-feature model
 
 ## What to Look For
 

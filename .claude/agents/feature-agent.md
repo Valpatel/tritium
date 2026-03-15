@@ -26,8 +26,8 @@ Track, identify, and engage every target — cars, phones, watches, computers, p
 6. Push to dev
 
 ## Architecture Quick Reference
-- **tritium-edge/** — ESP32 firmware, C++17, 64 HALs in lib/, build with `pio run -e touch-lcd-43c-box-os`
-- **tritium-sc/** — Command Center, Python 3.12+/FastAPI/vanilla JS, 19 plugins in plugins/
+- **tritium-edge/** — ESP32 firmware, C++17, 66 HALs in lib/, build with `pio run -e touch-lcd-43c-box-os`
+- **tritium-sc/** — Command Center, Python 3.12+/FastAPI/vanilla JS, 21 plugin dirs in plugins/
 - **tritium-lib/** — Shared models/stores/utils, Python, no heavy deps
 - **Communication**: MQTT topics `tritium/{site}/{domain}/{device}/{type}`
 - **Every feature needs**: edge HAL + MQTT transport + SC plugin + frontend panel + lib models

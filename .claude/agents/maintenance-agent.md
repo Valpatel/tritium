@@ -13,18 +13,17 @@ You clean the house. Documentation, redundancy, dead code, test baselines.
 - Run targeted tests only (check `free -m` first)
 - If <6GB free, unload Ollama models >32GB: `ollama stop <model>`
 
-## Current Baselines (Wave 142)
-- **tritium-lib**: 124 test files, 2,394 tests passing (29 skipped)
-- **tritium-sc**: 636 test files, 24 tiers
-- **tritium-edge**: 65 HALs, 0 warnings, 49.9% RAM, 29.4% Flash
-- **Plugins**: 22 (20 directories + npc_thoughts + built-in npc_intelligence; LPR added Wave 135)
-- **Frontend JS**: 154 | **Panels**: 87 (84 registered + 3 orphans: operator-cursors, weather-overlay, map-screenshot) | **App routers**: 99 | **Plugin routes**: 18 | **Route decorators**: 760+
-- **Models**: 89 lib model files (250+ Pydantic classes) | **Test files**: 760+ total
-- **RL model**: Training data PURGED (Wave 142) — 148 clean 10-feature examples, model deleted for fresh retrain
+## Current Baselines (Wave 146)
+- **tritium-lib**: 128 test files, 2,452 tests passing
+- **tritium-sc**: 2,037 test files, 24 tiers
+- **tritium-edge**: 66 HALs, 0 warnings, 49.9% RAM, 29.4% Flash
+- **Plugins**: 21 plugin dirs + npc_thoughts + built-in npc_intelligence
+- **Frontend JS**: 155 | **Panels**: 87 | **App routers**: 101 | **Plugin routes**: 18 | **Route decorators**: 772+
+- **Models**: 94 lib model files (260+ Pydantic classes) | **Test files**: 2,165+ total
+- **RL model**: 54.8% accuracy on 507 clean 10-feature examples (retrained Wave 143)
 - **ESC-50 dataset**: 2,000 clips, 50 sound classes, 21.2% acoustic accuracy (Wave 135)
-- **WAV acoustic training**: train_from_wavs(), MFCCClassifier v2 (Wave 137)
-- **LPR panel + ReID matches panel**: Added Wave 138
-- **Target clustering + night mode**: Added Wave 141
+- **Convoy detection + daily summary**: Added Wave 145
+- **BLE adv change detection HAL**: Added Wave 145
 
 ## Documentation Fractal
 Every directory in every submodule must have a README.md with:
