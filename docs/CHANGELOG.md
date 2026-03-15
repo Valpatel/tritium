@@ -2,6 +2,31 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 82 (2026-03-14): Dossier Enrichment, Weather, EventStore, ESP-NOW Classification
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Dossier environment auto-enrichment — Meshtastic env data (temp/humidity/pressure) auto-added to nearby BLE target dossiers | Unit tested (7 tests) |
+| Weather overlay API (`/api/weather/current`) — Open-Meteo proxy with 10min cache, WMO code mapping, no API key needed | Unit tested (7 tests) |
+| Weather overlay map widget — compact display of temp/wind/conditions at map center | Code reviewed |
+| Operator viewport sharing — cursor_update now includes zoom + bounds, rendered as dashed viewport rectangles on other operators' maps | Code reviewed |
+| DossierEnvEnrichment service: EventBus listener, cooldown, stale target filtering | Unit tested |
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| `store/event_store.py` — EventStore for persisting tactical events (TacticalEvent model), SQLite with time-range/type/severity/target/source queries, batch insert, cleanup | Unit tested (26 tests) |
+| EventStore exported from `tritium_lib.store` package | Verified |
+
+### tritium-edge
+| Change | Verification |
+|--------|-------------|
+| ESP-NOW classification relay — `broadcastClassification()` sends device class results through mesh so other nodes benefit | Build verified (49.6% RAM, 29.2% Flash) |
+| `ClassifyRelay` packed struct, `DeviceClassId` enum (21 device classes), `MeshDataType::CLASSIFY` subtype | Build verified |
+| `onClassifyRelay()` callback for receiving classification data from mesh peers | Build verified |
+| DATA handler routes CLASSIFY subtype to `handleClassifyRelay()` in mesh receive path | Build verified |
+
 ## Wave 80 (2026-03-14): MILESTONE + Security + System Version
 
 ### tritium-sc
