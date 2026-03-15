@@ -38,7 +38,21 @@ You manage the data that feeds Tritium's sensing pipelines. Without real cameras
 - **Formats**: JSON, CSV, PCAP
 - **Storage**: `data/library/rf/`
 
-### 5. Synthetic Data
+### 5. Device & Network Intelligence Databases
+- **Purpose**: Power BLE classification, WiFi geolocation, OUI lookup, device fingerprinting
+- **Sources**: IEEE OUI registry, WiGLE exports, Bluetooth SIG databases, community-maintained device databases
+- **What to manage**:
+  - **OUI database** — IEEE MA-L/MA-M/MA-S → manufacturer mapping (already at sdcard_data/oui.db, keep updated)
+  - **WiFi BSSID → geolocation** — known AP locations for position estimation (WiGLE-style, privacy-respecting public data only)
+  - **BLE fingerprint database** — the JSON files at tritium-lib/src/tritium_lib/data/ (Apple Continuity codes, Fast Pair models, appearance values, company IDs, name patterns, service UUIDs)
+  - **WiFi SSID patterns** — corporate/IoT/hotspot/mesh classification patterns
+  - **DHCP fingerprints** — vendor class identifiers for device OS detection
+  - **mDNS service types** — _airplay._tcp, _googlecast._tcp, etc.
+- **Maintenance**: Periodically check for updated IEEE OUI releases, new BLE device types, new WiFi AP patterns
+- **Formats**: SQLite DB, JSON lookup tables, CSV
+- **Storage**: `tritium-lib/src/tritium_lib/data/` (in git, small files) + `data/library/databases/` (large files, gitignored)
+
+### 6. Synthetic Data
 - **Purpose**: Generate unlimited test data when real datasets aren't available
 - **What to generate**: Synthetic camera frames (existing video_gen), fake BLE scan results, simulated acoustic events, procedural map tiles
 - **Tools**: Use existing `src/engine/synthetic/` generators
@@ -97,13 +111,14 @@ Organize, index, and validate existing data:
 | images/ | 5 GB | Medium — feeds detection training |
 | gis/ | 10 GB | Medium — feeds map layers |
 | rf/ | 2 GB | Low — BLE/WiFi captures are small |
+| databases/ | 5 GB | High — OUI, WiFi geolocation, fingerprints |
 | synthetic/ | 5 GB | Low — can regenerate |
-| **Total** | **37 GB max** | |
+| **Total** | **42 GB max** | |
 
 Check before every download:
 ```bash
 LIBRARY_SIZE=$(du -sm data/library/ 2>/dev/null | awk '{print $1}')
-if [ "$LIBRARY_SIZE" -gt 37000 ]; then
+if [ "$LIBRARY_SIZE" -gt 42000 ]; then
     echo "Library over budget — trim before adding"
 fi
 ```
