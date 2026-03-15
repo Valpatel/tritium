@@ -87,7 +87,7 @@ if host:
 
 See `tests/ui/vlm_sweep_wave4.py` for the real VLM pattern using `requests` + base64 encoding + `http://localhost:11434/api/generate`.
 
-## What to Verify (159 JS files, 91 panels, 22 plugins)
+## What to Verify (161 JS files, 93 panels, ~23 plugins)
 - Dark cyberpunk theme (dominant colors: #0a0a0f background, cyan/magenta accents)
 - No blank white areas (rendering failure)
 - Panels have content (not empty shells) — 91 panels in `src/frontend/js/command/panels/`

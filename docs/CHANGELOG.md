@@ -2,6 +2,76 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 158 (2026-03-15): Maintenance + Agent Refiner
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated through Wave 158 with fresh filesystem counts | Complete |
+| All changelogs updated through Wave 158 in all repos | Complete |
+| All 13 agent files updated with Wave 158 baselines | Complete |
+| Iteration queue trigger schedule updated — maintenance + agent-refiner Last Run = Wave 158 | Complete |
+| Lib pytest: 2,569 passing (up from 2,527) | pytest verified |
+| Codebase counts: 101 app routers, 93 panels, 161 JS files, 21 plugin dirs, 97 lib models, 67 HALs, 133 lib test files | Verified |
+
+---
+
+## Wave 157 (2026-03-15): RL 92% Accuracy + Indoor Positioning Panel
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| RL GridSearchCV hyperparameter optimization — 92.0% accuracy (up from 81.7%) | 113 tests pass |
+| 16-feature model with acoustic_cooccurrence, top: time_of_day_similarity 14.5% | Verified |
+| Indoor positioning panel, fleet indoor position display | Code review |
+| BLE company ID database expanded to 933 entries | Verified |
+
+---
+
+## Wave 156 (2026-03-15): Collaboration Hub + Indoor Positioning Plugin
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| indoor_positioning plugin — WiFi+BLE fusion for indoor localization | Code review |
+| Collaboration API wired to frontend panels | Code review |
+| Dead JS cleanup, acoustic test fix | Code review |
+
+---
+
+## Wave 155 (2026-03-15): Security + Self-Preservation + Librarian
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| Security audit — acoustic/LPR panel fixes, auth hardening | Code review |
+| Librarian — catalog update, data gap analysis | Complete |
+| Self-preservation — health check, gb10-02 sync | Complete |
+
+---
+
+## Wave 154 (2026-03-15): Geofence Drawing + Patrol Routes + Discovery
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| Geofence polygon drawing tool on tactical map | Code review |
+| Patrol route drawing tool on tactical map | Code review |
+| Discovery report Wave 154: API mismatches, dead code, orphan models | Complete |
+
+---
+
+## Wave 153 (2026-03-15): Map Layer Switcher + Fusion Viz + Dossier Enrichment
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| Map layer switcher panel with per-layer toggles | Code review |
+| Fused target indicators with multi-source visualization | Code review |
+| Dossier auto-enrichment with signal history and behavioral profile | Code review |
+
+---
+
 ## Wave 152 (2026-03-15): Maintenance + Agent Refiner
 
 ### Changes

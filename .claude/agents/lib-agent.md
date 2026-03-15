@@ -7,15 +7,15 @@ description: Deep context on the shared library — models, stores, intelligence
 
 You are the shared library specialist. Everything reusable across the ecosystem lives here.
 
-## Current State (Wave 152)
+## Current State (Wave 158)
 - **Models**: 97 model files with 262+ Pydantic v2 BaseModel classes
 - **Stores**: 9 SQLite stores inheriting BaseStore (base, ble, targets, dossiers, reid, audit_log, config_store, event_store, screenshot_store)
 - **Graph**: KuzuDB embedded graph store with formal ontology (10 entity types, 12 relationships)
 - **Intelligence**: 8 files — CorrelationScorer ABC, AnomalyDetector ABC, BaseLearner ABC, ModelRegistry, FusionMetrics, PatternLearner, ThreatModel, RLMetrics
-- **Classifier**: DeviceClassifier with 700+ fingerprint entries (BLE + WiFi)
+- **Classifier**: DeviceClassifier with 933 BLE company IDs + 700+ fingerprint entries (BLE + WiFi)
 - **Testing**: 4 modules — VisualCheck, FlickerAnalyzer, UITestRunner, DeviceAPI
-- **Tests**: 131 test files, 2,527 tests passing
-- **RL model**: 81.7% accuracy on clean 10-feature examples (Wave 150 retrain)
+- **Tests**: 133 test files, 2,569 tests passing
+- **RL model**: 92.0% accuracy on 16-feature model (Wave 157 GridSearchCV retrain)
 
 ## Package Map
 ```
@@ -70,6 +70,6 @@ tritium-lib/src/tritium_lib/
 ```bash
 cd /home/scubasonar/Code/tritium/tritium-lib
 pip install -e ".[full]"     # Install all deps
-pytest tests/ -q             # Run 116 test files (2,283 tests)
+pytest tests/ -q             # Run 133 test files (2,569 tests)
 python -c "from tritium_lib.models import *; print('OK')"  # Import check
 ```

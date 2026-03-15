@@ -25,28 +25,28 @@ Every agent file must be:
 - **Actionable** — tells the agent exactly what to do, not just what exists
 - **Self-contained** — agent can work without reading other agent files
 
-How to get current counts (Wave 152 verified values):
+How to get current counts (Wave 158 verified values):
 ```bash
 # Plugins (excluding __pycache__)
-ls -d tritium-sc/plugins/*/ | grep -v __pycache__ | wc -l   # → 20 dirs (+npc_thoughts +built-in npc_intelligence)
+ls -d tritium-sc/plugins/*/ | grep -v __pycache__ | wc -l   # → 21 dirs (+npc_thoughts +built-in npc_intelligence = ~23)
 
 # Frontend JS files
-find tritium-sc/src/frontend -name "*.js" | wc -l            # → 159
+find tritium-sc/src/frontend -name "*.js" | wc -l            # → 161
 
 # Panels
-find tritium-sc/src/frontend -path "*/panels/*" -name "*.js" | wc -l  # → 91
+find tritium-sc/src/frontend -path "*/panels/*" -name "*.js" | wc -l  # → 93
 
 # App routers
 find tritium-sc/src/app/routers -name "*.py" | wc -l         # → 101
 
 # Plugin route files
-find tritium-sc/plugins -name "routes.py" -o -name "router.py" | wc -l  # → 18
+find tritium-sc/plugins -name "routes.py" -o -name "router.py" | wc -l  # → 19
 
 # Total routers (app + plugin + amy)
-# 101 + 18 + 1 = 120
+# 101 + 19 + 1 = 121
 
 # Route decorators
-grep -rh '^\s*@router\.\|^\s*@app\.' tritium-sc/src/ tritium-sc/plugins/ --include="*.py" | wc -l  # → 755+
+grep -rh '^\s*@router\.\|^\s*@app\.' tritium-sc/src/ tritium-sc/plugins/ --include="*.py" | wc -l  # → 808+
 
 # HALs
 ls -d tritium-edge/lib/*/ | wc -l                            # → 67
@@ -58,10 +58,10 @@ find tritium-lib/src -name "*.py" -path "*/models/*" ! -name "__init__.py" | wc 
 grep -r "class.*BaseModel" tritium-lib/src/tritium_lib/models/ --include="*.py" | wc -l  # → 262+
 
 # Test files total
-find tritium-sc tritium-lib -name "test_*.py" -not -path "*/.venv/*" -not -path "*/__pycache__/*" | wc -l  # → 769+
+find tritium-sc tritium-lib -name "test_*.py" -not -path "*/.venv/*" -not -path "*/__pycache__/*" | wc -l  # → 835+
 
 # SC test files
-find tritium-sc -name "test_*.py" -not -path "*/.venv/*" | wc -l  # → 638
+find tritium-sc -name "test_*.py" -not -path "*/.venv/*" | wc -l  # → 704
 
 # Lib test files
 find tritium-lib -name "test_*.py" -not -path "*/.venv/*" | wc -l  # → 131
@@ -70,13 +70,15 @@ find tritium-lib -name "test_*.py" -not -path "*/.venv/*" | wc -l  # → 131
 grep -c "^tier[0-9]" tritium-sc/test.sh                      # → 24
 
 # Lib tests passing
-cd tritium-lib && python3 -m pytest tests/ -q                # → 2,527
+cd tritium-lib && python3 -m pytest tests/ -q                # → 2,569
 
 # RL model status
-# Retrained Wave 150: 81.7% accuracy on clean 10-feature data
-# Training data PURGED Wave 142 — clean 10-feature examples only
+# Retrained Wave 157: 92.0% accuracy on 16-feature model (GridSearchCV)
+# Top features: time_of_day_similarity 14.5%, acoustic_cooccurrence 11.2%
+# BLE company IDs: 933 in ble_fingerprints.json
 # ESC-50 acoustic: 21.2% accuracy (Wave 135)
 # MFCC+KNN acoustic classifier added Wave 151
+# indoor_positioning plugin added Wave 156
 ```
 
 ### 2. Commands (`.claude/commands/*.md`)

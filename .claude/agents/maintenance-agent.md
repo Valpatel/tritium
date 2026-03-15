@@ -13,15 +13,17 @@ You clean the house. Documentation, redundancy, dead code, test baselines.
 - Run targeted tests only (check `free -m` first)
 - If <6GB free, unload Ollama models >32GB: `ollama stop <model>`
 
-## Current Baselines (Wave 152)
-- **tritium-lib**: 131 test files, 2,527 tests passing
-- **tritium-sc**: 638 test files, 24 tiers
+## Current Baselines (Wave 158)
+- **tritium-lib**: 133 test files, 2,569 tests passing
+- **tritium-sc**: 704 test files, 24 tiers
 - **tritium-edge**: 67 HALs, 0 warnings, 50.6% RAM, 29.4% Flash
-- **Plugins**: 20 plugin dirs + npc_thoughts + built-in npc_intelligence
-- **Frontend JS**: 159 | **Panels**: 91 | **App routers**: 101 | **Plugin routes**: 18 | **Route decorators**: 755+
-- **Models**: 97 lib model files (262+ Pydantic classes) | **Test files**: 769+ total (638 SC + 131 lib)
-- **RL model**: 81.7% accuracy on clean 10-feature examples (retrained Wave 150)
+- **Plugins**: 21 plugin dirs + npc_thoughts + built-in npc_intelligence (~23 total)
+- **Frontend JS**: 161 | **Panels**: 93 | **App routers**: 101 | **Plugin routes**: 19 | **Route decorators**: 808+
+- **Models**: 97 lib model files (262+ Pydantic classes) | **Test files**: 835+ total (704 SC + 131 lib)
+- **RL model**: 92.0% accuracy on 16-feature model (GridSearchCV Wave 157)
+- **BLE company IDs**: 933 in ble_fingerprints.json
 - **ESC-50 dataset**: 2,000 clips, 50 sound classes, 21.2% acoustic accuracy (Wave 135)
+- **indoor_positioning plugin**: WiFi+BLE fusion — Added Wave 156
 - **Acoustic MFCC+KNN classifier**: Added Wave 151 (scipy MFCC + sklearn KNN)
 - **Federation v2**: Target dedup, health monitoring — Added Wave 151
 - **I2S MEMS mic HAL**: Added Wave 151

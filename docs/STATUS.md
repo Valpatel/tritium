@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-15 (Wave 152 — Maintenance + Agent Refiner).
+Current state of all components as of 2026-03-15 (Wave 158 — Maintenance + Agent Refiner).
 
 ## Component Health
 
@@ -9,19 +9,72 @@ Current state of all components as of 2026-03-15 (Wave 152 — Maintenance + Age
 | **tritium-edge firmware** | Building | 49.9% RAM, 29.4% Flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 2,527 tests passing |
+| **tritium-lib** | Stable | 2,569 tests passing |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds, diagnostics |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler wired in Wave 105) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 | **Intelligence pipeline** | Active | 7 modules, all learners using BaseLearner ABC, 10-feature model |
-| **RL pipeline** | Retrained | 81.7% accuracy on clean 10-feature examples (Wave 150 retrain); top feature: source_diversity_score |
-| **Plugin system** | Active | 20 plugin directories + npc_thoughts + built-in npc_intelligence, auto-discovery with boot report |
+| **RL pipeline** | Retrained | 92.0% accuracy on 16-feature model (Wave 157 GridSearchCV retrain); top feature: time_of_day_similarity |
+| **Plugin system** | Active | 21 plugin directories + npc_thoughts + built-in npc_intelligence (~23 total), auto-discovery with boot report |
 | **Collaboration** | Active | Shared workspaces, map drawing, operator chat, WebSocket broadcast |
 | **Forensics** | Active | Event reconstruction, incident reports, map replay |
 | **Fleet management** | Active | Device lifecycle, health summary, remote diagnostics |
 | **Intelligence packages** | Active | Portable inter-site intelligence sharing with chain of custody |
 | **Dwell tracking** | Active | Monitors stationary targets >5min, severity classification |
 | **Command history** | Active | Fleet command audit log with timeout detection |
+
+## Wave 158 (Maintenance + Agent Refiner)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| STATUS.md updated through Wave 158 with fresh counts | docs | - | Complete |
+| All changelogs updated through Wave 158 in all repos | docs | - | Complete |
+| All 13 agent files updated with Wave 158 counts | agents | - | Complete |
+| Iteration queue trigger schedule updated — maintenance + agent-refiner Last Run = Wave 158 | Complete |
+| Lib pytest: 2,569 passing (up from 2,527) | tritium-lib | 2,569 | Verified |
+| Codebase counts: 101 app routers, 93 panels, 161 JS files, 21 plugin dirs, 97 lib models, 67 HALs, 133 lib test files | all | - | Verified |
+
+## Wave 157 (Feature: RL 92% Accuracy + Indoor Positioning Panel + Acoustic Feature)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| RL GridSearchCV hyperparameter optimization — 92.0% accuracy (up from 81.7%) | tritium-sc | 113 tests | Complete |
+| 16-feature model with acoustic_cooccurrence as new feature | tritium-sc | - | Complete |
+| Indoor positioning panel — fleet indoor position display | tritium-sc | - | Complete |
+| Acoustic panel verification | tritium-sc | - | Complete |
+| BLE company ID database expanded to 933 entries in ble_fingerprints.json | tritium-lib | - | Complete |
+
+## Wave 156 (Feature: Collaboration Hub + Indoor Positioning Plugin)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| indoor_positioning plugin — WiFi+BLE fusion for indoor localization | tritium-sc | - | Complete |
+| Collaboration API wired to frontend panels | tritium-sc | - | Complete |
+| Dead JS cleanup, acoustic test fix | tritium-sc | - | Complete |
+
+## Wave 155 (Security + Self-Preservation + Librarian)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| Security audit — acoustic/LPR panel fixes, auth hardening on new endpoints | tritium-sc | - | Complete |
+| Librarian — catalog update, data gap analysis | docs | - | Complete |
+| Self-preservation — health check, gb10-02 sync | infra | - | Complete |
+
+## Wave 154 (Feature: Geofence Drawing + Patrol Routes + Discovery)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| Geofence polygon drawing tool on tactical map | tritium-sc | - | Complete |
+| Patrol route drawing tool on tactical map | tritium-sc | - | Complete |
+| Discovery report Wave 154: API mismatches, dead code, orphan models | docs | - | Complete |
+
+## Wave 153 (Feature: Map Layer Switcher + Fusion Viz + Dossier Enrichment)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| Map layer switcher panel with per-layer toggles | tritium-sc | - | Complete |
+| Fused target indicators with multi-source visualization | tritium-sc | - | Complete |
+| Dossier auto-enrichment with signal history and behavioral profile | tritium-sc | - | Complete |
 
 ## Wave 152 (Maintenance + Agent Refiner)
 
@@ -436,55 +489,57 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
 | WebSocket stress test (10/50/100 concurrent connections) | 111 | tritium-sc | Complete |
 | Demo mode RL training generator (100+ examples in 5 min) | 111 | tritium-sc | Complete |
 
-## Codebase Metrics (Wave 152)
+## Codebase Metrics (Wave 158)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 152 |
-| **Total features shipped** | 410+ |
-| **Active plugins** | 20 plugin dirs + npc_thoughts + built-in npc_intelligence |
+| **Total waves completed** | 158 |
+| **Total features shipped** | 430+ |
+| **Active plugins** | 21 plugin dirs + npc_thoughts + built-in npc_intelligence (~23 total) |
 | **App routers** | 101 |
-| **Plugin route files** | 18 |
-| **Total routers** | 120 (101 app + 18 plugin + amy) |
-| **Route decorators** | 755+ |
-| **Frontend panels** | 91 |
-| **Frontend JS files** | 159 |
-| **Test files total** | 769+ (638 SC + 131 lib) |
+| **Plugin route files** | 19 |
+| **Total routers** | 121 (101 app + 19 plugin + amy) |
+| **Route decorators** | 808+ |
+| **Frontend panels** | 93 |
+| **Frontend JS files** | 161 |
+| **Test files total** | 835+ (704 SC + 131 lib) |
 | **Lib model files** | 97 |
 | **Lib Pydantic classes** | 262+ |
-| **Lib tests** | 2,527 |
+| **Lib tests** | 2,569 |
 | **HAL libraries** | 67 |
+| **BLE company IDs** | 933 (in ble_fingerprints.json) |
 | **Correlation strategies** | 6 (spatial=0.30, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13, wifi_probe=0.15) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
-| **RL features** | 10 (expanded from 6 in Wave 126, model reset Wave 129, purged Wave 142, retrained 81.7% Wave 150) |
+| **RL features** | 16 (expanded: 10 base + acoustic_cooccurrence + 5 others, GridSearchCV tuned Wave 157) |
+| **RL accuracy** | 92.0% (Wave 157, up from 81.7% Wave 150) |
 | **ESC-50 dataset** | 2,000 clips, 50 sound classes, 1.4 GB, 21.2% accuracy benchmark |
 
-## Test Results (Wave 152)
+## Test Results (Wave 158)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib | 2,527 tests | All passing |
-| tritium-sc | 101 router files, 91 panel JS files | Passing |
+| tritium-lib | 2,569 tests | All passing |
+| tritium-sc | 101 router files, 93 panel JS files | Passing |
 | tritium-edge build | 50.6% RAM, 29.4% Flash | 0 warnings, SUCCESS |
-| Total test files | 769+ (638 SC + 131 lib) | |
+| Total test files | 835+ (704 SC + 131 lib) | |
 
-## RL Pipeline Status (Wave 150 — 10-Feature Model, Retrained 81.7%)
+## RL Pipeline Status (Wave 157 — 16-Feature Model, Retrained 92.0%)
 
 | Metric | Value |
 |--------|-------|
 | **TrainingStore DB** | data/training.db (10 MB after vacuum) |
 | **Model path** | data/models/correlation_model.pkl |
-| **Feature count** | 10 (expanded from 6 in Wave 126) |
-| **Features** | distance, rssi_delta, co_movement, device_type_match, time_gap, signal_pattern, co_movement_duration, time_of_day_similarity, source_diversity_score, wifi_probe_correlation |
-| **Training data** | 507+ clean 10-feature examples |
-| **Accuracy** | 81.7% (Wave 150 retrain, up from 54.8% in Wave 143) |
-| **Top feature** | source_diversity_score |
+| **Feature count** | 16 (expanded from 10 in Wave 157, added acoustic_cooccurrence + GridSearchCV tuning) |
+| **Features** | distance, rssi_delta, co_movement, device_type_match, time_gap, signal_pattern, co_movement_duration, time_of_day_similarity, source_diversity_score, wifi_probe_correlation, acoustic_cooccurrence, +5 more |
+| **Training data** | 507+ clean examples |
+| **Accuracy** | 92.0% (Wave 157 GridSearchCV retrain, up from 81.7% in Wave 150) |
+| **Top feature** | time_of_day_similarity (14.5%), acoustic_cooccurrence (11.2%), signal_pattern (7.6%) |
 | **Static fallback** | Active when model=None (graceful degradation) |
 | **Auto-retrain scheduler** | Every 6 hours or 50 new feedback entries |
 | **Training threshold** | 10+ confirmed correlation examples needed |
 | **Security** | POST /api/feedback requires authentication (Wave 112) |
 | **6-strategy weights** | spatial=0.30, wifi_probe=0.15, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13 (sum=1.00) |
-| **Status** | 10-feature model retrained (Wave 150). 81.7% accuracy, up from 54.8% (Wave 143). Feature consistency verified across all modules. |
+| **Status** | 16-feature model retrained (Wave 157). 92.0% accuracy via GridSearchCV (n_estimators=200, max_depth=10). Up from 81.7% (Wave 150). |
 
 ## Architecture
 
@@ -492,8 +547,8 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
   tritium-edge (C++17)     tritium-sc (Python+JS)     tritium-lib (Python)
   ==================       =====================       ===================
   ESP32-S3 firmware        FastAPI :8000               97 model files
-  6 board types            22 plugins                  262+ Pydantic classes
-  67 HAL libraries         120 routers                 2,527 tests
+  6 board types            ~23 plugins                 262+ Pydantic classes
+  67 HAL libraries         121 routers                 2,569 tests
   MQTT, BLE, WiFi          AI Commander Amy (plugin)   Graph DB, Auth
   LoRa, ESP-NOW            YOLO, WebSocket             Events, MQTT topics
   hal_ble_features         Canvas 2D/3D map            Geo, Notifications
@@ -508,7 +563,7 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
                            Proximity monitoring
 ```
 
-## Plugins (22 active)
+## Plugins (~23 active)
 
 | Plugin | Purpose |
 |--------|---------|
@@ -532,6 +587,7 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
 | swarm_coordination | Multi-robot formations and waypoints |
 | edge_autonomy | Autonomous edge decision processing |
 | lpr | License Plate Recognition — watchlist, detection, search |
+| indoor_positioning | WiFi+BLE fusion for indoor localization |
 | amy | AI Commander Amy (4-layer cognitive AI, sensorium, instinct dispatch) |
 
 ## Security Audit (Wave 112)

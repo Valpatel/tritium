@@ -37,11 +37,13 @@ OllamaFleet (discovered via LAN/Tailscale)
 Small models: qwen2.5:3b, phi3:mini, llava:7b
 ```
 
-## RL Model Status (Wave 124)
-- **Correlation model**: Trained at 76.7% accuracy (logistic regression)
-- **Training data**: 61,908 correlation observations, 188 confirmed, 60 training examples
+## RL Model Status (Wave 157)
+- **Correlation model**: Trained at 92.0% accuracy (RandomForest + GridSearchCV, n_estimators=200, max_depth=10)
+- **Feature count**: 16 (expanded from 10 in Wave 157, added acoustic_cooccurrence)
+- **Top features**: time_of_day_similarity (14.5%), acoustic_cooccurrence (11.2%), signal_pattern (7.6%)
+- **Training data**: 507+ clean 16-feature examples (purged in Wave 142)
 - **Static fallback**: Still used when model is None (see `_static_predict()` in correlation_learner.py)
-- **5-strategy correlator**: spatial=0.35, temporal=0.18, signal_pattern=0.17, dossier=0.15, learned=0.15
+- **6-strategy correlator**: spatial=0.30, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13, wifi_probe=0.15
 - **Auto-retrain**: Every 6 hours or 50 new feedback entries
 
 ## SC Intelligence Files (7 files in src/engine/intelligence/)

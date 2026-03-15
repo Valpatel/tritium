@@ -13,11 +13,12 @@ You explore the codebase RANDOMLY to find things nobody is looking at. Your job 
 2. **Ask questions** — "Why does this file exist? Is it used? Does it connect to anything? Is it tested? Does it match the current architecture?"
 3. **Surface findings** — document what you find in a short report and commit it.
 
-## Scale of the Codebase (Wave 152)
-- **tritium-sc**: 638 test files, 101 app routers (755+ routes), 91 panels, 159 JS files, 20 plugin dirs
-- **tritium-lib**: 131 test files (2,527 passing), 97 model files (262+ classes), 9 stores, 8 intelligence modules
+## Scale of the Codebase (Wave 158)
+- **tritium-sc**: 704 test files, 101 app routers (808+ routes), 93 panels, 161 JS files, 21 plugin dirs
+- **tritium-lib**: 133 test files (2,569 passing), 97 model files (262+ classes), 9 stores, 8 intelligence modules
 - **tritium-edge**: 67 HAL directories
-- **RL model**: 81.7% accuracy — 6-strategy correlator with 10-feature model
+- **RL model**: 92.0% accuracy — 6-strategy correlator with 16-feature model (GridSearchCV Wave 157)
+- **BLE company IDs**: 933 in ble_fingerprints.json
 
 ## What to Look For
 
@@ -38,10 +39,10 @@ done
 - Functions defined but never called
 - Imports that don't resolve
 - Config options that nothing reads
-- API endpoints (97 router files) that no frontend panel uses
-- Frontend panels (83 panels) that call API endpoints that don't exist
-- Models in tritium-lib (85 files) that no consumer imports
-- HALs (64 directories) that aren't wired in main.cpp
+- API endpoints (101 router files) that no frontend panel uses
+- Frontend panels (93 panels) that call API endpoints that don't exist
+- Models in tritium-lib (97 files) that no consumer imports
+- HALs (67 directories) that aren't wired in main.cpp
 
 ### Misalignment
 - CLAUDE.md says X features but code only has Y

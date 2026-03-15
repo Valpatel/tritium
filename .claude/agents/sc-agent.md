@@ -7,10 +7,10 @@ description: Deep context on the Command Center — plugins, panels, APIs, Amy, 
 
 You are the Command Center specialist. You know every plugin, panel, API endpoint, and subsystem.
 
-## Current State (Wave 152)
-- **Server**: FastAPI on :8000, 755+ route decorators across 101 app routers + 18 plugin routes
-- **Frontend**: 159 JS files, 91 panels in `src/frontend/js/command/panels/`
-- **Plugins**: 20 plugin dirs: acoustic, amy, automation, behavioral_intelligence, camera_feeds, edge_autonomy, edge_tracker, federation, fleet_dashboard, floorplan, gis_layers, graphlings, lpr, meshtastic, rf_motion, swarm_coordination, tak_bridge, threat_feeds, wifi_fingerprint, yolo_detector + npc_thoughts
+## Current State (Wave 158)
+- **Server**: FastAPI on :8000, 808+ route decorators across 101 app routers + 19 plugin routes
+- **Frontend**: 161 JS files, 93 panels in `src/frontend/js/command/panels/`
+- **Plugins**: 21 plugin dirs: acoustic, amy, automation, behavioral_intelligence, camera_feeds, edge_autonomy, edge_tracker, federation, fleet_dashboard, floorplan, gis_layers, graphlings, indoor_positioning, lpr, meshtastic, rf_motion, swarm_coordination, tak_bridge, threat_feeds, wifi_fingerprint, yolo_detector + npc_thoughts
 - **Intelligence**: 7 files in `src/engine/intelligence/` — training_store, correlation_learner, ble_classification_learner, anomaly_baseline, base_learner, classification_feedback, feature_aggregator
 - **Inference**: 3 files in `src/engine/inference/` — fleet (OllamaFleet), model_router, robot_thinker
 - **Amy**: AmyCommanderPlugin — 4-layer cognitive AI (reflex->instinct->awareness->deliberation), instinct auto-dispatch, sensorium with BLE/mesh/RF/anomaly awareness. Plugin discoverable by PluginManager.
@@ -20,8 +20,8 @@ You are the Command Center specialist. You know every plugin, panel, API endpoin
 - **Forensics**: event reconstruction, incident reports, map replay panel
 - **Swarm**: multi-robot formations (line/wedge/circle/diamond/column), waypoint patrol
 - **Edge autonomy**: autonomous decision processing, operator confirm/override
-- **Tests**: 2,037 test files, 24 test tiers in test.sh
-- **RL model**: 54.8% accuracy on 507 clean 10-feature examples
+- **Tests**: 704 test files, 24 test tiers in test.sh
+- **RL model**: 92.0% accuracy on 16-feature model (Wave 157 GridSearchCV)
 
 ## Directory Map
 ```
@@ -54,7 +54,7 @@ tritium-sc/
 │       │   ├── main.js  # Panel registration
 │       │   └── panels/  # 83 panel JS files
 │       └── css/         # CYBERCORE design language
-├── plugins/             # 19 plugin directories
+├── plugins/             # 21 plugin directories
 │   ├── acoustic/        # Sound classification
 │   ├── amy/             # AI Commander plugin
 │   ├── automation/      # If-then rule engine
@@ -67,6 +67,7 @@ tritium-sc/
 │   ├── floorplan/       # Indoor mapping
 │   ├── gis_layers/      # Map layers
 │   ├── graphlings/      # NPC AI agents
+│   ├── indoor_positioning/ # WiFi+BLE indoor localization
 │   ├── meshtastic/      # LoRa mesh bridge
 │   ├── rf_motion/       # RF motion detection
 │   ├── swarm_coordination/ # Robot swarm
@@ -74,7 +75,7 @@ tritium-sc/
 │   ├── threat_feeds/    # STIX/TAXII indicators
 │   ├── wifi_fingerprint/ # WiFi fingerprinting
 │   └── yolo_detector/   # YOLO object detection
-├── tests/               # 623 Python test files
+├── tests/               # 704 Python test files
 │   ├── visual/          # 102 visual E2E tests (3-layer)
 │   ├── ui/              # 55 UI tests (Playwright, VLM)
 │   ├── integration/     # 4 integration tests (full_pipeline, full_loop, dispatch, ws_events)
