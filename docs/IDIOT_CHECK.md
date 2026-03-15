@@ -1,46 +1,84 @@
-# VILLAGE IDIOT REPORT — 2026-03-15
+# VILLAGE IDIOT CHECK — 2026-03-15 (Run 2)
 
-## Summary
+Server: http://localhost:8000 | Demo: active 39 min | 8 generators running
 
-WEBSITE: partially broken
-MAP: visible — satellite imagery loads, shows a real neighborhood/facility from above
-TARGETS ON MAP: no — header says 54 targets but zero dots/markers/blips appear on the map
-CLICKING: responds — keyboard shortcuts work (B opens mission select, T/O/S change modes, F zooms)
-DEMO MODE: things appeared — scrolling cyan alert text shows up ("confirmed hostile", "unknown contact classified hostile"), target counter goes up, but nothing is plotted on the actual map
-APIs: 4 of 5 returned data
+## What I See
 
-## OBVIOUS PROBLEMS
+MAP: Yes. Satellite imagery loads. A real neighborhood/facility viewed from above with a purple/magenta tint (night-vision aesthetic). Roads, buildings, parking lots are all visible. Map pans and zooms smoothly.
 
-1. **No targets visible on the map.** The header says 54 targets, 33 threats, 21 units. The API returns target data with lat/lng coordinates. The TritiumStore has 50+ units. But the map has ZERO MapLibre markers. Nothing is drawn. The map is just a satellite photo with no dots on it. This is the single biggest problem — the whole point of the product is to show targets on a map, and it does not.
+DOTS ON MAP: Yes, partially. There are small colored markers scattered on the map:
+- Cyan/teal dots and rectangles (appear to be BLE/sensor targets)
+- Magenta/pink small squares (appear to be hostile or unknown targets)
+- A bright orange/red glowing cluster near the center (looks like a hot zone or concentrated detections)
+- The minimap in the bottom-right shows pink dots corresponding to target positions
 
-2. **Setup wizard blocks the entire screen on first load.** A "WELCOME TO TRITIUM" setup wizard (6 pages) pops up and covers the map. There is no obvious X button or close mechanism that works. Pressing Escape does not close it. I had to hide it with JavaScript. A new user would be stuck.
+HEADER BAR: Shows "22 units, 39 threats, 61 targets, 39 22" — live updating. Connection shows ONLINE. FPS counter visible.
 
-3. **Amy is doing nothing.** The Amy Commander panel says "IDLE" and "Awaiting initialization..." with no thoughts, no activity. Demo mode is running with 33 threats and she has nothing to say about it. The AI commander is asleep while the house is on fire.
+FLOATING TEXT: Cyan scrolling text appears mid-screen with alerts like "Target unknown contact classified hostile", "We have a confirmed hostile", "Hostile confirmed, unknown contact is a threat". Updates regularly.
 
-4. **Fleet devices endpoint is empty.** `GET /api/fleet/devices` returns `{"devices":[], "count":0}` even with demo mode running. If I'm supposed to see my sensor devices, there are none.
+AMY COMMANDER: Panel in bottom-left. Shows "AMY IDLE / CONTENT / Awaiting initialization..." — She is not doing anything. Has CHAT and ATTEND tabs. Chat input box present but Amy never says anything on her own.
 
-5. **Threat level is RED but nothing feels urgent.** The page says THREAT RED, 33 threats, 36 alerts — but visually it looks like a calm satellite photo of a neighborhood. No flashing, no obvious danger indicators on the map. The urgency is only in tiny text in the corners.
+MINIMAP: Bottom-right, shows pink dots on a dark field. Appears to reflect target positions.
 
-6. **The scrolling cyan text is hard to read.** Alert messages scroll across the middle of the map in a stylized font that's small and overlaps with the satellite imagery. It's like subtitles on a bright movie scene — you can barely make them out.
+TOP-RIGHT PANEL: Shows what appears to be horizontal bars (possibly health bars or status indicators), but they are dark/hard to read against the background.
 
-## THINGS THAT WORK
+MENUS: FILE, VIEW, LAYOUT, MAP, GAME, HELP all present in toolbar. VIEW menu opens a long list of toggleable layers (satellite, roads, grid, buildings, units, labels, fog, terrain, etc.). HELP opens a keyboard shortcuts modal with comprehensive key bindings.
 
-1. **The satellite map loads and looks good.** Real satellite imagery, smooth zooming and panning, proper tile loading. The map itself is solid.
+## Actual Problems Found
 
-2. **The header bar gives useful info at a glance.** Unit count, threat count, target count, connection status (ONLINE), FPS counter — all there and updating.
+### 1. CSP blocks map tile provider (ERROR)
+The Content Security Policy blocks connections to `tiles.openfreemap.org`. Console error: "Connecting to 'https://tiles.openfreemap.org/planet' violates the following Content Security Policy directive: connect-src". The map falls back after a 5-second timeout with "[MAP-ML] Load event did not fire in 5s -- force-initializing". Map still works because satellite tiles come from somewhere else, but this is an error on every page load.
 
-3. **The API endpoints return real data.** Targets, dossiers, plugins (23 running), system readiness — the backend is clearly doing work.
+### 2. CSP blocks web worker (ERROR)
+"Creating a worker from 'blob:...' violates Content Security Policy directive: script-src". Some worker-based feature is broken silently.
 
-4. **WebSocket connection is live.** Status shows WS: OK, and the target counter updates in real-time.
+### 3. PanelManager errors (ERROR)
+Two console errors: "[PanelManager] Panel definition requires id and title" -- two panels are misconfigured and fail to register.
 
-5. **Keyboard shortcuts work.** B opens mission selection, F centers the camera, T/O/S switch map modes. The UI responds to input.
+### 4. Amy is asleep (UX)
+39 threats, 61 targets being tracked, hostile intruders everywhere. Amy says "Awaiting initialization..." and mood is "content". The AI commander ignores everything. No thoughts, no commentary, no tactical analysis. She has nothing to say while the system tracks dozens of hostiles.
 
-6. **Mission initialization screen looks cool.** When you press B, a proper mission selection screen comes up with BATTLE, DEFENSE, PATROL, ESCORT, CIVIL UNREST, DRONE SWARM options. Cyberpunk aesthetic is on point.
+### 5. Floating alert text is hard to read (UX)
+The cyan scrolling text overlaps satellite imagery and is small. On bright parts of the map it nearly disappears. No background behind the text.
 
-7. **Minimap exists** in the bottom-left corner and shows a small overview.
+### 6. Top-right panel content unclear (UX)
+Something is rendered in the top-right corner but it is too dark/small to understand. Looks like status bars or a feed but cannot tell what it shows.
 
-8. **Filter buttons exist** (SAT, HM, FOG, GRD, PTR, MSH, NIT, TRL, ELP) suggesting there are map layers that can be toggled.
+### 7. AudioContext warnings (MINOR)
+11 warnings about AudioContext not being allowed to start before user gesture. Harmless but noisy.
 
-## MY HONEST IMPRESSION
+### 8. No setup wizard this time (IMPROVEMENT)
+Unlike the previous idiot check, no setup wizard blocked the screen. Either it was fixed or it only shows on truly first load.
 
-This looks like a backend that works connected to a frontend that is 80% there. The satellite map, the cyberpunk UI chrome, the header stats, the mission selection — all of that is polished and impressive. But the ONE thing this product is supposed to do — show me where targets are on a map — does not work. 54 targets exist in the data and none of them appear on the screen. It's like a weather app that shows a beautiful map but no weather.
+## Things That Work Well
+
+1. **Map renders and is interactive.** Satellite imagery, smooth zoom/pan, purple cyberpunk tint. Looks professional.
+2. **Targets appear on the map.** Unlike the previous check where zero markers showed, this time colored dots, rectangles, and a glowing hotspot are visible. Targets are being plotted.
+3. **Header bar is informative.** Unit/threat/target counts update in real-time. ONLINE status. FPS counter.
+4. **53 targets tracked via API.** BLE devices (iPhone, Watch, Galaxy), simulation intruders, YOLO detections (persons, cars). Mix of sources confirms fusion is working in the backend.
+5. **Demo mode generators all running.** BLE, Meshtastic, Camera (x2), Fusion, RL Training, ReID, Trilateration -- 8 generators active.
+6. **WebSocket is connected.** WS: OK in status bar.
+7. **Keyboard shortcuts work.** ? shows a comprehensive help modal. B opens mission select. O/T/S switch modes.
+8. **Menus work.** FILE, VIEW, LAYOUT, MAP, GAME, HELP all open and show options.
+9. **Minimap shows target positions.** Pink dots on dark background in bottom-right.
+10. **Cyberpunk aesthetic is consistent.** Cyan, magenta, dark backgrounds throughout.
+
+## Comparison to Previous Check
+
+| Item | Previous (Run 1) | Now (Run 2) |
+|------|------------------|-------------|
+| Map loads | Yes | Yes |
+| Targets on map | NO (zero markers) | YES (dots, rectangles, glow) |
+| Setup wizard blocking | Yes, hard to dismiss | No, gone |
+| Amy | Idle, silent | Still idle, still silent |
+| CSP errors | Not checked | Yes, 3 errors |
+| Panel errors | Not checked | Yes, 2 errors |
+| API data flowing | Yes | Yes |
+
+## Verdict
+
+The product has improved since the last check. The critical bug (targets not appearing on map) appears to be fixed -- colored markers and a glowing hotspot are now visible. The map looks like a real tactical display rather than just a satellite photo. The backend is strong with 53 tracked targets from multiple sensor types.
+
+The remaining issues are: Amy being completely inert despite active threats, CSP misconfigurations causing console errors and blocked features, and two broken panel registrations. The floating alert text needs a background or outline to be readable.
+
+Overall impression: 70% there. A real product is emerging. The map with dots is what sells it, and that works now. Amy being silent is the biggest gap -- the AI commander should be the star of the show and she is doing nothing.
