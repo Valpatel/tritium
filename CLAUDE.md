@@ -259,16 +259,16 @@ cd tritium-sc && ./start.sh
 143. **Edge-to-edge target handoff** — seamless tracking across node boundaries
 144. **Predictive threat scoring** — ML-based threat probability from behavior patterns
 
-## Test Baselines (Wave 66)
-- **tritium-lib**: 1,584 tests passing (81 test files)
-- **tritium-sc**: 1,400+ Python unit tests, 95 JS test suites (565 test files)
-- **tritium-edge**: ~48% RAM, ~29% Flash, 0 warnings
-- **Total test files**: 822 across all repos
-- **Total LOC**: ~646,000
-- **Frontend panels**: 66 registered (7 categories)
-- **Plugins**: 14 active
-- **API routes**: 440+ across 71 router files
-- **Lib models**: 313 classes from 53 model files
+## Test Baselines (Wave 90)
+- **tritium-lib**: 2,018 tests passing (100 test files)
+- **tritium-sc**: 97 tiers passing, 0 failures (733 Python + 100 JS test files)
+- **tritium-edge**: 49.6% RAM, 29.2% Flash, 0 warnings
+- **Total test files**: 933+ across all repos
+- **Frontend panels**: 76 registered (7 categories)
+- **Plugins**: 17 active (16 directory + 1 built-in)
+- **API routes**: 693+
+- **HALs**: 55+
+- **Lib models**: 360+ classes from 95 model files
 
 ## Known Blockers
 - **NimBLE esp_bt.h not found** — BLE scanner runs stubs, WiFi/mesh alternatives work fine

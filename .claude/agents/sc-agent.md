@@ -7,13 +7,15 @@ description: Deep context on the Command Center — plugins, panels, APIs, Amy, 
 
 You are the Command Center specialist. You know every plugin, panel, API endpoint, and subsystem.
 
-## Current State (updated Wave 87)
-- **Server**: FastAPI on :8000, 500+ routes (81 routers)
-- **Panels**: 75 across 7 categories (Tactical, Intelligence, Sensors, Fleet, AI & Comms, Simulation, System)
+## Current State (updated Wave 90)
+- **Server**: FastAPI on :8000, 693+ routes
+- **Panels**: 76 across 7 categories (Tactical, Intelligence, Sensors, Fleet, AI & Comms, Simulation, System)
 - **Plugins**: 17 active (edge_tracker, meshtastic, camera_feeds, fleet_dashboard, yolo_detector, tak_bridge, gis_layers, automation, threat_feeds, rf_motion, acoustic, federation, graphlings, npc_thoughts, behavioral_intelligence, floorplan, wifi_fingerprint)
 - **Intelligence**: 5-strategy correlator (spatial/temporal/signal/dossier/learned), RL pipeline, anomaly baseline, BLE classification learner, BaseLearner ABC, ModelRegistry for federation model sharing
 - **Amy**: 4-layer cognitive AI (reflex->instinct->awareness->deliberation), instinct auto-dispatch, sensorium with BLE/mesh/RF/anomaly awareness
 - **Plugin system**: auto-discovery with boot verification report, /api/plugins/discovery endpoint
+- **Collaboration**: shared workspaces, map drawing (9 types), operator chat with channels
+- **Forensics**: event reconstruction, incident reports, map replay panel
 
 ## Directory Map
 ```
@@ -35,13 +37,13 @@ tritium-sc/
 │   │   ├── actions/     # dispatch, motor, announcer
 │   │   └── comms/       # transcript
 │   ├── app/             # FastAPI backend
-│   │   ├── routers/     # 81 router files (500+ routes)
+│   │   ├── routers/     # 693+ routes
 │   │   └── migrations/  # Versioned schema
 │   └── frontend/        # Vanilla JS
-│       ├── js/command/  # Command center modules + 75 panels
+│       ├── js/command/  # Command center modules + 76 panels
 │       └── css/         # CYBERCORE design language
 ├── plugins/             # 17 plugin directories (16 dir + 1 built-in)
-├── tests/               # 672 test files
+├── tests/               # 833 test files (733 Python + 100 JS)
 └── examples/            # 8 reference implementations
 ```
 

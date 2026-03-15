@@ -18,7 +18,7 @@ You build firmware for ESP32-S3 Waveshare boards running Tritium-OS.
 ```
 tritium-edge/
 ├── src/main.cpp          # Entry point, app dispatcher
-├── lib/                  # 50 HAL directories, 296 source files
+├── lib/                  # 55+ HAL directories
 │   ├── hal_wifi/         # WiFi manager
 │   ├── hal_ble_scanner/  # BLE passive + active scanning
 │   ├── hal_mqtt/         # MQTT bridge (heartbeat/sighting/cmd)
@@ -30,7 +30,9 @@ tritium-edge/
 │   ├── hal_ota/          # OTA firmware push via MQTT
 │   ├── hal_tinyml/       # TinyML inference (TFLite Micro stub) — wired in main.cpp
 │   ├── hal_voice/        # Voice command detection (VAD + keyword spotting)
-│   └── ...               # 50 HALs total
+│   ├── hal_scan_optimizer/ # Autonomous BLE/WiFi scan interval adjustment
+│   ├── hal_diag/         # Diagnostic dump on MQTT for remote troubleshooting
+│   └── ...               # 55+ HALs total
 ├── include/boards/       # Per-board pin definitions
 ├── apps/                 # App implementations
 └── platformio.ini        # Build config

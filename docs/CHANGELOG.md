@@ -2,6 +2,31 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 90 (2026-03-14): MILESTONE + Maintenance + Security
+
+### docs
+| Change | Verification |
+|--------|-------------|
+| MILESTONE_WAVE90.md — comprehensive 90-wave system snapshot with architecture, metrics, security review | Created |
+| STATUS.md updated to Wave 90: 2,018 lib tests, 97 SC tiers, 76 panels, 693+ routes, 95 model files | Verified |
+| CHANGELOG.md updated with Wave 90 entries | Verified |
+| Iteration queue: Waves 88-89 marked DONE, Waves 91-95 planned | Verified |
+| All 12 agent files updated with current counts (Wave 90 baseline) | Verified |
+
+### security
+| Change | Verification |
+|--------|-------------|
+| OWASP review of Waves 86-89: forensics, collaboration, chat, diagnostic dump endpoints | Documented in milestone |
+| Collaboration API: HTML tag stripping, html.escape(), resource caps (100 workspaces, 1000 drawings, 500 chat msgs), string truncation, type whitelists | Code review verified |
+| Forensics API: Pydantic validation, max_events cap (100K), time range validation | Code review verified |
+| Edge diagnostic dump: no credentials exposed, fixed-size buffer | Code review verified |
+
+### tests
+| Change | Verification |
+|--------|-------------|
+| Lib test baseline: 2,018 passing (11.15s) | Verified |
+| SC test baseline: 97 tiers, 0 failures (405s) | Verified |
+
 ## Wave 89 (2026-03-14): Forensic Replay + Diagnostics
 
 ### tritium-lib
