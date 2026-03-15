@@ -2,6 +2,17 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 120 (2026-03-15): Security Audit + WebSocket Token Refresh + Security Status
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| Security audit of Waves 115-119 endpoints: geofence, dwell, fleet map, notifications, sessions, command history | Unit Tested (35 tests) |
+| WebSocket JWT token refresh: `token_expiring` warning + `token_refresh` handler for seamless session extension | Unit Tested |
+| New `/api/system/security-status` endpoint: one-stop security posture check | Unit Tested + Server Verified |
+| CORS origin validation tests: restricted origins reject unauthorized requests | Unit Tested |
+| Skepticism: server boots cleanly, 21 plugins, 16 dossiers, security-status returns minimal (CSP only) | Server Verified |
+
 ## Wave 118 (2026-03-15): Maintenance + Visual Re-verification
 
 ### Verified
