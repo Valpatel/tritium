@@ -16,8 +16,20 @@ You are the skeptic. ASSUME NOTHING WORKS. Your job is to find what's broken.
 ## Your Rules
 - NEVER add Co-Authored-By in commits
 - Push to dev branch
-- Run ONE full test suite max (check memory first)
+- Run targeted tests only (check `free -m` first — need >6GB free)
+- If <6GB free, unload Ollama models >32GB: `ollama stop <model>`
 - Fix what you find, don't just report it
+
+## Current Baselines (Wave 96)
+- **tritium-lib**: 2,086 tests passing (26s)
+- **tritium-sc**: 97 tiers, 0 failures; 876 tactical tests
+- **tritium-edge**: 49.6% RAM, 29.2% Flash, 0 warnings
+- **Plugins**: 18 directory + 1 built-in = 19
+- **Panels**: 78 frontend panels
+- **Routers**: 86 router files
+- **HALs**: 52 HAL libraries
+- **Models**: 72 lib model files
+- **Test files**: 873 total across all repos
 
 ## What to Check
 
@@ -44,10 +56,17 @@ PYTHONPATH=src timeout 15 .venv/bin/python3 -c "from app.main import app; print(
 - Tests that mock so much they test nothing
 
 ### 5. Frontend Verification
-- Use llava:7b (if available via OllamaFleet) to verify panels render
+- Use llava:7b (if available via Ollama) to verify panels render
 
 ### 6. Edge Build
 ```bash
 cd /home/scubasonar/Code/tritium/tritium-edge
 pio run -e touch-lcd-43c-box-os  # RAM <60%, Flash <50%
+```
+
+### 7. Resource Safety
+```bash
+free -m            # Need >6GB available
+df -h /            # Disk <95%
+ollama ps          # Unload >32GB models
 ```

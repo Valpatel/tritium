@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (Wave 93 — Maintenance).
+Current state of all components as of 2026-03-14 (Wave 96 — Maintenance).
 
 ## Component Health
 
@@ -18,57 +18,54 @@ Current state of all components as of 2026-03-14 (Wave 93 — Maintenance).
 | **Collaboration** | Active | Shared workspaces, map drawing, operator chat, WebSocket broadcast |
 | **Forensics** | Active | Event reconstruction, incident reports, map replay |
 
-## Wave 91-92 Features
+## Wave 94-95 Features
 
 | Feature | Component | Tests | Status |
 |---------|-----------|-------|--------|
-| Swarm coordination plugin | tritium-sc | Tests passing | Complete |
-| Edge autonomy plugin | tritium-sc | Tests passing | Complete |
-| Mission target binder | tritium-sc | Tests passing | Complete |
-| Cross-camera ReID (YOLO) | tritium-sc | Code review | Complete |
-| Per-user rate limits | tritium-sc | Tests passing | Complete |
-| API key scoping | tritium-sc | Tests passing | Complete |
-| Plugin auth middleware | tritium-sc | Tests passing | Complete |
-| Swarm/autonomy models | tritium-lib | Tests passing | Complete |
-| Swarm coordination panel | tritium-sc frontend | Code review | Complete |
+| Analytics dashboard widgets (counter/chart/table/timeline) | tritium-sc | 9 tests | Complete |
+| DashboardWidget, WidgetType, WidgetConfig models | tritium-lib | 9 tests | Complete |
+| Drag-drop configurable analytics panel | tritium-sc frontend | Code review | Complete |
+| Confidence decay (exponential per source type) | tritium-lib | 15 tests | Complete |
+| ConfidenceModel wired into TargetTracker | tritium-sc | 876 tactical pass | Complete |
+| WebSocket message sanitization | tritium-sc | Code review | Complete |
+| Amy curiosity system (autonomous investigation) | tritium-sc | Code review | Complete |
 
-## Wave 93 Features (Maintenance)
+## Wave 96 Features (Maintenance)
 
 | Feature | Component | Tests | Status |
 |---------|-----------|-------|--------|
-| STATUS.md update (Waves 88-93) | docs | -- | Complete |
-| Annotations test upgrade (TestClient) | tritium-sc | 22 tests | Complete |
-| Plugin redundancy audit | tritium-sc | -- | Complete |
-| Lib test baseline: 2,062 passing | tests | -- | Complete |
-| gb10-02 sync verified | infrastructure | -- | Complete |
-| Agent files updated | docs | -- | In Progress |
-| Changelogs updated | docs | -- | In Progress |
+| STATUS.md update (Waves 94-96) | docs | -- | Complete |
+| Unloaded nemotron-3-super:120b (94GB GPU) | infrastructure | -- | Complete |
+| Agent files updated (quality, maintenance, refiner) | docs | -- | Complete |
+| Iteration queue updated | docs | -- | Complete |
+| gb10-02 synced: 2,086 lib tests passing | infrastructure | -- | Complete |
+| Lib test baseline: 2,086 passing | tests | -- | Complete |
+| SC tactical test baseline: 876 passing | tests | -- | Complete |
 
-## Codebase Metrics (Wave 93 Baseline)
+## Codebase Metrics (Wave 96 Baseline)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 93 |
-| **Total features shipped** | 230+ |
+| **Total waves completed** | 96 |
+| **Total features shipped** | 240+ |
 | **Active plugins** | 19 (18 directory + 1 built-in NPC Intelligence) |
-| **API routes** | 685+ |
-| **Frontend panel files** | 77 |
-| **Lib model files** | 99 |
-| **Lib test files** | 102 |
-| **HAL libraries** | 64 |
-| **SC Python test files** | 624 |
-| **SC JS test files** | 99 |
+| **API routes** | 690+ |
+| **Frontend panel files** | 78 |
+| **Lib model files** | 72 |
+| **HAL libraries** | 52 |
+| **Router files** | 86 |
 | **Correlation strategies** | 5 (spatial, temporal, signal_pattern, dossier, learned) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
-| **Total test files** | 825+ (624 SC Python + 99 SC JS + 102 lib) |
+| **Total test files** | 873 |
 
-## Test Results (Wave 93 Baseline)
+## Test Results (Wave 96 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib pytest | 2,062 passed | All passing (11.6s) |
-| tritium-lib on gb10-02 | 2,062 passed | All passing (20.5s) |
-| tritium-sc test.sh fast | 97 tiers passed, 0 failures | All passing (397s) |
+| tritium-lib pytest | 2,086 passed | All passing |
+| tritium-lib on gb10-02 | 2,086 passed | All passing (26s) |
+| tritium-sc tactical tests | 876 passed, 1 skipped | All passing (44s) |
+| tritium-sc confidence+dashboard | 24 passed | All passing |
 | tritium-edge build | 49.6% RAM, 29.2% Flash | 0 warnings, SUCCESS |
 
 ## Architecture

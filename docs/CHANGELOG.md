@@ -2,6 +2,32 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 96 (2026-03-14): Maintenance
+
+### Infrastructure
+| Change | Verification |
+|--------|-------------|
+| Unloaded nemotron-3-super:120b (94GB GPU memory) | Verified |
+| gb10-02 synced: 2,086 lib tests passing | Verified (26s) |
+| Disk: gb10-01 90% (779G/916G), gb10-02 77% (665G/916G) | Verified |
+
+### Documentation & Agent Files
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated to Wave 96 (240+ features, 78 panels, 86 routers) | Updated |
+| quality-agent.md updated with Wave 96 baselines + resource safety | Updated |
+| maintenance-agent.md updated with Wave 96 baselines | Updated |
+| agent-refiner.md updated with Wave 96 counts | Updated |
+| Iteration queue: Waves 94-95 DONE, 97-100 planned | Updated |
+
+### Test Baselines
+| Suite | Count | Status |
+|-------|-------|--------|
+| tritium-lib | 2,086 passed | All passing |
+| tritium-sc tactical | 876 passed, 1 skipped | All passing (44s) |
+| tritium-sc confidence+dashboard | 24 passed | All passing |
+| tritium-lib on gb10-02 | 2,086 passed | All passing (26s) |
+
 ## Wave 95 (2026-03-14): Security + Confidence Decay + Amy Curiosity
 
 ### tritium-lib

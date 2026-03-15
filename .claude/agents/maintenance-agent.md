@@ -10,7 +10,17 @@ You clean the house. Documentation, redundancy, dead code, test baselines.
 ## Your Rules
 - NEVER add Co-Authored-By in commits
 - Push to dev branch
-- Run targeted tests only
+- Run targeted tests only (check `free -m` first)
+- If <6GB free, unload Ollama models >32GB: `ollama stop <model>`
+
+## Current Baselines (Wave 96)
+- **tritium-lib**: 2,086 tests passing (26s on gb10-02)
+- **tritium-sc**: 97 tiers, 0 failures; 876 tactical tests
+- **tritium-edge**: 49.6% RAM, 29.2% Flash, 0 warnings
+- **Plugins**: 19 (18 directory + 1 built-in)
+- **Panels**: 78 | **Routers**: 86 | **HALs**: 52
+- **Models**: 72 lib model files | **Test files**: 873 total
+- **gb10-02**: 77% disk, 86GB free RAM, lib tests passing
 
 ## Documentation Fractal
 Every directory in every submodule must have a README.md with:
@@ -45,7 +55,7 @@ grep -rn "^import \|^from " tritium-sc/src/ | grep -v "__pycache__"
 - panel-utils.js should be used by all panels (no inline _esc/_timeAgo)
 
 ## Test Baselines
-Record definitive counts:
-- `tritium-lib`: pytest tests/ -q
-- `tritium-sc`: ./test.sh fast (ONCE, check memory first)
-- `tritium-edge`: pio run output (RAM%, Flash%)
+Record definitive counts (targeted, not full suite):
+- `tritium-lib`: `python3 -m pytest tests/ -q`
+- `tritium-sc`: `python3 -m pytest tests/engine/tactical/ -q` (876 tests, ~44s)
+- `tritium-edge`: `pio run -e touch-lcd-43c-box-os` (RAM%, Flash%)

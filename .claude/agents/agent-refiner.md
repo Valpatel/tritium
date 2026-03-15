@@ -25,15 +25,16 @@ Every agent file must be:
 - **Actionable** — tells the agent exactly what to do, not just what exists
 - **Self-contained** — agent can work without reading other agent files
 
-Update ALL agent files with current counts:
-```bash
-ls tritium-sc/src/frontend/js/command/panels/*.js | wc -l    # Panels
-ls tritium-sc/plugins/*/plugin.py | wc -l                      # Plugins
-ls tritium-sc/src/app/routers/*.py | wc -l                     # Routers
-ls -d tritium-edge/lib/hal_*/ | wc -l                          # HALs
-ls tritium-lib/src/tritium_lib/models/*.py | wc -l             # Models
-find . -name "test_*.py" -o -name "test_*.js" | grep -v .venv | wc -l  # Tests
-```
+Update ALL agent files with current counts (Wave 96 baseline):
+- **Panels**: 78 (`ls tritium-sc/src/frontend/js/command/panels/*.js | wc -l`)
+- **Plugins**: 18 directory (`ls tritium-sc/plugins/*/plugin.py | wc -l`) + 1 built-in = 19
+- **Routers**: 86 (`ls tritium-sc/src/app/routers/*.py | wc -l`)
+- **HALs**: 52 (`ls -d tritium-edge/lib/hal_*/ | wc -l`)
+- **Models**: 72 (`ls tritium-lib/src/tritium_lib/models/*.py | wc -l`)
+- **Test files**: 873 (`find . -name "test_*.py" -o -name "test_*.js" | grep -v .venv | wc -l`)
+- **Lib tests**: 2,086 passing
+- **SC tactical tests**: 876 passing
+- **Waves completed**: 96
 
 ### 2. Commands (`.claude/commands/*.md`)
 Focus commands for context switching:
