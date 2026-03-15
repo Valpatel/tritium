@@ -2,6 +2,22 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 113 (2026-03-14): Dwell Tracking, Mesh Env Weather, Command History, Cmd ACK
+
+### Features
+| Change | Verification |
+|--------|-------------|
+| tritium-lib: DwellEvent model (target_id, position, start_time, duration_s, zone_id, severity) | 11 tests passing |
+| tritium-sc: DwellTracker backend — monitors targets stationary >5min, classifies severity | 7 tests passing |
+| tritium-sc: Dwell monitor panel with active dwells, severity badges, concentric ring indicators | Code review |
+| tritium-sc: Dwell API — /api/dwell/active, /api/dwell/history, /api/dwell/target/{id} | Code review |
+| tritium-sc: Weather overlay enhanced with mesh node environment data (temp/humidity/pressure) | Code review |
+| tritium-sc: Mesh environment API — /api/mesh/environment returns sensor data from mesh nodes | Code review |
+| tritium-sc: Fleet command history panel — audit log with command, device, timestamp, result, latency | Code review |
+| tritium-sc: Command history API — /api/fleet/commands/history, /api/fleet/commands/stats | 9 tests passing |
+| tritium-sc: CommandHistoryStore — thread-safe in-memory audit log with timeout detection | 9 tests passing |
+| tritium-edge: Command ACK — publishes to tritium/{id}/cmd/ack with command_id and result | Build SUCCESS (49.9% RAM, 29.4% Flash) |
+
 ## Wave 109 (2026-03-14): Maintenance — RL Audit + Route Redundancy + Edge Verify
 
 ### Audits
