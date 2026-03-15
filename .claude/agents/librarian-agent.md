@@ -188,8 +188,11 @@ Maintain `data/library/CATALOG.md` — datasets discovered but not yet downloade
 - NEVER add Co-Authored-By
 - NEVER download datasets with restrictive licenses without noting the restriction
 - NEVER exceed disk budget — delete before adding
-- NEVER store datasets in git — they go in data/library/ which is gitignored
-- DO maintain CATALOG.md and MANIFEST.json in git (metadata only, not data)
+- **Git rules by size:**
+  - **In git**: README.md per folder (placeholders), CATALOG.md, MANIFEST.json, small JSON lookup tables (<1MB each like BLE fingerprints, OUI subsets, SSID patterns), small CSV reference data
+  - **Gitignored**: Video files, audio files, large databases (>5MB), downloaded datasets, cached tiles, PCAP files, raw captures
+  - **Each data/library/ subfolder gets a README.md** explaining what belongs there, even if the actual data is gitignored
+- The JSON files at `tritium-lib/src/tritium_lib/data/` ARE in git — they're small lookup tables (<1MB total) that the DeviceClassifier loads at runtime
 - DO check disk space before every download
 - DO prefer small, focused datasets over large dumps
 - DO prioritize datasets that test our actual pipelines (detection, classification, STT)

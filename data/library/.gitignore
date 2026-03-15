@@ -1,0 +1,43 @@
+# Library data — large files gitignored, small metadata in git
+
+# Ignore all data files by default
+*.mp4
+*.avi
+*.mkv
+*.mov
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.pcap
+*.pcapng
+*.mbtiles
+*.tiff
+*.geotiff
+*.db
+*.sqlite
+*.sqlite3
+*.tar.gz
+*.zip
+*.7z
+
+# But keep these in git
+!README.md
+!CATALOG.md
+!MANIFEST.json
+!.gitignore
+
+# Keep small JSON/CSV lookup tables (<1MB)
+!*.json
+!*.csv
+
+# Keep small image samples for testing (<100KB each)
+# Large image datasets should be in images/ which is bulk-ignored below
+
+# Bulk ignore large dataset directories (download targets)
+video/*/
+audio/*/
+images/*/
+gis/tiles/
+gis/dem/
+synthetic/generated/
