@@ -2,6 +2,22 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 128 (2026-03-15): Security Audit + OWASP Pass + ESC-50 Dataset
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| SECURITY: OWASP auth pass on Waves 121-127 endpoints — added auth to 10 unprotected routes across intelligence, dwell, fleet_map, command_history routers | 14 tests, signature verified |
+| SECURITY: Prompt injection mitigation on `/api/intelligence/anomaly/describe` — input sanitization, known-type restriction | 5 tests passing |
+| SECURITY: Input validation bounds on `/api/intelligence/features?limit=` (1-1000) | Code review |
+| NEW: Security Audit Trail panel + API (`/api/security/audit-trail`, `/audit-stats`) — failed auth, rate limits, CORS, server errors | Unit tested, panel registered |
+| LIBRARIAN: ESC-50 dataset downloaded (1.4 GB, 2000 clips, 50 environmental sound classes) to data/library/audio/ | 2000 files verified |
+| LIBRARIAN: MANIFEST.json created for data library tracking | Created |
+| SELF-PRES: gb10-02 synced — tritium-lib 2334 tests passing, all submodules updated | Remote SSH verified |
+| SKEPTICISM: RL model status — 6-feature model at 51.3% accuracy (effectively random), old training data lacks new 10-feature columns | Investigated, documented |
+
+---
+
 ## Wave 127 (2026-03-15): Maintenance + Dossier Enrichment
 
 ### Changes

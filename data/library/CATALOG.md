@@ -1,6 +1,6 @@
 # Tritium Data Library Catalog
 
-Last updated: 2026-03-14
+Last updated: 2026-03-15
 
 Datasets discovered for Tritium's sensing pipelines. Relevance scored 0.0-1.0 based on
 how directly the dataset supports our detection, classification, and tracking pipelines.
@@ -24,7 +24,7 @@ how directly the dataset supports our detection, classification, and tracking pi
 
 | Dataset | Size | License | Relevance | URL | Downloaded |
 |---------|------|---------|-----------|-----|-----------|
-| ESC-50 | 615 MB | CC-BY-NC-3.0 | 0.9 | https://github.com/karolpiczak/ESC-50 | No |
+| ESC-50 | 1.4 GB (full repo) | CC-BY-NC-3.0 | 0.9 | https://github.com/karolpiczak/ESC-50 | YES (2026-03-15) |
 | Gunshot/Gunfire Audio (Zenodo) | 1.6 GB | CC-BY-4.0 | 0.8 | https://zenodo.org/records/7004819 | No |
 | UrbanSound8K | 5.6 GB | CC-BY-NC-3.0 | 0.7 | https://urbansounddataset.weebly.com/urbansound8k.html | No |
 
@@ -86,7 +86,7 @@ how directly the dataset supports our detection, classification, and tracking pi
 
 Ordered by value-per-byte for our pipelines:
 
-1. **ESC-50** (615 MB, CC-BY-NC) -- acoustic classification, 50 classes, small
+1. ~~**ESC-50**~~ DOWNLOADED (1.4 GB, CC-BY-NC) -- at `data/library/audio/ESC-50/`, 2000 clips, 50 classes
 2. **Mini LibriSpeech** (458 MB, CC-BY-4.0) -- STT regression testing
 3. **BLEBeacon Dataset** (888 MB full, 920 KB sample downloaded) -- BLE tracker testing
 4. **COCO val2017** (~1.2 GB, CC-BY-4.0) -- YOLO detection benchmark

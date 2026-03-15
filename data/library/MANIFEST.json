@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "last_updated": "2026-03-15",
+  "datasets": [
+    {
+      "name": "ESC-50",
+      "category": "audio",
+      "path": "audio/ESC-50",
+      "size_bytes": 1500000000,
+      "size_human": "1.4 GB",
+      "license": "CC-BY-NC-3.0",
+      "source_url": "https://github.com/karolpiczak/ESC-50",
+      "downloaded": true,
+      "download_date": "2026-03-15",
+      "description": "Environmental Sound Classification - 2000 clips across 50 classes (5s each, 44.1kHz WAV)",
+      "relevance": 0.9,
+      "files": 2000,
+      "classes": 50,
+      "use_case": "acoustic_classifier"
+    },
+    {
+      "name": "BLEBeacon Dataset (sample)",
+      "category": "rf",
+      "path": "rf/blebeacon-sample",
+      "size_bytes": 942080,
+      "size_human": "920 KB",
+      "license": "Research",
+      "source_url": "https://github.com/dimisik/BLEBeacon-Dataset",
+      "downloaded": true,
+      "download_date": "2026-03-14",
+      "description": "BLE beacon RSSI traces from university building - sample only",
+      "relevance": 0.7,
+      "use_case": "ble_tracker"
+    }
+  ],
+  "queued": [
+    {
+      "name": "Mini LibriSpeech",
+      "category": "audio",
+      "size_human": "458 MB",
+      "license": "CC-BY-4.0",
+      "source_url": "https://www.openslr.org/31/",
+      "relevance": 0.8,
+      "use_case": "stt_testing"
+    },
+    {
+      "name": "COCO val2017",
+      "category": "video",
+      "size_human": "~1.2 GB",
+      "license": "CC-BY-4.0",
+      "source_url": "http://images.cocodataset.org/zips/val2017.zip",
+      "relevance": 0.9,
+      "use_case": "yolo_detection"
+    },
+    {
+      "name": "Gunshot/Gunfire Audio",
+      "category": "audio",
+      "size_human": "1.6 GB",
+      "license": "CC-BY-4.0",
+      "source_url": "https://zenodo.org/records/7004819",
+      "relevance": 0.8,
+      "use_case": "threat_acoustic"
+    }
+  ]
+}
