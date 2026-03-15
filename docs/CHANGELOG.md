@@ -2,6 +2,20 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 141 (2026-03-15): Target Clustering + Night Mode + RL Retrain + Power Saver
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| tritium-lib: BehaviorCluster model with FormationType, CommonPattern, ClusterSummary | 7 tests passing |
+| tritium-sc: Behavioral clustering — /api/patterns/clusters groups targets by movement similarity | Synthetic data verified |
+| tritium-sc: Map night mode — auto-dims between sunset/sunrise, warm amber overlay, NIT quick toggle | JS syntax verified |
+| tritium-sc: RL model retrained with 10-feature set, 3,802 examples, 49.4% accuracy | Retrain executed |
+| tritium-edge: Power saver optimization — reduced serial output, disabled non-essential consumers, slower tick | Code review |
+| All changelogs updated | Complete |
+
+---
+
 ## Wave 139 (2026-03-15): Maintenance — STATUS Update, Orphan Panel Audit, Agent Refiner
 
 ### Changes
