@@ -2,6 +2,27 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 118 (2026-03-15): Maintenance + Visual Re-verification
+
+### Verified
+| Change | Verification |
+|--------|-------------|
+| /api/threat-feeds/ returns 200 with 10 indicators (stable since Wave 114) | Live server test |
+| /api/dossiers returns 12 dossiers after demo (stable since Wave 114) | Live server test |
+| /api/system/readiness shows 21/21 plugins running (stable since Wave 114) | Live server test |
+| /api/targets/export?format=cot returns valid XML (10 CoT events) | Live server test |
+| /api/amy/personality returns 5 traits + 5 presets | Live server test |
+| /api/fleet/map/devices returns (empty, no MQTT broker) | Live server test |
+| tritium-lib: 2,265 tests passing (up from 2,247) | pytest |
+
+### Analysis
+| Change | Verification |
+|--------|-------------|
+| Duplicate route prefix audit: 7 shared prefixes (/api/targets x7, /api/system x3, /api/analytics x3, /api/mesh x2, /api/devices x2, /api/amy x2, /api x4) — all unique suffixes, no collisions | Code review |
+| Agent trigger schedule "Last Run" column updated to Wave 118 | Updated |
+| STATUS.md updated through Wave 118 | Updated |
+| Iteration queue updated with Waves 119-123 planned | Updated |
+
 ## Wave 115 (2026-03-14): Maintenance + Re-verification
 
 ### Verified

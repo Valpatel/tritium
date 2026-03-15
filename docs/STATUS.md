@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (Wave 115 — Maintenance + Re-verification).
+Current state of all components as of 2026-03-15 (Wave 118 — Maintenance + Visual Re-verification).
 
 ## Component Health
 
@@ -9,7 +9,7 @@ Current state of all components as of 2026-03-14 (Wave 115 — Maintenance + Re-
 | **tritium-edge firmware** | Building | 49.9% RAM, 29.4% Flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 2,247 tests passing |
+| **tritium-lib** | Stable | 2,265 tests passing |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds, diagnostics |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler wired in Wave 105) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
@@ -22,6 +22,22 @@ Current state of all components as of 2026-03-14 (Wave 115 — Maintenance + Re-
 | **Intelligence packages** | Active | Portable inter-site intelligence sharing with chain of custody |
 | **Dwell tracking** | Active | Monitors stationary targets >5min, severity classification |
 | **Command history** | Active | Fleet command audit log with timeout detection |
+
+## Wave 118 (Maintenance + Visual Re-verification)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| Re-verify: /api/threat-feeds/ returns 200 with 10 indicators | tritium-sc | Live server | VERIFIED |
+| Re-verify: /api/dossiers returns 12 dossiers after demo | tritium-sc | Live server | VERIFIED |
+| Re-verify: /api/system/readiness shows 21/21 plugins | tritium-sc | Live server | VERIFIED |
+| Re-verify: /api/targets/export?format=cot returns valid XML | tritium-sc | Live server | VERIFIED |
+| Re-verify: /api/amy/personality returns traits | tritium-sc | Live server | VERIFIED |
+| Re-verify: /api/fleet/map/devices returns (empty, no MQTT) | tritium-sc | Live server | VERIFIED |
+| Duplicate route prefix audit: 7 shared prefixes, all unique suffixes | tritium-sc | Code review | Complete |
+| STATUS.md updated through Wave 118 | docs | - | Complete |
+| Agent trigger schedule "Last Run" updated | docs | - | Complete |
+| Lib pytest: 2,265 passing (up from 2,247) | tritium-lib | 2,265 | Verified |
+| Changelogs updated | all | - | Complete |
 
 ## Wave 115 (Maintenance + Re-verification)
 
@@ -81,28 +97,28 @@ Current state of all components as of 2026-03-14 (Wave 115 — Maintenance + Re-
 | WebSocket stress test (10/50/100 concurrent connections) | 111 | tritium-sc | Complete |
 | Demo mode RL training generator (100+ examples in 5 min) | 111 | tritium-sc | Complete |
 
-## Codebase Metrics (Wave 115)
+## Codebase Metrics (Wave 118)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 115 |
-| **Total features shipped** | 300+ |
+| **Total waves completed** | 118 |
+| **Total features shipped** | 310+ |
 | **Active plugins** | 21 (including AmyCommanderPlugin) |
 | **API routers** | 90+ |
 | **Frontend panels** | 82 |
 | **Visual test files** | 105 |
 | **UI test files** | 56 |
 | **Lib model files** | 82 |
-| **Lib tests** | 2,247 |
+| **Lib tests** | 2,265 |
 | **HAL libraries** | 64 |
 | **Correlation strategies** | 5 (spatial, temporal, signal_pattern, dossier, learned) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
 
-## Test Results (Wave 115)
+## Test Results (Wave 118)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib | 2,247 tests | All passing |
+| tritium-lib | 2,265 tests | All passing |
 | tritium-sc | 90+ router files, 82 panel JS files | Passing |
 | tritium-edge build | 49.9% RAM, 29.4% Flash | 0 warnings, SUCCESS |
 
