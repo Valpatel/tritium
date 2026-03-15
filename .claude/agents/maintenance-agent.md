@@ -13,17 +13,18 @@ You clean the house. Documentation, redundancy, dead code, test baselines.
 - Run targeted tests only (check `free -m` first)
 - If <6GB free, unload Ollama models >32GB: `ollama stop <model>`
 
-## Current Baselines (Wave 146)
-- **tritium-lib**: 128 test files, 2,452 tests passing
-- **tritium-sc**: 2,037 test files, 24 tiers
-- **tritium-edge**: 66 HALs, 0 warnings, 49.9% RAM, 29.4% Flash
-- **Plugins**: 21 plugin dirs + npc_thoughts + built-in npc_intelligence
-- **Frontend JS**: 155 | **Panels**: 87 | **App routers**: 101 | **Plugin routes**: 18 | **Route decorators**: 772+
-- **Models**: 94 lib model files (260+ Pydantic classes) | **Test files**: 2,165+ total
-- **RL model**: 54.8% accuracy on 507 clean 10-feature examples (retrained Wave 143)
+## Current Baselines (Wave 152)
+- **tritium-lib**: 131 test files, 2,527 tests passing
+- **tritium-sc**: 638 test files, 24 tiers
+- **tritium-edge**: 67 HALs, 0 warnings, 50.6% RAM, 29.4% Flash
+- **Plugins**: 20 plugin dirs + npc_thoughts + built-in npc_intelligence
+- **Frontend JS**: 159 | **Panels**: 91 | **App routers**: 101 | **Plugin routes**: 18 | **Route decorators**: 755+
+- **Models**: 97 lib model files (262+ Pydantic classes) | **Test files**: 769+ total (638 SC + 131 lib)
+- **RL model**: 81.7% accuracy on clean 10-feature examples (retrained Wave 150)
 - **ESC-50 dataset**: 2,000 clips, 50 sound classes, 21.2% acoustic accuracy (Wave 135)
-- **Convoy detection + daily summary**: Added Wave 145
-- **BLE adv change detection HAL**: Added Wave 145
+- **Acoustic MFCC+KNN classifier**: Added Wave 151 (scipy MFCC + sklearn KNN)
+- **Federation v2**: Target dedup, health monitoring — Added Wave 151
+- **I2S MEMS mic HAL**: Added Wave 151
 
 ## Documentation Fractal
 Every directory in every submodule must have a README.md with:

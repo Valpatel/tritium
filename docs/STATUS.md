@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-15 (Wave 150 — 150-Wave Milestone).
+Current state of all components as of 2026-03-15 (Wave 152 — Maintenance + Agent Refiner).
 
 ## Component Health
 
@@ -9,19 +9,40 @@ Current state of all components as of 2026-03-15 (Wave 150 — 150-Wave Mileston
 | **tritium-edge firmware** | Building | 49.9% RAM, 29.4% Flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 2,516 tests passing |
+| **tritium-lib** | Stable | 2,527 tests passing |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds, diagnostics |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler wired in Wave 105) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 | **Intelligence pipeline** | Active | 7 modules, all learners using BaseLearner ABC, 10-feature model |
-| **RL pipeline** | Retrained | 54.8% accuracy on 507 clean 10-feature examples; top feature: source_diversity_score |
-| **Plugin system** | Active | 21 plugin directories + npc_thoughts + built-in npc_intelligence, auto-discovery with boot report |
+| **RL pipeline** | Retrained | 81.7% accuracy on clean 10-feature examples (Wave 150 retrain); top feature: source_diversity_score |
+| **Plugin system** | Active | 20 plugin directories + npc_thoughts + built-in npc_intelligence, auto-discovery with boot report |
 | **Collaboration** | Active | Shared workspaces, map drawing, operator chat, WebSocket broadcast |
 | **Forensics** | Active | Event reconstruction, incident reports, map replay |
 | **Fleet management** | Active | Device lifecycle, health summary, remote diagnostics |
 | **Intelligence packages** | Active | Portable inter-site intelligence sharing with chain of custody |
 | **Dwell tracking** | Active | Monitors stationary targets >5min, severity classification |
 | **Command history** | Active | Fleet command audit log with timeout detection |
+
+## Wave 152 (Maintenance + Agent Refiner)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| STATUS.md updated through Wave 152 | docs | - | Complete |
+| Changelogs updated through Wave 152 in all repos | docs | - | Complete |
+| Agent files updated with Wave 152 counts | agents | - | Complete |
+| Lib pytest: 2,527 passing (up from 2,516) | tritium-lib | 2,527 | Verified |
+| Codebase counts: 101 app routers, 91 panels, 159 JS files, 20 plugin dirs, 97 lib model files, 67 HALs, 131 lib test files | all | - | Verified |
+
+## Wave 151 (Feature: Acoustic MFCC+KNN + Federation v2 + I2S Mic HAL)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| Acoustic classifier MFCC+KNN upgrade — scipy MFCC + sklearn KNN (k=5), 3-tier graceful degradation | tritium-sc | 60 tests | Complete |
+| Federation v2.0.0 — target dedup, shared threat assessments, site health monitoring | tritium-sc | 71 tests | Complete |
+| AcousticFeatureVector model — compact MFCC transport for edge-to-SC | tritium-lib | 11 tests | Complete |
+| I2S MEMS microphone HAL — adaptive VAD, energy-based detection, MQTT publish | tritium-edge | - | Build verified |
+| Federation dashboard — health grid, threat list, dedup stats | tritium-sc | - | Complete |
+| Edge build: 50.6% RAM, 29.4% Flash | tritium-edge | - | Verified |
 
 ## Wave 150 (150-Wave Milestone Report)
 
@@ -415,39 +436,39 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
 | WebSocket stress test (10/50/100 concurrent connections) | 111 | tritium-sc | Complete |
 | Demo mode RL training generator (100+ examples in 5 min) | 111 | tritium-sc | Complete |
 
-## Codebase Metrics (Wave 149)
+## Codebase Metrics (Wave 152)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 150 |
-| **Total features shipped** | 400+ |
-| **Active plugins** | 21 plugin dirs + npc_thoughts + built-in npc_intelligence |
+| **Total waves completed** | 152 |
+| **Total features shipped** | 410+ |
+| **Active plugins** | 20 plugin dirs + npc_thoughts + built-in npc_intelligence |
 | **App routers** | 101 |
 | **Plugin route files** | 18 |
 | **Total routers** | 120 (101 app + 18 plugin + amy) |
-| **Route decorators** | 772+ |
+| **Route decorators** | 755+ |
 | **Frontend panels** | 91 |
-| **Frontend JS files** | 162 |
-| **Test files total** | 1934+ (1804 SC + 130 lib) |
-| **Lib model files** | 96 |
-| **Lib Pydantic classes** | 265+ |
-| **Lib tests** | 2,516 |
+| **Frontend JS files** | 159 |
+| **Test files total** | 769+ (638 SC + 131 lib) |
+| **Lib model files** | 97 |
+| **Lib Pydantic classes** | 262+ |
+| **Lib tests** | 2,527 |
 | **HAL libraries** | 67 |
 | **Correlation strategies** | 6 (spatial=0.30, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13, wifi_probe=0.15) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
-| **RL features** | 10 (expanded from 6 in Wave 126, model reset Wave 129, training data purged Wave 142) |
+| **RL features** | 10 (expanded from 6 in Wave 126, model reset Wave 129, purged Wave 142, retrained 81.7% Wave 150) |
 | **ESC-50 dataset** | 2,000 clips, 50 sound classes, 1.4 GB, 21.2% accuracy benchmark |
 
-## Test Results (Wave 149)
+## Test Results (Wave 152)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib | 2,516 tests | All passing |
+| tritium-lib | 2,527 tests | All passing |
 | tritium-sc | 101 router files, 91 panel JS files | Passing |
-| tritium-edge build | 49.9% RAM, 29.4% Flash | 0 warnings, SUCCESS |
-| Total test files | 1,934+ (1,804 SC + 130 lib) | |
+| tritium-edge build | 50.6% RAM, 29.4% Flash | 0 warnings, SUCCESS |
+| Total test files | 769+ (638 SC + 131 lib) | |
 
-## RL Pipeline Status (Wave 146 — 10-Feature Model, Clean Retrained)
+## RL Pipeline Status (Wave 150 — 10-Feature Model, Retrained 81.7%)
 
 | Metric | Value |
 |--------|-------|
@@ -455,24 +476,24 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
 | **Model path** | data/models/correlation_model.pkl |
 | **Feature count** | 10 (expanded from 6 in Wave 126) |
 | **Features** | distance, rssi_delta, co_movement, device_type_match, time_gap, signal_pattern, co_movement_duration, time_of_day_similarity, source_diversity_score, wifi_probe_correlation |
-| **Training data** | 507 clean 10-feature examples |
-| **Accuracy** | 54.8% on clean 10-feature data (Wave 143 retrain) |
+| **Training data** | 507+ clean 10-feature examples |
+| **Accuracy** | 81.7% (Wave 150 retrain, up from 54.8% in Wave 143) |
 | **Top feature** | source_diversity_score |
 | **Static fallback** | Active when model=None (graceful degradation) |
 | **Auto-retrain scheduler** | Every 6 hours or 50 new feedback entries |
 | **Training threshold** | 10+ confirmed correlation examples needed |
 | **Security** | POST /api/feedback requires authentication (Wave 112) |
 | **6-strategy weights** | spatial=0.30, wifi_probe=0.15, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13 (sum=1.00) |
-| **Status** | Clean 10-feature model retrained (Wave 143). 54.8% accuracy, up from 49.4% on mixed data. Feature consistency verified across all modules. |
+| **Status** | 10-feature model retrained (Wave 150). 81.7% accuracy, up from 54.8% (Wave 143). Feature consistency verified across all modules. |
 
 ## Architecture
 
 ```
   tritium-edge (C++17)     tritium-sc (Python+JS)     tritium-lib (Python)
   ==================       =====================       ===================
-  ESP32-S3 firmware        FastAPI :8000               96 model files
-  6 board types            21+ plugins                 265+ Pydantic classes
-  67 HAL libraries         120 routers                 2,516 tests
+  ESP32-S3 firmware        FastAPI :8000               97 model files
+  6 board types            22 plugins                  262+ Pydantic classes
+  67 HAL libraries         120 routers                 2,527 tests
   MQTT, BLE, WiFi          AI Commander Amy (plugin)   Graph DB, Auth
   LoRa, ESP-NOW            YOLO, WebSocket             Events, MQTT topics
   hal_ble_features         Canvas 2D/3D map            Geo, Notifications

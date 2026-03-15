@@ -2,6 +2,86 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 152 (2026-03-15): Maintenance + Agent Refiner
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated through Wave 152 with corrected counts | Complete |
+| All changelogs updated through Wave 152 | Complete |
+| Agent files updated with Wave 152 baselines (13 agent .md files) | Complete |
+| Iteration queue trigger schedule updated — maintenance + agent-refiner Last Run = Wave 152 | Complete |
+| Lib pytest: 2,527 passing (up from 2,516) | pytest verified |
+| Codebase counts: 101 app routers, 91 panels, 159 JS files, 20 plugin dirs, 97 lib models, 67 HALs | Verified |
+
+---
+
+## Wave 151 (2026-03-15): Acoustic MFCC+KNN + Federation v2 + I2S Mic HAL
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| Acoustic classifier MFCC+KNN upgrade — scipy MFCC + sklearn KNN (k=5), 3-tier graceful degradation | 60 tests pass |
+| Federation v2.0.0 — target dedup, shared threat assessments, site health monitoring | 71 tests pass |
+| AcousticFeatureVector model in tritium-lib — compact MFCC transport for edge-to-SC | 11 tests pass |
+| I2S MEMS microphone HAL — adaptive VAD, energy-based detection, MQTT publish | Code review |
+| Federation dashboard — health grid, threat list, dedup stats | Code review |
+| Edge build: 50.6% RAM, 29.4% Flash | Build verified |
+
+---
+
+## Wave 150 (2026-03-15): 150-Wave Milestone — RL Retrain + Dead Routes
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| MILESTONE_150.md comprehensive retrospective — 8 days, 150 waves, ~645K lines | Complete |
+| RL retrain: 81.7% accuracy (up from 54.8%) | API verified |
+| Dead routes wired to frontend consumers | Code review |
+| Lib pytest: 2,516 passing | pytest verified |
+| Edge build: 49.9% RAM, 29.4% Flash, 0 warnings | Build verified |
+
+---
+
+## Wave 149 (2026-03-15): Maintenance + Quality Audit
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated through Wave 149 | Complete |
+| Changelogs updated through Wave 149 in all repos | Complete |
+| Unused lib models wired into SC consumers | Code review |
+| Quality audit: 1 test fixed, 12 assertions added | pytest verified |
+| Lib pytest: 2,516 passing | pytest verified |
+
+---
+
+## Wave 148 (2026-03-15): LPR Panel + ReID Panel + Power Management + Environment HAL
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| LPR frontend panel — watchlist CRUD, live plate feed UI | Code review |
+| ReID cross-camera tracking panel — re-identification matches UI | Code review |
+| Power state machine — battery-aware deep sleep with scan interval adjustment | Code review |
+| hal_environment I2C sensor drivers — BME280/BMP280/SHT31/BME680/BH1750/VEML7700 | Code review |
+| hal_lora simulator stubs for desktop builds | Code review |
+
+---
+
+## Wave 147 (2026-03-15): Target Trail Export GPX/KML + Security Hardening
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| GPX/KML trail export endpoints — /api/targets/{id}/trail/export with format selection | Code review |
+| Trail Export panel — frontend UI for downloading target movement trails | Code review |
+| Douglas-Peucker trail simplification for large datasets | Code review |
+| KML document builder + TrailExport models in tritium-lib | Unit tested |
+| Security audit — auth guards, input validation, query bounds across 11 plugins | Code review |
+
+---
+
 ## Wave 146 (2026-03-15): RTSP Timeout Fix + Convoy Visualization + First-Seen Notifications
 
 ### Changes

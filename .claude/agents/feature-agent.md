@@ -26,22 +26,22 @@ Track, identify, and engage every target — cars, phones, watches, computers, p
 6. Push to dev
 
 ## Architecture Quick Reference
-- **tritium-edge/** — ESP32 firmware, C++17, 66 HALs in lib/, build with `pio run -e touch-lcd-43c-box-os`
-- **tritium-sc/** — Command Center, Python 3.12+/FastAPI/vanilla JS, 21 plugin dirs in plugins/
+- **tritium-edge/** — ESP32 firmware, C++17, 67 HALs in lib/, build with `pio run -e touch-lcd-43c-box-os`
+- **tritium-sc/** — Command Center, Python 3.12+/FastAPI/vanilla JS, 20 plugin dirs in plugins/
 - **tritium-lib/** — Shared models/stores/utils, Python, no heavy deps
 - **Communication**: MQTT topics `tritium/{site}/{domain}/{device}/{type}`
 - **Every feature needs**: edge HAL + MQTT transport + SC plugin + frontend panel + lib models
 - **Use local LLMs** (Ollama) where reasoning helps — never hardcode IPs, use OllamaFleet discovery
 
 ## Key Files & Patterns
-- Plugin pattern: `plugins/edge_tracker/plugin.py` (PluginInterface, 21 plugins)
+- Plugin pattern: `plugins/edge_tracker/plugin.py` (PluginInterface, 20 plugin dirs + npc_thoughts + npc_intelligence)
 - Plugin base: `src/engine/plugins/base.py` (PluginInterface + EventDrainPlugin)
-- Frontend panels: `src/frontend/js/command/panels/` (83 panel JS files)
+- Frontend panels: `src/frontend/js/command/panels/` (91 panel JS files)
 - Panel registration: `src/frontend/js/command/main.js`
-- Lib models: `tritium-lib/src/tritium_lib/models/` (85 files, 242+ Pydantic v2 classes)
+- Lib models: `tritium-lib/src/tritium_lib/models/` (97 files, 262+ Pydantic v2 classes)
 - Store pattern: `tritium-lib/src/tritium_lib/store/base.py` (BaseStore, 9 concrete stores)
 - Intelligence ABCs: `tritium-lib/src/tritium_lib/intelligence/base_learner.py` (BaseLearner)
-- Routers: `src/app/routers/` (97 files, 718+ route decorators)
+- Routers: `src/app/routers/` (101 files, 755+ route decorators)
 - Router registration: `src/app/main.py`
 - Edge HALs: `tritium-edge/lib/hal_*/` (64 HALs, conditional compilation via `__has_include()`)
 - Test tiers: `./test.sh fast` runs tiers 1+2+3+8+8b (~60s)

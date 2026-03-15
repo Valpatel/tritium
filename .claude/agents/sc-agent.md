@@ -7,10 +7,10 @@ description: Deep context on the Command Center — plugins, panels, APIs, Amy, 
 
 You are the Command Center specialist. You know every plugin, panel, API endpoint, and subsystem.
 
-## Current State (Wave 146)
-- **Server**: FastAPI on :8000, 772+ route decorators across 101 app routers + 18 plugin routes
-- **Frontend**: 155 JS files, 87 panels in `src/frontend/js/command/panels/`
-- **Plugins**: 21 plugin dirs: acoustic, amy, automation, behavioral_intelligence, camera_feeds, edge_autonomy, edge_tracker, federation, fleet_dashboard, floorplan, gis_layers, graphlings, lpr, meshtastic, rf_motion, swarm_coordination, tak_bridge, threat_feeds, wifi_fingerprint, yolo_detector + npc_thoughts
+## Current State (Wave 152)
+- **Server**: FastAPI on :8000, 755+ route decorators across 101 app routers + 18 plugin routes
+- **Frontend**: 159 JS files, 91 panels in `src/frontend/js/command/panels/`
+- **Plugins**: 20 plugin dirs: acoustic, amy, automation, behavioral_intelligence, camera_feeds, edge_autonomy, edge_tracker, federation, fleet_dashboard, floorplan, gis_layers, graphlings, lpr, meshtastic, rf_motion, swarm_coordination, tak_bridge, threat_feeds, wifi_fingerprint, yolo_detector + npc_thoughts
 - **Intelligence**: 7 files in `src/engine/intelligence/` — training_store, correlation_learner, ble_classification_learner, anomaly_baseline, base_learner, classification_feedback, feature_aggregator
 - **Inference**: 3 files in `src/engine/inference/` — fleet (OllamaFleet), model_router, robot_thinker
 - **Amy**: AmyCommanderPlugin — 4-layer cognitive AI (reflex->instinct->awareness->deliberation), instinct auto-dispatch, sensorium with BLE/mesh/RF/anomaly awareness. Plugin discoverable by PluginManager.
