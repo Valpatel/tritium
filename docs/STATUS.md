@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (Wave 109 — Maintenance).
+Current state of all components as of 2026-03-14 (Wave 112 — Maintenance + Security).
 
 ## Component Health
 
@@ -14,81 +14,82 @@ Current state of all components as of 2026-03-14 (Wave 109 — Maintenance).
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler wired in Wave 105) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 | **Intelligence pipeline** | Active | 7 modules, all learners using BaseLearner ABC |
-| **RL pipeline** | Idle | TrainingStore has 54 feedback entries, 0 correlation/classification data; model not yet trained (needs 10+ confirmed correlations) |
+| **RL pipeline** | Wired | Correlator + BLE classifier now log decisions; demo mode RL generator produces training data; feedback endpoint secured with auth (Wave 112) |
 | **Plugin system** | Active | 20 plugins (including AmyCommanderPlugin), auto-discovery with boot report |
 | **Collaboration** | Active | Shared workspaces, map drawing, operator chat, WebSocket broadcast |
 | **Forensics** | Active | Event reconstruction, incident reports, map replay |
 | **Fleet management** | Active | Device lifecycle, health summary, remote diagnostics |
 | **Intelligence packages** | Active | Portable inter-site intelligence sharing with chain of custody |
 
-## Wave 109 (Maintenance)
+## Wave 112 (Maintenance + Security)
 
 | Feature | Component | Tests | Status |
 |---------|-----------|-------|--------|
-| STATUS.md update to Wave 109 | docs | - | Complete |
-| RL pipeline health audit (54 feedback, 0 correlations, model not trained) | tritium-sc | - | Audited |
-| Edge firmware build verification: 49.8% RAM, 29.4% Flash | tritium-edge | Build Verified | Complete |
-| Route redundancy audit: 88 routers, no collisions | tritium-sc | - | Audited |
-| Agent trigger schedule updated | docs | - | Complete |
+| STATUS.md update to Wave 112 | docs | - | Complete |
+| Security: /api/feedback requires auth (prevents training data poisoning) | tritium-sc | - | Fixed |
+| Orphan router: proximity.py registered in main.py (was unlinked since Wave 108) | tritium-sc | - | Fixed |
+| 5 orphan panels registered in main.js (acoustic-intelligence, behavioral-intelligence, map-replay, voice-command, wifi-fingerprint) | tritium-sc | - | Fixed |
+| Lib pytest: 2,236 passing confirmed | tritium-lib | 2,236 | Verified |
+| Changelog updated | tritium-sc | - | Complete |
 
-## Wave 105-108 Features
+## Wave 107-111 Features
 
 | Feature | Wave | Component | Status |
 |---------|------|-----------|--------|
-| Radio scheduler (hal_radio_scheduler) wired into main.cpp | 105 | tritium-edge | Complete |
-| Tamper detection (hal_tamper_detect) wired with conditional compilation | 105 | tritium-edge | Complete |
-| Threat level history — 24h ring buffer + GET /api/threat-level/history | 105 | tritium-sc | Complete |
-| Amy Commander Plugin verified (Phase 4) | 105 | tritium-sc | Complete |
-| STATUS.md comprehensive update | 106 | docs | Complete |
-| Waves 104-108 feature delivery + quality | 104-108 | all | Complete |
+| Security: classify API requires auth, 6 tests | 107 | tritium-sc | Complete |
+| Meshtastic chat bridge (operator-to-mesh bidirectional) | 107 | tritium-sc | Complete |
+| CoT XML export format for targets | 107 | tritium-sc/lib | Complete |
+| Amy daily learning summary endpoint | 107 | tritium-sc | Complete |
+| tritium-lib CoT export models (CoTExportEvent, CoTExportPoint) | 107 | tritium-lib | Complete |
+| ProximityMonitor engine + REST API /api/proximity/ | 108 | tritium-sc | Complete |
+| Investigation auto-close with configurable delay | 108 | tritium-sc | Complete |
+| STATUS.md comprehensive update, route audit (88 routers) | 109 | docs | Complete |
+| RL pipeline health audit | 109 | tritium-sc | Complete |
+| Correlator logs correlation decisions to TrainingStore | 110 | tritium-sc | Complete |
+| BLE classifier logs classification decisions to TrainingStore | 110 | tritium-sc | Complete |
+| Health endpoint includes rl_training metrics | 110 | tritium-sc | Complete |
+| Playwright visual test (dark theme, map, menu bar) | 110 | tritium-sc | Complete |
+| Target capacity benchmark (248K ops/s at 10K targets) | 111 | tritium-sc | Complete |
+| WebSocket stress test (10/50/100 concurrent connections) | 111 | tritium-sc | Complete |
+| Demo mode RL training generator (100+ examples in 5 min) | 111 | tritium-sc | Complete |
 
-## Wave 103 Features
-
-| Feature | Component | Tests | Status |
-|---------|-----------|-------|--------|
-| IntelligencePackage model (portable intel sharing) | tritium-lib | 32 tests | Complete |
-| Intelligence package export/import API (7 routes) | tritium-sc | 18 tests | Complete |
-| Edge device remote diagnostics (3 routes) | tritium-sc | 11 tests | Complete |
-| Edge diagnostics frontend panel | tritium-sc | JS panel | Complete |
-
-## Codebase Metrics (Wave 109)
+## Codebase Metrics (Wave 112)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 109 |
-| **Total features shipped** | 280+ |
+| **Total waves completed** | 112 |
+| **Total features shipped** | 290+ |
 | **Active plugins** | 20 (including AmyCommanderPlugin) |
-| **API routers** | 88 |
-| **Frontend JS files** | 145 |
+| **API routers** | 90 (89 files, proximity now registered) |
+| **Frontend panels** | 80 (72 registered in main.js) |
 | **Lib model files** | 82 |
 | **Lib tests** | 2,236 |
 | **HAL libraries** | 64 |
 | **Correlation strategies** | 5 (spatial, temporal, signal_pattern, dossier, learned) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
 
-## Test Results (Wave 109)
+## Test Results (Wave 112)
 
 | Suite | Count | Status |
 |-------|-------|--------|
 | tritium-lib | 2,236 tests | All passing |
-| tritium-sc | 88 router files, 145 JS files | Passing |
+| tritium-sc | 90 router files, 80 panel JS files | Passing |
 | tritium-edge build | 49.8% RAM, 29.4% Flash | 0 warnings, SUCCESS |
 
-## RL Pipeline Status (Wave 109 Audit)
+## RL Pipeline Status (Wave 112 Audit)
 
 | Metric | Value |
 |--------|-------|
-| **TrainingStore DB** | data/training.db (45 KB) |
-| **Correlation decisions logged** | 0 |
-| **Correlation decisions with outcome** | 0 |
-| **Classification decisions logged** | 0 |
-| **Operator feedback entries** | 54 |
-| **Saved model** | None (no correlation_model.pkl) |
+| **TrainingStore DB** | data/training.db |
+| **Correlation decisions** | Now logged by correlator (Wave 110) |
+| **Classification decisions** | Now logged by BLE classifier (Wave 110) |
+| **Operator feedback entries** | 54+ (auth required as of Wave 112) |
+| **Demo RL generator** | Produces 100+ training examples in 5 min (Wave 111) |
 | **Auto-retrain scheduler** | Code ready, starts via `start_retrain_scheduler()` |
 | **Training threshold** | 10+ confirmed correlation examples needed |
 | **Retrain interval** | Every 6 hours or 50 new feedback entries |
-| **sklearn available** | Yes |
-| **Status** | IDLE — collecting feedback but no correlation/classification decisions being logged to train on. The correlator needs to call `training_store.log_correlation()` during operation to populate training data. |
+| **Security** | POST /api/feedback now requires authentication (Wave 112 fix) |
+| **Status** | WIRED — correlator and classifier now log decisions. Demo mode can generate training data. Auth prevents poisoning. |
 
 ## Architecture
 
@@ -97,18 +98,19 @@ Current state of all components as of 2026-03-14 (Wave 109 — Maintenance).
   ==================       =====================       ===================
   ESP32-S3 firmware        FastAPI :8000               82 model files
   6 board types            20 plugins                  370+ dataclasses
-  64 HAL libraries         88 routers                  2,236 tests
+  64 HAL libraries         90 routers                  2,236 tests
   MQTT, BLE, WiFi          AI Commander Amy (plugin)   Graph DB, Auth
   LoRa, ESP-NOW            YOLO, WebSocket             Events, MQTT topics
   hal_ble_features         Canvas 2D/3D map            Geo, Notifications
   hal_tinyml, hal_voice    7 intelligence modules      Classifier, COT
-  hal_scan_optimizer       145 frontend JS files       BaseLearner ABC
+  hal_scan_optimizer       80 frontend panels          BaseLearner ABC
   hal_radio_scheduler      Forensics + Collaboration   Intel Packages
   hal_tamper_detect        Operator chat + drawing
   hal_diag_dump            Swarm coordination
   Fleet server :8080       Fleet lifecycle mgmt
                            Remote diagnostics
                            Intel package export/import
+                           Proximity monitoring
 ```
 
 ## Plugins (20 active)
@@ -136,18 +138,13 @@ Current state of all components as of 2026-03-14 (Wave 109 — Maintenance).
 | edge_autonomy | Autonomous edge decision processing |
 | amy | AI Commander Amy (4-layer cognitive AI, sensorium, instinct dispatch) |
 
-## Route Redundancy Audit (Wave 109)
+## Security Audit (Wave 112)
 
-88 routers with unique prefixes. Shared-prefix routers have non-overlapping suffixes:
-
-| Prefix | Routers | Collision? |
-|--------|---------|------------|
-| `/api/targets` | 6 (ar_export, classification_override, enrichment, nearby_targets, target_search, timeline) | No — unique suffixes |
-| `/api/devices` | 2 (device_management, devices) | No — unique suffixes |
-| `/api/analytics` | 3 (analytics_dashboard, history_analytics, movement_analytics) | No — unique suffixes |
-| `/api/system` | 3 (metrics, self_test, system_inventory) | No — unique suffixes |
-
-No duplicate or overlapping endpoint paths found.
+| Endpoint | Risk | Status |
+|----------|------|--------|
+| POST /api/feedback | Training data poisoning via unauthenticated feedback | FIXED — now requires `require_auth` |
+| POST /api/targets/{id}/classify | Classification override without auth | Fixed in Wave 106 |
+| MQTT topics | Unrestricted pub/sub | ACL template created in Wave 106 |
 
 ## Integration Points
 
@@ -173,18 +170,11 @@ No duplicate or overlapping endpoint paths found.
 | Fleet health summary aggregation | Working |
 | Plugin auto-discovery with boot report | Working |
 | Unified event feed | Working |
-
-## Infrastructure Health
-
-| Host | Disk | RAM Free | Status |
-|------|------|----------|--------|
-| gb10-01 (primary) | — | — | Active development |
-| gb10-02 (backup) | — | — | SSH unreachable this session (host key verification) |
+| Proximity monitoring + alerts | Working |
 
 ## Known Blockers
 
 - **NimBLE esp_bt.h not found** -- blocks BLE serial + BLE OTA. WiFi/mesh/SD alternatives work.
 - **BLE/WiFi coexistence** -- can't run BLE scanner alongside WiFi. Radio scheduler HAL wired (Wave 105), needs serial verification.
 - **RGB parallel display glitches** -- 43C-BOX cosmetic issue when USB connected.
-- **RL pipeline idle** -- TrainingStore has 54 feedback entries but 0 correlation/classification decisions. Correlator needs to call `log_correlation()` during operation to generate training data for the learned model.
 - **gb10-02 sync** -- SSH host key verification failed; needs manual acceptance of new host key.
