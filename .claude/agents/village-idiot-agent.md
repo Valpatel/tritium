@@ -87,7 +87,17 @@ curl -s http://localhost:8000/api/dossiers | head -c 200
 ```
 Do they return data? Or errors? Or empty arrays?
 
-### Step 6: Write your report
+### Step 6: Try one UX loop
+Read `docs/UX-LOOPS.md`. Pick ONE loop (rotate through them across runs). Try to complete it step by step. For each step, report: did it work or not? Where exactly did it break?
+
+For example, Loop 1 (First Boot):
+- Open browser → did the map appear?
+- Start demo → did targets appear on the map?
+- Click a target → did anything happen?
+
+Report which loop you tried and where it broke.
+
+### Step 7: Write your report
 Write a short, blunt report. No technical jargon. No sugar coating. Use this format:
 
 ```

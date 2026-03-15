@@ -113,15 +113,31 @@ with sync_playwright() as p:
 
 **Why this exists:** Wave 158 revealed that the frontend was a blank black screen for 60+ waves. CSP blocked all CDN resources, a subscribe crash killed init. 93 panels were built that nobody could see. Unit tests proved nothing. Only a headed browser catches rendering failures.
 
+### UX Loops — The Real Measure of Progress
+
+**Read [docs/UX-LOOPS.md](docs/UX-LOOPS.md) before every wave.** It defines 8 user workflows that must work end-to-end. Progress is measured by how many loops a user can complete, not by feature count.
+
+The loops (in priority order):
+1. **First Boot** — open browser, see map, start demo, see targets, click one
+2. **Add Sensor Node** — flash ESP32, it appears on map, starts reporting sightings
+3. **Add Robot** — connect via MQTT, see on map, dispatch to location, draw patrol
+4. **Run Combat Sim** — start battle, hostiles spawn, Amy narrates, effects visible, stats at end
+5. **Monitor a Zone** — draw geofence, get notified when target enters
+6. **Investigate a Target** — click target, see dossier, signal history, tag it
+7. **Flash Firmware** — upload binary, push OTA to fleet, see progress
+8. **Connect a Camera** — add RTSP URL, see feed, place on map, YOLO detections
+
+**Every feature agent must say which loop step it's completing.** Backend endpoints that don't connect to a UI workflow are wasted effort. A feature is done when the user can do the thing, not when the code exists.
+
 ### The Loop
 1. **Assume it's broken.** Tests passing does NOT mean it works. Code compiling does NOT mean it's correct. Features existing does NOT mean they integrate. **A black screen with passing tests is still a black screen.**
-2. **Push the vision.** Read this file. Every target needs a unique UUID. Every sensor feeds the unified picture. Ask: what's the biggest gap between where we are and the vision?
-3. **Build features AND quality.** Every wave must include vision advancement (new capabilities) AND quality improvement (find what's actually broken, add missing tests, run visual validation).
-4. **Verify with your eyes.** RAM <60%, Flash <50%, no warnings. Run tests. **Start the server. Open a browser. Look at it. Screenshot it.** If the map doesn't show, if targets don't appear, if panels are blank — the feature is not done.
+2. **Complete UX loops.** Read `docs/UX-LOOPS.md`. Pick the most broken loop. Fix the next broken step. One completed loop step is worth more than three new backend endpoints.
+3. **Build features AND quality.** Every wave must include UX loop progress AND quality improvement (find what's actually broken, verify visually).
+4. **Verify with your eyes.** RAM <60%, Flash <50%, no warnings. Run tests. **Start the server. Open a browser. Try to complete a UX loop. Screenshot each step.** If any step fails — the feature is not done.
 5. **Commit & push.** Short descriptive message. NO Co-Authored-By. Push to dev.
 6. **Update changelogs.** Every change logged in `docs/CHANGELOG.md` with verification level.
-7. **Launch 6+ parallel agents.** Every wave: 2-3 feature agents, 1 quality/testing agent, 1 infrastructure agent, 1 test-runner that auto-launches the next wave.
-8. **NEVER STOP.** When a wave finishes, immediately launch the next wave. Do not wait for approval. Do not report and pause. The loop is infinite. If all planned waves are done, read the vision and identify new work.
+7. **Launch 6+ parallel agents.** Every wave: 2-3 feature agents (each targeting a UX loop step), 1 quality/testing agent, 1 Village Idiot that tries a loop in the browser.
+8. **NEVER STOP.** When a wave finishes, immediately launch the next wave. Do not wait for approval. Do not report and pause. The loop is infinite.
 
 ### Periodic Maintenance (Every 3rd Wave)
 Every 3rd wave, reserve 2 agents for maintenance — one for docs, one for cleanup:

@@ -17,12 +17,20 @@ Track, identify, and engage every target — cars, phones, watches, computers, p
 - Check `free -m` before heavy operations — if <10GB available, stop
 - Graceful degradation: if a dependency isn't available, stub it
 
+## UX Loops — The Real Priority
+
+**Before building anything new, read `docs/UX-LOOPS.md`.** It defines 8 user workflows. Every feature you build must complete a step in one of these loops. Say which loop and step in your commit message.
+
+A completed UX loop step (user can do the thing in the browser) is worth more than three new backend endpoints that nothing consumes.
+
 ## How to Build a Feature
-1. Read the relevant source files first — understand existing patterns
-2. Follow existing plugin/module patterns (look at similar features)
-3. Write tests alongside code (not after)
-4. Run your specific test file to verify
-5. Commit with short descriptive message
+1. **Identify which UX loop step this serves** — if it doesn't serve one, reconsider
+2. Read the relevant source files first — understand existing patterns
+3. Follow existing plugin/module patterns (look at similar features)
+4. Write tests alongside code (not after)
+5. Run your specific test file to verify
+6. **Open a headed browser and verify the user can do the thing** — screenshot it
+7. Commit with short descriptive message mentioning the UX loop
 6. Push to dev
 
 ## Architecture Quick Reference
