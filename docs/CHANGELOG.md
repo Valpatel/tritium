@@ -2,6 +2,20 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 135 (2026-03-15): LPR Plugin, Graph Edge Labels, ESC-50 Benchmark, RL Export
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| tritium-sc: LPR (License Plate Recognition) stub plugin — watchlist CRUD, detection pipeline, search, demo mode | 19 tests passing |
+| tritium-sc: Graph explorer edge labels — relationship types (CARRIES, DETECTED_WITH) + confidence %, directional arrows, dynamic legend | Code review |
+| tritium-sc: ESC-50 full benchmark — 2000 WAV files, 34/50 categories mapped to 9/11 classes, 21.2% accuracy | Tests passing (121s) |
+| tritium-lib: RLMetrics.export() — full JSON-serializable metrics snapshot, PredictionRecord export | 13 tests passing |
+| gb10-02 sync verified, 2391 lib tests passing, disk at 77% | Verified |
+| ESC-50 dataset gitignored, not synced to gb10-02 (as expected) | Verified |
+
+---
+
 ## Wave 134 (2026-03-15): RL E2E Pipeline, ReID Cross-Camera, Dossier Timeline, BLE Dwell Time
 
 ### Changes
