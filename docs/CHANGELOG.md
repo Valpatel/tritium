@@ -2,6 +2,20 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 134 (2026-03-15): RL E2E Pipeline, ReID Cross-Camera, Dossier Timeline, BLE Dwell Time
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| tritium-sc: RL training E2E pipeline — generate data, train, verify 55% accuracy, save/reload | 2 tests passing |
+| tritium-sc: ReID embedding store for cross-camera identity matching | 7 tests passing |
+| tritium-sc: ReID demo generator — persons moving between camera FOVs with dossier merge | Code review |
+| tritium-sc: Dossier timeline panel — chronological signal visualization with source colors | Code review |
+| tritium-lib: RLMetrics — model accuracy, feature importance, prediction distribution tracking | 10 tests passing |
+| tritium-edge: BLE device dwell time tracking (dwell_time_s in all JSON outputs) | Build verified: 49.9% RAM, 29.4% Flash |
+
+---
+
 ## Wave 131 (2026-03-15): Target Groups, Annotation Persistence, Kalman Filter, BLE History
 
 ### Changes
