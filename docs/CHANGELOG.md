@@ -2,6 +2,21 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 145 (2026-03-15): Convoy Detection + Daily Summary + BLE Adv Monitor
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| Convoy model in tritium-lib — Convoy, ConvoyFormation, ConvoyStatus, ConvoySummary | 12 tests pass |
+| ConvoyDetector in tritium-sc — detects 3+ targets moving together, publishes convoy_detected/dissolved events | 12 tests pass |
+| DailySummaryGenerator in tritium-sc — generates JSON daily activity summary with unique targets, busiest hour, threat levels | 9 tests pass |
+| EventStore: added convoy_detected, convoy_dissolved, daily_summary to tracked event types | Code review |
+| BLE advertisement change detection HAL (hal_ble_adv_monitor) — detects suspicious BLE adv payload mutations | Code review |
+| BLE adv monitor service descriptor for service registry integration | Code review |
+| Lib: Convoy model with suspicious_score computation (heading/speed variance, duration, member count) | Unit tested |
+
+---
+
 ## Wave 144 (2026-03-15): Activity Heatmap + Device First/Last Seen + DailyPattern Model
 
 ### Changes
