@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-15 (Wave 139 — Maintenance).
+Current state of all components as of 2026-03-15 (Wave 142 — Maintenance).
 
 ## Component Health
 
@@ -14,7 +14,7 @@ Current state of all components as of 2026-03-15 (Wave 139 — Maintenance).
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler wired in Wave 105) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 | **Intelligence pipeline** | Active | 7 modules, all learners using BaseLearner ABC, 10-feature model |
-| **RL pipeline** | Reset | Old 6-feature model deleted (Wave 129); 10-feature model trains fresh on real data |
+| **RL pipeline** | Reset | Old training data purged (Wave 142); 148 clean 10-feature examples remain; model deleted for fresh retrain |
 | **Plugin system** | Active | 22 plugins (including LPR, AmyCommanderPlugin), auto-discovery with boot report |
 | **Collaboration** | Active | Shared workspaces, map drawing, operator chat, WebSocket broadcast |
 | **Forensics** | Active | Event reconstruction, incident reports, map replay |
@@ -22,6 +22,39 @@ Current state of all components as of 2026-03-15 (Wave 139 — Maintenance).
 | **Intelligence packages** | Active | Portable inter-site intelligence sharing with chain of custody |
 | **Dwell tracking** | Active | Monitors stationary targets >5min, severity classification |
 | **Command history** | Active | Fleet command audit log with timeout detection |
+
+## Wave 142 (Maintenance)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| STATUS.md updated through Wave 141 | docs | - | Complete |
+| Lib pytest: 2,394 passing (down from 2,416 — 29 skipped) | tritium-lib | 2,394 | Verified |
+| RL training data purged: 65,495 old 6-feature records deleted, 148 clean 10-feature records remain | tritium-sc | - | Complete |
+| correlation_model.pkl deleted — next retrain starts fresh on 10-feature-only data | tritium-sc | - | Complete |
+| training.db vacuumed: 33 MB to 10 MB | tritium-sc | - | Complete |
+| RL feature consistency verified: FEATURE_NAMES in correlation_learner.py, scorer.py, and EXTENDED_FEATURE_NAMES in feature_engineering.py all match (10 features identical) | all | - | Verified |
+| Agent refiner: updated counts in agent-refiner.md and maintenance-agent.md | agents | - | Complete |
+| Codebase counts: 99 app routers, 87 panels (84 registered), 154 JS files, 636 SC test files, 124 lib test files | all | - | Verified |
+| Changelogs updated | docs | - | Complete |
+
+## Wave 141 (Feature: Target Clustering + Night Mode + RL Retrain + Power Saver)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| Behavioral clustering — /api/patterns/clusters groups targets by movement similarity | tritium-sc | - | Complete |
+| BehaviorCluster model with FormationType, CommonPattern, ClusterSummary | tritium-lib | 7 tests | Complete |
+| Map night mode — auto-dims between sunset/sunrise, NIT quick toggle | tritium-sc | - | JS verified |
+| RL model retrained: 10-feature set, 3,802 examples, 49.4% accuracy (old 6-feature data still in training set) | tritium-sc | - | Retrained |
+| Power saver optimization — reduced serial output, disabled non-essential consumers | tritium-edge | - | Code review |
+
+## Wave 140 (Feature: Orphan Panel Registration + Ops Dashboard Uptime Widget)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| 5 orphan panels converted to PanelDef and registered in main.js (edge-diagnostics, fusion-dashboard, operator-activity, swarm-coordination, training-dashboard) | tritium-sc | 93 JS tests | Complete |
+| System Uptime widget added to Ops Dashboard | tritium-sc | 27 tests | Complete |
+| /api/health extended with started_at, targets_processed, events_logged | tritium-sc | - | Complete |
+| Edge HAL discovery: hal_acoustic, hal_voice, hal_camera gaps identified | tritium-edge | - | Audited |
 
 ## Wave 139 (Maintenance)
 
@@ -291,52 +324,53 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
 | WebSocket stress test (10/50/100 concurrent connections) | 111 | tritium-sc | Complete |
 | Demo mode RL training generator (100+ examples in 5 min) | 111 | tritium-sc | Complete |
 
-## Codebase Metrics (Wave 139)
+## Codebase Metrics (Wave 142)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 139 |
-| **Total features shipped** | 380+ |
+| **Total waves completed** | 142 |
+| **Total features shipped** | 390+ |
 | **Active plugins** | 22 (20 dirs + npc_thoughts + built-in npc_intelligence) |
-| **App routers** | 100 |
+| **App routers** | 99 |
 | **Plugin route files** | 18 |
-| **Total routers** | 119 (100 app + 18 plugin + amy) |
+| **Total routers** | 118 (99 app + 18 plugin + amy) |
 | **Route decorators** | 760+ |
-| **Frontend panels** | 87 (78 registered + 7 legacy orphans + map-screenshot + operator-cursors) |
+| **Frontend panels** | 87 (84 registered + 3 legacy orphans: operator-cursors, weather-overlay, map-screenshot) |
 | **Frontend JS files** | 154 |
-| **Test files total** | 835 (700 SC + 123 lib + others) |
+| **Test files total** | 760+ (636 SC + 124 lib) |
 | **Lib model files** | 89 |
 | **Lib Pydantic classes** | 250+ |
-| **Lib tests** | 2,416 |
+| **Lib tests** | 2,394 |
 | **HAL libraries** | 65 |
 | **Correlation strategies** | 6 (spatial=0.30, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13, wifi_probe=0.15) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
-| **RL features** | 10 (expanded from 6 in Wave 126, model reset Wave 129, E2E verified at 55% in Wave 134) |
+| **RL features** | 10 (expanded from 6 in Wave 126, model reset Wave 129, training data purged Wave 142) |
 | **ESC-50 dataset** | 2,000 clips, 50 sound classes, 1.4 GB, 21.2% accuracy benchmark |
 
-## Test Results (Wave 139)
+## Test Results (Wave 142)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib | 2,416 tests | All passing |
-| tritium-sc | 119 router files, 87 panel JS files | Passing |
+| tritium-lib | 2,394 tests (29 skipped) | All passing |
+| tritium-sc | 99 router files, 87 panel JS files | Passing |
 | tritium-edge build | 49.9% RAM, 29.4% Flash | 0 warnings, SUCCESS |
-| Total test files | 835 (700 SC + 123 lib + others) | |
+| Total test files | 760+ (636 SC + 124 lib) | |
 
-## RL Pipeline Status (Wave 139 — 10-Feature Model, 55% E2E Verified)
+## RL Pipeline Status (Wave 142 — 10-Feature Model, Training Data Purged)
 
 | Metric | Value |
 |--------|-------|
-| **TrainingStore DB** | data/training.db |
-| **Model path** | data/models/correlation_model.pkl |
+| **TrainingStore DB** | data/training.db (10 MB after vacuum) |
+| **Model path** | data/models/correlation_model.pkl (DELETED — awaiting fresh retrain) |
 | **Feature count** | 10 (expanded from 6 in Wave 126) |
 | **Features** | distance, rssi_delta, co_movement, device_type_match, time_gap, signal_pattern, co_movement_duration, time_of_day_similarity, source_diversity_score, wifi_probe_correlation |
+| **Training data** | 148 clean 10-feature examples (121 correct, 27 incorrect) — 65,495 old 6-feature records purged |
 | **Static fallback** | Active when model=None (graceful degradation) |
 | **Auto-retrain scheduler** | Every 6 hours or 50 new feedback entries |
 | **Training threshold** | 10+ confirmed correlation examples needed |
 | **Security** | POST /api/feedback requires authentication (Wave 112) |
 | **6-strategy weights** | spatial=0.30, wifi_probe=0.15, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13 (sum=1.00) |
-| **Status** | Model RESET (Wave 129), E2E verified at 55% (Wave 134). 10-feature extractor active. ESC-50 acoustic benchmark: 21.2% accuracy on real 2000-clip dataset (Wave 135). Feature engineering library in tritium-lib. RLMetrics export added (Wave 135). |
+| **Status** | Old 6-feature data PURGED (Wave 142). 148 clean 10-feature records remain. Model deleted for fresh retrain on pure 10-feature data. Previous: 49.4% accuracy on mixed data (Wave 141) — expect improvement with clean data. Feature consistency verified: correlation_learner.py, scorer.py, feature_engineering.py all list identical 10 features. |
 
 ## Architecture
 
@@ -345,7 +379,7 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
   ==================       =====================       ===================
   ESP32-S3 firmware        FastAPI :8000               89 model files
   6 board types            22 plugins                  250+ Pydantic classes
-  65 HAL libraries         119 routers                 2,416 tests
+  65 HAL libraries         118 routers                 2,394 tests
   MQTT, BLE, WiFi          AI Commander Amy (plugin)   Graph DB, Auth
   LoRa, ESP-NOW            YOLO, WebSocket             Events, MQTT topics
   hal_ble_features         Canvas 2D/3D map            Geo, Notifications

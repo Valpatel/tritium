@@ -2,6 +2,24 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 142 (2026-03-15): Maintenance — Training Data Purge, RL Feature Audit, Agent Refiner
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated through Wave 141 with RL pipeline status | Complete |
+| Lib pytest: 2,394 passing (29 skipped) | pytest verified |
+| RL training data PURGED: 65,495 old 6-feature records deleted from correlation_decisions | SQLite verified |
+| 148 clean 10-feature records remain (121 correct, 27 incorrect) | Verified |
+| correlation_model.pkl deleted — next retrain will use only clean 10-feature data | File deleted |
+| training.db vacuumed: 33 MB to 10 MB | Verified |
+| RL feature consistency audit: FEATURE_NAMES identical in correlation_learner.py, scorer.py, feature_engineering.py | Code review |
+| Agent refiner: updated agent-refiner.md and maintenance-agent.md to Wave 142 counts | Updated |
+| Codebase counts: 99 routers, 87 panels (84 registered), 154 JS, 636 SC tests, 124 lib tests | File counts verified |
+| All changelogs updated | Complete |
+
+---
+
 ## Wave 141 (2026-03-15): Target Clustering + Night Mode + RL Retrain + Power Saver
 
 ### Changes
