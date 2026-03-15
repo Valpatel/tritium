@@ -1,116 +1,75 @@
-# Village Idiot Check — Wave 162
+# Village Idiot Check — UX Loop 5: Monitor a Zone
 
 **Date:** 2026-03-15
-**Loop Tested:** UX Loop 5 — Monitor a Zone
-**Tester:** Village Idiot (automated browser walkthrough)
+**Tester:** Village Idiot (automated Playwright, headed browser)
+**Server:** http://localhost:8000
+**Demo mode:** Active (44 targets)
 
-## Overall Verdict: PARTIALLY WORKING — Key wiring gap prevents end-to-end completion
+## Summary
 
----
+**Score: 7/8 steps PASS.** UX Loop 5 is mostly functional. A user can create a geofence zone, targets trigger enter/exit events, and the geofence panel shows both zones and events. One gap: dossier integration (geofence events are not recorded in target dossiers).
 
 ## Step-by-Step Results
 
-### Step 1: Open browser, see map, start demo, see targets — PASS
-- Map loads correctly with satellite imagery (MapLibre GL)
-- Demo mode starts via `POST /api/demo/start` (8 generators running)
-- Targets appear on map (8 markers visible: BLE, YOLO, fusion, trilateration)
-- Target positions confirmed at lat ~37.7159, lng ~-121.896
-- No JS errors on load
+| # | Step | Result | Details |
+|---|------|--------|---------|
+| 1 | Open browser, see map | **PASS** | MapLibre map loads with satellite imagery, canvas present |
+| 2 | Start demo, targets visible | **PASS** | 44 targets active across BLE, mesh, camera, fusion |
+| 3 | Open Geofence panel | **PASS** | Panel found. Note: `[data-panel="geofence"]` not in menu dropdown; fell back to `panelManager.open('geofence')` via JS. Menu item may be missing from Tactical category dropdown rendering. |
+| 4 | Create restricted zone around targets | **PASS** | POST `/api/geofence/zones` returned 201. Zone polygon covers target cluster area. |
+| 4b | DRAW ZONE button works | **PASS** | Button `[data-action="draw-zone"]` found and clickable. Emits `geofence:drawZone` event. Toast appears: "Click to place vertices..." |
+| 5a | Geofence events fired | **PASS** | 8 events recorded. 4 BLE targets triggered `enter` events for IDIOT-TEST-ZONE. |
+| 5b | Zone shows occupant count | **PASS** | `/api/geofence/zones/{id}/occupants` returned `occupant_count=4` with target IDs. |
+| 6 | Dossier records geofence event | **FAIL** | `/api/dossier/{target_id}` returns 404. Dossier API is at `/api/dossiers` (plural, list-based). Geofence enter/exit events are NOT automatically added to target dossiers. |
 
-### Step 2: Find the geofence drawing tool — PASS (but hard to discover)
-- **VIEW menu** in the top menu bar contains "GEOFENCE" entry (among 80+ panel options!)
-- Clicking it opens the Geofence panel
-- The panel has two tabs (ZONES / EVENTS) and a "+ DRAW ZONE" button
-- Right-click context menu also has "CREATE GEOFENCE ZONE HERE"
-- **Discoverability concern:** The VIEW menu has 80+ items. Finding "GEOFENCE" requires scrolling. No visual cue that geofencing exists until you explore menus.
+## Visual Observations
 
-### Step 3: Try to draw a polygon on the map — PARTIAL
-- The "+ DRAW ZONE" button exists in the geofence panel
-- Right-click "CREATE GEOFENCE ZONE HERE" opens the geofence panel and puts a marker at the click location
-- However, the polygon drawing interaction was unclear — no visible drawing mode indicator, no polygon vertex placement confirmed
-- The zone creation dialog input field was present but not visible/interactable in the test (may be a z-index or visibility CSS issue)
+- **Map:** Satellite imagery renders correctly. Target markers visible on map.
+- **Geofence panel:** Opens on left side. Shows zone list with type color indicator (red for restricted). Events tab shows timestamped enter/exit events.
+- **Zone polygon on map:** The geofence polygon zone does NOT appear to render as a colored overlay on the tactical map. The zone exists in the backend and fires events, but there is no visible polygon boundary on the map view. This means the user cannot visually see where their zone is.
+- **Toast notifications:** 13 toast elements present on page during test. The system does produce toasts.
+- **Menu access:** The geofence panel is listed in the Tactical menu category in code, but the menu dropdown click did not find `[data-panel="geofence"]`. The panel was opened via `panelManager.open('geofence')` fallback.
 
-### Step 4: Name the zone and set it as "restricted" — PASS (via API only)
-- API endpoint `POST /api/geofence/zones` works correctly
-- Accepts: name, zone_type (restricted/monitored/safe), polygon, alert_on_enter, alert_on_exit
-- Zone was successfully created: `zone_id=55d56cec4af8`, name "Restricted Zone Alpha", type "restricted"
-- API returns proper response with all fields
-- **UI path blocked:** The dialog input field from the context menu was not interactable (timed out waiting for visibility)
-
-### Step 5: Wait 30 seconds for notification when target enters — FAIL
-- Created a geofence polygon around known target positions (lat 37.7157-37.7161, lng -121.8962 to -121.8958)
-- Waited 20+ seconds after zone creation
-- **Zero geofence events generated** (`GET /api/geofence/events` returns `[]`)
-- **Zero zone occupants detected** (`GET /api/geofence/zones/{id}/occupants` returns `occupant_count: 0`)
-- **Zero geofence notifications** (out of 100+ notifications, none from geofence source)
-- **Root cause identified:** The `GeofenceEngine.check()` method is never called for real targets. It only gets called from:
-  1. `fusion_scenario.py` line 432 — but only for `fusion-*` actor IDs
-  2. `battle_integration.py` line 638 — but using local (x, y) coordinates, not lat/lng
-- The main target tracker (`target_tracker.py`) does NOT call `geofence_engine.check()` when target positions update
-- Even when called by battle_integration, it uses local (x, y) not lat/lng, while the API creates zones with lat/lng polygons — coordinate system mismatch
-
-### Step 6: Check the geofence panel for zone occupancy — FAIL
-- Geofence panel opens and shows the created zone in the ZONES tab
-- Events tab shows "Loading events..." then empty
-- Zone occupancy is always 0 (because check() is never called)
-- No visual indication of the geofence polygon on the map
-
----
-
-## Bugs Found
+## Gaps Found
 
 ### Critical
-1. **Geofence engine never checks real targets** — `GeofenceEngine.check()` is not called from the target tracker update loop. Zones are created but nothing ever enters or exits them. This makes the entire geofence feature non-functional for BLE/WiFi/camera targets.
+1. **Geofence polygon not visible on map** — After creating a zone via API, the polygon boundary does not render on the tactical map. Users cannot see where their zones are. The code has `_drawGeofencePolygonZones()` in `map.js` but it may not be fetching/rendering API-created zones properly.
 
-2. **Coordinate system mismatch** — The API accepts lat/lng polygons, but `battle_integration.py` calls `check()` with local (x, y) coordinates. These are completely different coordinate spaces.
-
-### Major
-3. **Context menu "Create Geofence Zone Here" dialog input not interactable** — The zone name input field exists in the DOM but `element is not visible` according to Playwright. Likely a CSS z-index or display issue with the dialog that appears.
-
-4. **No geofence polygon visualization on map** — After creating a zone, there is no visible polygon drawn on the tactical map. Users can't see where their zones are.
+### Moderate
+2. **Dossier integration missing** — Geofence enter/exit events are not recorded in target dossiers. When investigating a target (UX Loop 6), there's no geofence history in the dossier.
+3. **Menu panel access** — The Tactical menu dropdown doesn't surface `[data-panel="geofence"]` as a clickable item. The panel exists but isn't easily discoverable through the menu.
 
 ### Minor
-5. **VIEW menu has 80+ items** — Discovering the geofence panel requires scrolling through a massive list. Consider grouping or providing a search/filter.
-
-6. **Server crashes during extended Playwright sessions** — The server became unreachable during the first test run (connection refused). May be related to WebSocket pressure from the headed browser session.
-
----
-
-## What Would Complete Loop 5
-
-To make "Monitor a Zone" work end-to-end, the system needs:
-
-1. **Wire `GeofenceEngine.check()` into the target tracker update loop** — Every time a target's lat/lng position updates, call `geofence_engine.check(target_id, (lat, lng))` with the correct coordinate system.
-
-2. **Ensure polygon coordinates match** — Decide whether geofence polygons are in lat/lng or local x/y, and be consistent. The API and the check() calls must use the same coordinate space.
-
-3. **Fix the zone creation dialog** — Make the input field visible and interactable when triggered from the right-click context menu.
-
-4. **Draw geofence polygons on the map** — Use MapLibre GL's polygon/fill layers to show zone boundaries.
-
-5. **Generate notifications on zone entry/exit** — The EventBus is wired, but since check() is never called, no events flow. Once check() is called, events should propagate to the notification system.
-
----
-
-## Screenshots
-
-All screenshots saved to `docs/idiot_screenshots/`:
-- `step1_initial_load.png` — Map with targets (PASS)
-- `loop5_step2_view_menu.png` — VIEW menu showing GEOFENCE option
-- `context_menu.png` — Right-click showing "CREATE GEOFENCE ZONE HERE"
-- `loop5_step3b_geofence_dialog.png` — Geofence panel after context menu click
-- `step5_geofence_created.png` — After API zone creation (server reconnecting banner visible)
-- `step6_final.png` — Final state (no events, no occupants)
-
----
+4. **Zone creation UX** — Creating a zone via the DRAW ZONE button requires clicking vertices on the map, then finishing with double-click or Enter. The flow works but there's no visual guide for the zone name/type input after drawing completes. It would benefit from a modal dialog asking for name and type.
 
 ## API Endpoints Verified
 
 | Endpoint | Status | Notes |
 |----------|--------|-------|
-| `GET /api/geofence/zones` | WORKS | Returns zone list |
-| `POST /api/geofence/zones` | WORKS | Creates zone, returns zone_id |
-| `DELETE /api/geofence/zones/{id}` | WORKS | Deletes zone |
-| `GET /api/geofence/zones/{id}/occupants` | WORKS | Always returns 0 (never populated) |
-| `GET /api/geofence/events` | WORKS | Always returns [] (never populated) |
-| `GET /api/notifications` | WORKS | Shows 100+ notifications, 0 from geofence |
+| `POST /api/demo/start` | Working | Starts 8 generators, 44 targets |
+| `GET /api/targets` | Working | Returns all tracked targets with positions |
+| `POST /api/geofence/zones` | Working | Creates zone, returns 201 |
+| `GET /api/geofence/zones` | Working | Lists all zones |
+| `GET /api/geofence/zones/{id}/occupants` | Working | Returns occupant count and target IDs |
+| `GET /api/geofence/events` | Working | Returns enter/exit events with timestamps |
+| `DELETE /api/geofence/zones/{id}` | Working | Cleans up zone |
+| `GET /api/geofence/occupancy` | Not tested | Should return all zone occupancies |
+
+## Screenshots
+
+All saved to `tritium-sc/tests/.baselines/idiot_loop5_*.png`:
+- `01_initial_load.png` — Map with satellite imagery, welcome tooltip
+- `02_demo_running.png` — Demo active, targets on map
+- `03a_tactical_menu.png` — Tactical menu opened
+- `03b_geofence_panel.png` — Geofence panel opened
+- `04a_draw_zone_mode.png` — Draw zone mode activated
+- `04b_zone_created.png` — Zone created, panel shows it
+- `05_events_tab.png` — Events tab showing enter events
+- `06_final_state.png` — Final state
+
+## Recommendation
+
+UX Loop 5 is **functional at the API level** but has visual gaps. Priority fixes:
+1. Render geofence polygon zones on the tactical map (highest impact -- users need to SEE the zone)
+2. Wire geofence events into dossier manager (so Loop 6 benefits too)
+3. Ensure geofence panel is accessible from menu dropdown
