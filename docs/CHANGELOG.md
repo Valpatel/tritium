@@ -2,6 +2,24 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 109 (2026-03-14): Maintenance — RL Audit + Route Redundancy + Edge Verify
+
+### Audits
+| Item | Finding |
+|------|---------|
+| RL pipeline health | 54 feedback entries in TrainingStore, 0 correlation/classification decisions logged. Model not trained — needs correlator to call log_correlation() during operation. RetrainScheduler code ready but no data to train on. |
+| Route redundancy | 88 routers, 4 shared prefixes (/api/targets x6, /api/devices x2, /api/analytics x3, /api/system x3) — all with unique sub-paths, no actual collisions |
+| Edge firmware | 49.8% RAM, 29.4% Flash, 0 warnings, SUCCESS |
+| OUI database | 544-line oui_device_types.json verified present in tritium-lib |
+| gb10-02 sync | SSH host key verification failed — needs manual `ssh-keygen -R` + reconnect |
+
+### Documentation
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated to Wave 109 with RL pipeline status section | Updated |
+| Iteration queue: Wave 109 marked DONE, Waves 110-112 planned | Updated |
+| Agent trigger schedule: maintenance/edge/rl updated to Wave 109 | Updated |
+
 ## Wave 106 (2026-03-14): Maintenance — Real Mesh Links + MQTT Security + Auth Fix
 
 ### Features
