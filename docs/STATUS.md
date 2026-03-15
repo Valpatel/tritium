@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-15 (Wave 146 — Maintenance).
+Current state of all components as of 2026-03-15 (Wave 149 — Maintenance).
 
 ## Component Health
 
@@ -9,7 +9,7 @@ Current state of all components as of 2026-03-15 (Wave 146 — Maintenance).
 | **tritium-edge firmware** | Building | 49.9% RAM, 29.4% Flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 2,452 tests passing |
+| **tritium-lib** | Stable | 2,516 tests passing |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds, diagnostics |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler wired in Wave 105) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
@@ -23,14 +23,50 @@ Current state of all components as of 2026-03-15 (Wave 146 — Maintenance).
 | **Dwell tracking** | Active | Monitors stationary targets >5min, severity classification |
 | **Command history** | Active | Fleet command audit log with timeout detection |
 
-## Wave 146 (Maintenance)
+## Wave 149 (Maintenance)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| STATUS.md updated through Wave 149 | docs | - | Complete |
+| Changelogs updated through Wave 149 in all repos | docs | - | Complete |
+| Lib pytest: 2,516 passing | tritium-lib | 2,516 | Verified |
+| Codebase counts: 101 app routers, 91 panels, 162 JS files, 21 plugin dirs, 96 lib model files, 67 HALs, 130 lib test files | all | - | Verified |
+| Discovery report Wave 146 committed and verified | docs | - | Complete |
+| Unused lib model audit: 5 models (convoy, daily_pattern, acoustic_training, vehicle, benchmark) confirmed test-only — no SC consumers | tritium-lib | - | Audited |
+
+## Wave 148 (Feature: LPR Panel + ReID Panel + Power Management + Environment HAL)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| LPR frontend panel — watchlist CRUD, live plate feed UI | tritium-sc | - | Complete |
+| ReID cross-camera tracking panel — re-identification matches UI | tritium-sc | - | Complete |
+| Power state machine — battery-aware deep sleep with scan interval adjustment | tritium-edge | - | Code review |
+| hal_environment I2C sensor drivers — BME280/BMP280/SHT31/BME680/BH1750/VEML7700 implementations | tritium-edge | - | Code review |
+| hal_lora simulator stubs for desktop builds | tritium-edge | - | Code review |
+
+## Wave 147 (Feature: Target Trail Export GPX/KML)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| GPX/KML trail export endpoints — /api/targets/{id}/trail/export with format selection | tritium-sc | - | Complete |
+| Trail Export panel — frontend UI for downloading target movement trails | tritium-sc | - | Complete |
+| Douglas-Peucker trail simplification for large datasets | tritium-sc | - | Complete |
+| KML document builder — KmlDocument, KmlPlacemark, KmlStyle models | tritium-lib | - | Complete |
+| TrailExport models for structured trail output | tritium-lib | - | Complete |
+| Security audit — auth guards, input validation, query bounds across 11 plugins | tritium-sc | - | Complete |
+
+## Wave 146 (Maintenance + Security + Features)
 
 | Feature | Component | Tests | Status |
 |---------|-----------|-------|--------|
 | STATUS.md updated through Wave 146 | docs | - | Complete |
 | Changelogs updated through Wave 146 in all repos | docs | - | Complete |
-| Agent files updated with current counts | agents | - | Complete |
-| Lib pytest: 2,452 passing | tritium-lib | 2,452 | Verified |
+| Discovery report: orphan panels, dead routes, unused models, menu-bar gaps | docs | - | Complete |
+| BLE first-seen notification templates + convoy_detected templates | tritium-lib | - | Complete |
+| RTSP timeout fix, convoy visualization, BLE first-seen notifications | tritium-sc | 17 tests | Complete |
+| Security audit: auth guards, input validation, query bounds across 11 plugins | tritium-sc | - | Complete |
+| BLE scan auto-tuning defaults | tritium-edge | - | Code review |
+| Lib pytest: 2,477 passing | tritium-lib | 2,477 | Verified |
 | Codebase counts: 101 app routers, 87 panels, 155 JS files, 21 plugin dirs, 94 lib model files, 66 HALs | all | - | Verified |
 
 ## Wave 145 (Feature: Convoy Detection + Daily Activity Summary + BLE Adv Monitor)
@@ -368,37 +404,37 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
 | WebSocket stress test (10/50/100 concurrent connections) | 111 | tritium-sc | Complete |
 | Demo mode RL training generator (100+ examples in 5 min) | 111 | tritium-sc | Complete |
 
-## Codebase Metrics (Wave 146)
+## Codebase Metrics (Wave 149)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 146 |
-| **Total features shipped** | 395+ |
+| **Total waves completed** | 149 |
+| **Total features shipped** | 400+ |
 | **Active plugins** | 21 plugin dirs + npc_thoughts + built-in npc_intelligence |
 | **App routers** | 101 |
 | **Plugin route files** | 18 |
 | **Total routers** | 120 (101 app + 18 plugin + amy) |
 | **Route decorators** | 772+ |
-| **Frontend panels** | 87 |
-| **Frontend JS files** | 155 |
-| **Test files total** | 2165+ (2037 SC + 128 lib) |
-| **Lib model files** | 94 |
-| **Lib Pydantic classes** | 260+ |
-| **Lib tests** | 2,452 |
-| **HAL libraries** | 66 |
+| **Frontend panels** | 91 |
+| **Frontend JS files** | 162 |
+| **Test files total** | 1934+ (1804 SC + 130 lib) |
+| **Lib model files** | 96 |
+| **Lib Pydantic classes** | 265+ |
+| **Lib tests** | 2,516 |
+| **HAL libraries** | 67 |
 | **Correlation strategies** | 6 (spatial=0.30, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13, wifi_probe=0.15) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
 | **RL features** | 10 (expanded from 6 in Wave 126, model reset Wave 129, training data purged Wave 142) |
 | **ESC-50 dataset** | 2,000 clips, 50 sound classes, 1.4 GB, 21.2% accuracy benchmark |
 
-## Test Results (Wave 146)
+## Test Results (Wave 149)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib | 2,452 tests | All passing |
-| tritium-sc | 101 router files, 87 panel JS files | Passing |
+| tritium-lib | 2,516 tests | All passing |
+| tritium-sc | 101 router files, 91 panel JS files | Passing |
 | tritium-edge build | 49.9% RAM, 29.4% Flash | 0 warnings, SUCCESS |
-| Total test files | 2,165+ (2,037 SC + 128 lib) | |
+| Total test files | 1,934+ (1,804 SC + 130 lib) | |
 
 ## RL Pipeline Status (Wave 146 — 10-Feature Model, Clean Retrained)
 
@@ -423,14 +459,14 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
 ```
   tritium-edge (C++17)     tritium-sc (Python+JS)     tritium-lib (Python)
   ==================       =====================       ===================
-  ESP32-S3 firmware        FastAPI :8000               94 model files
-  6 board types            21+ plugins                 260+ Pydantic classes
-  66 HAL libraries         120 routers                 2,452 tests
+  ESP32-S3 firmware        FastAPI :8000               96 model files
+  6 board types            21+ plugins                 265+ Pydantic classes
+  67 HAL libraries         120 routers                 2,516 tests
   MQTT, BLE, WiFi          AI Commander Amy (plugin)   Graph DB, Auth
   LoRa, ESP-NOW            YOLO, WebSocket             Events, MQTT topics
   hal_ble_features         Canvas 2D/3D map            Geo, Notifications
   hal_tinyml, hal_voice    7 intelligence modules      Classifier, COT
-  hal_scan_optimizer       87 frontend panels          BaseLearner ABC
+  hal_scan_optimizer       91 frontend panels          BaseLearner ABC
   hal_radio_scheduler      Forensics + Collaboration   Intel Packages
   hal_tamper_detect        Operator chat + drawing
   hal_diag_dump            Swarm coordination
