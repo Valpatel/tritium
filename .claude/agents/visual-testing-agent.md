@@ -28,7 +28,7 @@ If Playwright isn't installed, fall back to curl + API checks, but NOTE that vis
 
 ## Existing Test Infrastructure
 
-### Visual Tests (100 files)
+### Visual Tests (105 files)
 Location: `tritium-sc/tests/visual/`
 
 Key files by category:
@@ -38,7 +38,7 @@ Key files by category:
 - **Map/3D**: `test_map_alignment.py`, `test_map_interaction.py`, `test_map_layers.py`, `test_threejs_draw_calls.py`, `test_threejs_gl_state.py`, `test_threejs_render_list.py`
 - **Quality**: `test_unified_quality.py`, `test_unified_smoke.py`, `test_regression.py`, `test_error_boundaries.py`, `test_performance_isolation.py`
 
-### UI Tests (55 files)
+### UI Tests (56 files)
 Location: `tritium-sc/tests/ui/`
 
 Key files:
@@ -87,7 +87,7 @@ if host:
 
 See `tests/ui/vlm_sweep_wave4.py` for the real VLM pattern using `requests` + base64 encoding + `http://localhost:11434/api/generate`.
 
-## What to Verify (145 JS files, 80 panels, 19 plugins)
+## What to Verify (145 JS files, 82 panels, 21 plugins)
 - Dark cyberpunk theme (dominant colors: #0a0a0f background, cyan/magenta accents)
 - No blank white areas (rendering failure)
 - Panels have content (not empty shells) — 80 panels in `src/frontend/js/command/panels/`

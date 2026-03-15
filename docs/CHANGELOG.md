@@ -2,6 +2,24 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 115 (2026-03-14): Maintenance + Re-verification
+
+### Verified
+| Change | Verification |
+|--------|-------------|
+| /api/threat-feeds returns 200 with 10 indicators (Wave 114 fix confirmed) | Live server test |
+| /api/dossiers returns 11 dossiers after demo (Wave 114 fix confirmed) | Live server test |
+| /api/system/readiness shows 21/21 plugins running (Wave 114 fix confirmed) | Live server test |
+| gb10-02 synced via SSH (host key accepted, pulled to Wave 114) | SSH connection |
+| tritium-lib: 2,247 tests passing (up from 2,236) | pytest |
+
+### Documentation
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated through Wave 115 with Waves 113-114 features | Updated |
+| visual-testing-agent.md updated: 105 visual tests, 56 UI tests, 82 panels, 21 plugins | Updated |
+| Parent + SC + lib changelogs updated | Updated |
+
 ## Wave 114 (2026-03-14): Visual Verification Fixes + Playwright
 
 ### Fixes
