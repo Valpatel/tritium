@@ -8,8 +8,8 @@ description: Deep context on the Command Center — plugins, panels, APIs, Amy, 
 You are the Command Center specialist. You know every plugin, panel, API endpoint, and subsystem.
 
 ## Current State
-- **Server**: FastAPI on :8000, 718+ route decorators across 88 routers
-- **Frontend**: 145 JS files, 80 panels in `src/frontend/js/command/panels/`
+- **Server**: FastAPI on :8000, 718+ route decorators across 97 routers
+- **Frontend**: 150 JS files, 83 panels in `src/frontend/js/command/panels/`
 - **Plugins**: 19 active: acoustic, amy, automation, behavioral_intelligence, camera_feeds, edge_autonomy, edge_tracker, federation, fleet_dashboard, floorplan, gis_layers, graphlings, meshtastic, rf_motion, swarm_coordination, tak_bridge, threat_feeds, wifi_fingerprint, yolo_detector
 - **Intelligence**: 7 files in `src/engine/intelligence/` — training_store, correlation_learner, ble_classification_learner, anomaly_baseline, base_learner, classification_feedback, feature_aggregator
 - **Inference**: 3 files in `src/engine/inference/` — fleet (OllamaFleet), model_router, robot_thinker
@@ -20,7 +20,8 @@ You are the Command Center specialist. You know every plugin, panel, API endpoin
 - **Forensics**: event reconstruction, incident reports, map replay panel
 - **Swarm**: multi-robot formations (line/wedge/circle/diamond/column), waypoint patrol
 - **Edge autonomy**: autonomous decision processing, operator confirm/override
-- **Tests**: 667 test files, 24 test tiers in test.sh
+- **Tests**: 623 test files, 24 test tiers in test.sh
+- **RL model**: Trained at 76.7% accuracy on correlation decisions (logistic regression)
 
 ## Directory Map
 ```
@@ -42,7 +43,7 @@ tritium-sc/
 │   │   ├── actions/     # dispatch, motor, announcer
 │   │   └── comms/       # transcript
 │   ├── app/             # FastAPI backend
-│   │   ├── routers/     # 88 router files (718+ route decorators)
+│   │   ├── routers/     # 97 router files (718+ route decorators)
 │   │   ├── auth.py      # JWT authentication
 │   │   ├── rate_limit.py # Rate limiting middleware
 │   │   ├── security_headers.py # CSP middleware
@@ -51,7 +52,7 @@ tritium-sc/
 │   └── frontend/        # Vanilla JS
 │       ├── js/command/  # Command center modules
 │       │   ├── main.js  # Panel registration
-│       │   └── panels/  # 80 panel JS files
+│       │   └── panels/  # 83 panel JS files
 │       └── css/         # CYBERCORE design language
 ├── plugins/             # 19 plugin directories
 │   ├── acoustic/        # Sound classification
@@ -73,8 +74,8 @@ tritium-sc/
 │   ├── threat_feeds/    # STIX/TAXII indicators
 │   ├── wifi_fingerprint/ # WiFi fingerprinting
 │   └── yolo_detector/   # YOLO object detection
-├── tests/               # 667 Python test files
-│   ├── visual/          # 100 visual E2E tests (3-layer)
+├── tests/               # 623 Python test files
+│   ├── visual/          # 102 visual E2E tests (3-layer)
 │   ├── ui/              # 55 UI tests (Playwright, VLM)
 │   ├── integration/     # 4 integration tests (full_pipeline, full_loop, dispatch, ws_events)
 │   ├── perf/            # API latency + battle FPS profiling
@@ -85,10 +86,10 @@ tritium-sc/
 └── examples/            # 8 reference implementations
 ```
 
-## Routers (88 files in src/app/routers/)
+## Routers (97 files in src/app/routers/)
 acoustic, ai, amy_briefing, analytics_dashboard, annotations, api_docs, ar_export, assets, audio, audit, auth, backup, behavior, bookmarks, briefing, cameras, classification_override, collaboration, correlations, demo, deployment, device_management, devices, discovery, dossiers, enrichment, feedback, fleet, forensics, fusion_dashboard, game, geodata, geofence, geo, health, heatmap, history_analytics, intelligence, investigations, layers, layouts, lpr, map_share, mesh, metrics, missions, models, movement_analytics, nearby_targets, notifications, npc, ollama_health, ontology, operator_activity, patrols, picture_of_day, playback, plugins, quick_actions, readiness, recordings, scenarios, screenshots, search, self_test, sensor_health, sessions, sitrep, synthetic_feed, system_inventory, tak, target_search, targets_unified, telemetry, terrain, testing, timeline, transponders, tts, unified_events, version, videos, voice, watchlist, weather, ws, zones
 
-## Panels (80 files in src/frontend/js/command/panels/)
+## Panels (83 files in src/frontend/js/command/panels/)
 acoustic-intelligence, activity-feed, alerts, amy-conversation, amy, analytics-dashboard, annotations, assets, audio, automation, behavioral-intelligence, bookmarks, building-occupancy, camera-feeds, cameras, deployment, device-capabilities, device-manager, dossier-groups, dossiers, edge-diagnostics, edge-intelligence, edge-tracker, escalation, events, export-scheduler, fleet-dashboard, fleet, floorplan, fusion-dashboard, game-hud, geofence, graph-explorer, graphlings, grid-overlay, heatmap, heatmap-timeline, keyboard-macros, layers, map-replay, map-screenshot, map-share, mesh, minimap, missions, mqtt-inspector, multi-camera, notification_prefs, notifications, operator-activity, operator-cursors, ops-dashboard, patrol, quick-start, replay, rf-motion, scenarios, search, sensor-health, sensors, setup-wizard, stats, swarm-coordination, system-health, system, tak, target-compare, target-merge, target-search, testing, timeline, training-dashboard, unit-inspector, units, videos, voice-command, watchlist, weather-overlay, wifi-fingerprint, zones
 
 ## Quick Commands
@@ -100,7 +101,7 @@ PYTHONPATH=src .venv/bin/python3 -c "from app.main import app; print(f'OK: {len(
 ```
 
 ## When Making Changes
-- Check `src/app/main.py` — is your router/middleware registered?
-- Check `src/frontend/js/command/main.js` — is your panel registered?
+- Check `src/app/main.py` — is your router/middleware registered? (97 routers)
+- Check `src/frontend/js/command/main.js` — is your panel registered? (83 panels)
 - Run your specific test file, not the full suite
 - Follow existing patterns (look at a similar plugin/panel/router)

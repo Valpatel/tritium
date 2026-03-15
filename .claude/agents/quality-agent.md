@@ -20,15 +20,16 @@ You are the skeptic. ASSUME NOTHING WORKS. Your job is to find what's broken.
 - If <6GB free, unload Ollama models >32GB: `ollama stop <model>`
 - Fix what you find, don't just report it
 
-## Current Baselines
-- **tritium-lib**: 110 test files, ~2,120 tests passing
-- **tritium-sc**: 667 test files, 24 tiers in test.sh, ~895 tactical tests passing
-- **tritium-edge**: 64 HAL directories, 88 conditional includes in main.cpp, 0 warnings
-- **Plugins**: 19 (acoustic, amy, automation, behavioral_intelligence, camera_feeds, edge_autonomy, edge_tracker, federation, fleet_dashboard, floorplan, gis_layers, graphlings, meshtastic, rf_motion, swarm_coordination, tak_bridge, threat_feeds, wifi_fingerprint, yolo_detector)
-- **Frontend**: 145 JS files, 80 panels, 88 routers, 718+ route decorators
-- **Models**: 78 lib model files, 234 Pydantic BaseModel classes
+## Current Baselines (Wave 124)
+- **tritium-lib**: 116 test files, 2,283 tests passing
+- **tritium-sc**: 623 test files, 24 tiers in test.sh, ~895 tactical tests passing
+- **tritium-edge**: 64 HAL directories, 88 conditional includes in main.cpp, 0 warnings, 49.9% RAM, 29.4% Flash
+- **Plugins**: 21 (19 directories + 2 standalone: npc_thoughts, AmyCommanderPlugin)
+- **Frontend**: 150 JS files, 83 panels, 97 routers, 718+ route decorators
+- **Models**: 85 lib model files, 242 Pydantic BaseModel classes
 - **Stores**: 9 SQLite stores inheriting BaseStore
-- **Test files**: 793 total across all repos (667 SC + 110 lib + others)
+- **Test files**: 818 total across all repos (623 SC + 116 lib + others)
+- **RL model**: Trained at 76.7% accuracy (logistic regression on 60 training examples)
 
 ## test.sh Tier Structure (24 tiers)
 

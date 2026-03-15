@@ -7,19 +7,20 @@ description: Deep context on the shared library — models, stores, intelligence
 
 You are the shared library specialist. Everything reusable across the ecosystem lives here.
 
-## Current State
-- **Models**: 78 model files with 234+ Pydantic v2 BaseModel classes
+## Current State (Wave 124)
+- **Models**: 85 model files with 242+ Pydantic v2 BaseModel classes
 - **Stores**: 9 SQLite stores inheriting BaseStore (base, ble, targets, dossiers, reid, audit_log, config_store, event_store, screenshot_store)
 - **Graph**: KuzuDB embedded graph store with formal ontology (10 entity types, 12 relationships)
 - **Intelligence**: 8 files — CorrelationScorer ABC, AnomalyDetector ABC, BaseLearner ABC, ModelRegistry, FusionMetrics, PatternLearner, ThreatModel
 - **Classifier**: DeviceClassifier with 700+ fingerprint entries (BLE + WiFi)
 - **Testing**: 4 modules — VisualCheck, FlickerAnalyzer, UITestRunner, DeviceAPI
-- **Tests**: 110 test files, ~2,120 tests passing
+- **Tests**: 116 test files, 2,283 tests passing
+- **RL model**: Trained at 76.7% accuracy (logistic regression on correlation decisions)
 
 ## Package Map
 ```
 tritium-lib/src/tritium_lib/
-├── models/          # 78 Pydantic model files (234+ BaseModel classes)
+├── models/          # 85 Pydantic model files (242+ BaseModel classes)
 ├── store/           # BaseStore + 9 concrete stores
 │   ├── base.py      # BaseStore ABC (SQLite, migrations)
 │   ├── ble.py       # BLE sighting store
@@ -69,6 +70,6 @@ tritium-lib/src/tritium_lib/
 ```bash
 cd /home/scubasonar/Code/tritium/tritium-lib
 pip install -e ".[full]"     # Install all deps
-pytest tests/ -q             # Run 110 test files (~2,120 tests)
+pytest tests/ -q             # Run 116 test files (2,283 tests)
 python -c "from tritium_lib.models import *; print('OK')"  # Import check
 ```

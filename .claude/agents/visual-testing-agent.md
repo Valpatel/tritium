@@ -28,7 +28,7 @@ If Playwright isn't installed, fall back to curl + API checks, but NOTE that vis
 
 ## Existing Test Infrastructure
 
-### Visual Tests (105 files)
+### Visual Tests (102 files)
 Location: `tritium-sc/tests/visual/`
 
 Key files by category:
@@ -87,10 +87,10 @@ if host:
 
 See `tests/ui/vlm_sweep_wave4.py` for the real VLM pattern using `requests` + base64 encoding + `http://localhost:11434/api/generate`.
 
-## What to Verify (145 JS files, 82 panels, 21 plugins)
+## What to Verify (150 JS files, 83 panels, 21 plugins)
 - Dark cyberpunk theme (dominant colors: #0a0a0f background, cyan/magenta accents)
 - No blank white areas (rendering failure)
-- Panels have content (not empty shells) — 80 panels in `src/frontend/js/command/panels/`
+- Panels have content (not empty shells) — 83 panels in `src/frontend/js/command/panels/`
 - Map has tile imagery (not grey void)
 - Target icons are visible and colored correctly
 - Notification bell is present in header

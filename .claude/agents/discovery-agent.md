@@ -13,10 +13,11 @@ You explore the codebase RANDOMLY to find things nobody is looking at. Your job 
 2. **Ask questions** — "Why does this file exist? Is it used? Does it connect to anything? Is it tested? Does it match the current architecture?"
 3. **Surface findings** — document what you find in a short report and commit it.
 
-## Scale of the Codebase
-- **tritium-sc**: 667 test files, 88 routers (718+ routes), 80 panels, 145 JS files, 19 plugins
-- **tritium-lib**: 110 test files, 78 model files (234+ classes), 9 stores, 8 intelligence modules
+## Scale of the Codebase (Wave 124)
+- **tritium-sc**: 623 test files, 97 routers (718+ routes), 83 panels, 150 JS files, 21 plugins
+- **tritium-lib**: 116 test files (2,283 passing), 85 model files (242+ classes), 9 stores, 8 intelligence modules
 - **tritium-edge**: 64 HAL directories, 88 conditional includes in main.cpp
+- **RL model**: Trained at 76.7% accuracy — 5-strategy correlator with learned weights
 
 ## What to Look For
 
@@ -37,9 +38,9 @@ done
 - Functions defined but never called
 - Imports that don't resolve
 - Config options that nothing reads
-- API endpoints (88 router files) that no frontend panel uses
-- Frontend panels (80 panels) that call API endpoints that don't exist
-- Models in tritium-lib (78 files) that no consumer imports
+- API endpoints (97 router files) that no frontend panel uses
+- Frontend panels (83 panels) that call API endpoints that don't exist
+- Models in tritium-lib (85 files) that no consumer imports
 - HALs (64 directories) that aren't wired in main.cpp
 
 ### Misalignment

@@ -29,14 +29,14 @@ You are the adversary. Try to break the system. Find vulnerabilities before atta
 
 ## What to Attack
 
-### Input Validation (718+ route decorators across 88 routers)
+### Input Validation (718+ route decorators across 97 routers)
 - Every API endpoint that accepts text: can you inject HTML? SQL? Path traversal?
 - Every numeric param: what happens with negative numbers? MAX_INT? Float overflow?
 - Every file upload: path traversal in filenames? ZIP bombs? Oversized payloads?
 - Key routers to audit: `src/app/routers/` — 88 router files including `voice.py`, `search.py`, `cameras.py`, `demo.py`, `enrichment.py`
 
 ### Authentication
-- Which of the 88 routers have no auth? Should they?
+- Which of the 97 routers have no auth? Should they?
 - Can you forge JWT tokens? Use expired tokens? (check `src/app/auth.py`)
 - Is the rate limiter actually working? (check `src/app/rate_limit.py` — send 100 rapid requests)
 - WebSocket auth: can you connect without a token? (check `src/app/routers/ws.py`)
@@ -75,7 +75,7 @@ grep -rn "password\|api_key\|secret" --include="*.py" --include="*.js" tritium-s
 - `tritium-sc/src/app/rate_limit.py` — rate limiting middleware
 - `tritium-sc/src/app/security_headers.py` — CSP and security headers
 - `tritium-sc/src/app/audit_middleware.py` — request audit logging
-- `tritium-sc/src/app/routers/` — 88 router files (718+ route decorators)
+- `tritium-sc/src/app/routers/` — 97 router files (718+ route decorators)
 - `tritium-lib/src/tritium_lib/web/` — sanitize utilities
 - `tritium-lib/src/tritium_lib/auth/` — JWT encode/decode
 - `tritium-lib/src/tritium_lib/intelligence/base_learner.py` — pickle-based model persistence (deserialization risk)

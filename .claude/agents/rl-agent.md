@@ -37,6 +37,13 @@ OllamaFleet (discovered via LAN/Tailscale)
 Small models: qwen2.5:3b, phi3:mini, llava:7b
 ```
 
+## RL Model Status (Wave 124)
+- **Correlation model**: Trained at 76.7% accuracy (logistic regression)
+- **Training data**: 61,908 correlation observations, 188 confirmed, 60 training examples
+- **Static fallback**: Still used when model is None (see `_static_predict()` in correlation_learner.py)
+- **5-strategy correlator**: spatial=0.35, temporal=0.18, signal_pattern=0.17, dossier=0.15, learned=0.15
+- **Auto-retrain**: Every 6 hours or 50 new feedback entries
+
 ## SC Intelligence Files (7 files in src/engine/intelligence/)
 - **`training_store.py`** — SQLite store with 3 tables: `correlation_decisions`, `classification_decisions`, `operator_feedback`. Logs every ML decision with features + confidence for later retraining. Indexed by target IDs and timestamps.
 - **`correlation_learner.py`** — trains logistic regression on correlation outcomes (should two targets be fused?). Inherits from BaseLearner.

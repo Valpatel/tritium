@@ -2,6 +2,20 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 124 (2026-03-15): Maintenance + Agent Refiner
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated through Wave 124 with RL model milestone (76.7% accuracy) | Complete |
+| All 13 agent files updated: 97 routers, 83 panels, 2,283 lib tests, 85 model files, 818 test files | Complete |
+| gb10-02 synced from Wave 116 to Wave 123 (via 192.168.110.2) | SSH verified |
+| 5-strategy correlator balance verified: learned model at weight 0.15, static fallback preserved | Code review |
+| Edge build verified: 49.9% RAM, 29.4% Flash, SUCCESS | Build verified |
+| tritium-lib: 2,283 tests passing (up from 2,272) | pytest |
+| Meshtastic radio: gb10-02 reachable but no /dev/ttyUSB* detected | Hardware check |
+| Wave 125-129 planned | Complete |
+
 ## Wave 123 (2026-03-15): Prediction Confidence Ellipses + Federation Site Status Panel
 
 ### Changes
