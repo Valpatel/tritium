@@ -2,6 +2,22 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 143 (2026-03-15): Security + RL Clean Retrain + Ops Accuracy Widget + Group Viz
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| RL retrained on clean 10-feature data: 54.8% accuracy on 507 examples | API verified, CV scores |
+| Fixed RL feature drift: reset_correlation_learner() deletes stale pickle on feature mismatch | Unit tested, 112 intelligence tests pass |
+| Retrain endpoint auto-detects stale feature config (6->10 features) and resets | API tested |
+| Security audit: behavioral intelligence routes now require auth on CRUD operations | 14 security tests pass |
+| Night mode: frontend-only, no API endpoints, no security issues found | Code review |
+| Ops dashboard: RL accuracy trend sparkline with color-coded line and 50% baseline | JS syntax verified |
+| Map: target group visualization — highlight rings, connecting lines, centroid label | JS syntax verified, 93 JS tests pass |
+| Dossier groups panel: click to select group for map highlighting | JS syntax verified |
+
+---
+
 ## Wave 142 (2026-03-15): Maintenance — Training Data Purge, RL Feature Audit, Agent Refiner
 
 ### Changes
