@@ -2,6 +2,37 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 80 (2026-03-14): MILESTONE + Security + System Version
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| `/api/system/version` endpoint — returns git commit hash, branch, build date, wave number (80), feature count (93), plugin/router/route counts | Unit tested |
+| Health router test baseline fix: tritium_lib 1584->1822, tritium_sc_pytest 1400->7800 | Unit tested |
+| OWASP security review of Waves 73-79 endpoints (10 endpoint groups) | Documented |
+| Server import verification: 502 routes, clean boot | Verified |
+
+### Parent
+| Change | Verification |
+|--------|-------------|
+| Comprehensive Wave 80 milestone report: 672K total LOC, 10,531+ tests, 16 plugins, 50 HALs, 86 model files | Documented in `docs/MILESTONE_WAVE80.md` |
+| Waves 81-85 roadmap: edge intelligence, target fusion, operational readiness, visualization, security | Documented |
+
+### System Metrics at Wave 80
+| Metric | Value |
+|--------|-------|
+| Total LOC (incl tests) | 672,476 |
+| API routes | 502 |
+| Plugins | 16 |
+| HAL libraries | 50 |
+| Lib model files | 86 |
+| tritium-lib tests | 1,856 |
+| tritium-sc unit tests | 8,675 |
+| JS test suites | 95 |
+| Total tests | 10,531+ |
+
+---
+
 ## Wave 79 (2026-03-14): Acoustic Intelligence Pipeline
 
 ### tritium-lib
