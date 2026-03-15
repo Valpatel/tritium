@@ -1,9 +1,21 @@
 # Tritium Data Library Catalog
 
-Last updated: 2026-03-15
+Last updated: 2026-03-15 (Wave 155 audit)
 
 Datasets discovered for Tritium's sensing pipelines. Relevance scored 0.0-1.0 based on
 how directly the dataset supports our detection, classification, and tracking pipelines.
+
+## Data Gap Summary
+
+| Gap | Severity | Notes |
+|-----|----------|-------|
+| WiFi BSSID-to-location database | HIGH | No local geolocation DB. MLS shut down. WiGLE API only. See WiFi Geolocation section. |
+| BLE Company IDs coverage | MEDIUM | Only 130 of ~3,000+ Bluetooth SIG company IDs mapped. Enough for common devices but misses niche IoT. |
+| IEEE OUI freshness | LOW | 39,029 entries as of 2026-03-14. IEEE publishes updates quarterly; re-scrape recommended every 3 months. |
+| Apple Continuity types | MEDIUM | Static snapshot. Apple adds new message types with each iOS release; no automated update pipeline. |
+| No WiFi probe request fingerprint DB | HIGH | No database mapping probe request patterns to device types/OS versions. Would improve passive WiFi tracking. |
+| No acoustic model weights | MEDIUM | ESC-50 downloaded but no trained classifier weights. Need to train or find pretrained model. |
+| No YOLO test images | LOW | COCO val2017 not yet downloaded. Synthetic data works for now. |
 
 ## Video Datasets (Person/Vehicle Detection)
 
@@ -46,13 +58,36 @@ how directly the dataset supports our detection, classification, and tracking pi
 
 ## WiFi/Geolocation Datasets
 
-| Dataset | Size | License | Relevance | URL | Downloaded |
-|---------|------|---------|-----------|-----|-----------|
-| WiGLE (API access) | Variable | Free API (rate-limited) | 0.6 | https://wigle.net/ | No |
+| Dataset | Size | License | Relevance | URL | Downloaded | Status |
+|---------|------|---------|-----------|-----|-----------|--------|
+| WiGLE (API access) | Variable | Free API (rate-limited) | 0.7 | https://wigle.net/ | No | Best available option |
+| Mozilla Location Services (MLS) | N/A | N/A | N/A | https://location.services.mozilla.com/ | No | SHUT DOWN (2024) |
+| OpenWifi.su | Unknown | Unknown | 0.4 | https://openwifi.su/ | No | Russian site, limited coverage, reliability unknown |
+| Apple/Google Location APIs | N/A | Proprietary | N/A | N/A | N/A | Not bulk-accessible |
+
+### WiFi Geolocation — Detailed Analysis
+
+**Mozilla Location Services (MLS)** was the gold standard for open WiFi geolocation (BSSID/cell-tower to lat/lng). Mozilla shut down MLS and the Ichnaea stumble server in 2024. The dataset is no longer available for download or API access. Some community mirrors may exist but are stale.
+
+**WiGLE** (Wireless Geographic Logging Engine) is now the primary public source:
+- Free account required, API key for programmatic access
+- Rate-limited: ~100 API calls/day on free tier, 11K results per search query
+- Covers 1.2B+ WiFi networks globally (as of 2025)
+- Provides BSSID -> approximate lat/lng
+- **Recommended approach**: Build a local SQLite cache by querying WiGLE API for our deployment areas. Cache schema: `(bssid TEXT PRIMARY KEY, ssid TEXT, lat REAL, lng REAL, last_seen TEXT, source TEXT)`
+- No bulk export available; must query per-area
+
+**OpenWifi.su** is a Russian wardriving database. Coverage is spotty outside Russia/CIS. Data quality and freshness are unverified. Not recommended as primary source.
+
+**What we need**: A `databases/wifi_geolocation.db` SQLite file with BSSID-to-location mappings for deployment areas. This should be populated incrementally via:
+1. WiGLE API queries (requires API key — user must provide)
+2. Self-collected wardriving data from Tritium edge nodes with GPS
+3. Optional: community stumble file imports
 
 ### Notes
-- **WiGLE** is the primary public WiFi geolocation database (BSSID -> lat/lng). No bulk download available; API access requires free account and is rate-limited to 11K results per query. Could build a local cache via API queries for our deployment areas.
-- No publicly available bulk WiFi geolocation dataset found. Most research datasets are proprietary or require institutional access.
+- No freely available bulk WiFi geolocation dataset exists as of 2026
+- Best strategy is a hybrid local cache: WiGLE API + self-collected data from GPS-equipped edge nodes
+- Edge nodes with WiFi scanning + GPS could contribute to our own geolocation database over time (self-improving system)
 
 ## BLE/RF Datasets (Device Fingerprinting)
 
@@ -65,22 +100,43 @@ how directly the dataset supports our detection, classification, and tracking pi
 ### Notes
 - **BLEBeacon Dataset** contains real BLE advertisement traces from beacons carried by people in a university building over a month. Includes RSSI reports -- directly useful for testing our BLE tracker and trilateration.
 - BLE fingerprinting datasets from academic papers tend to focus on RF-level (IQ samples) rather than advertisement-level data. Our existing JSON lookup tables in tritium-lib/data/ are more practical for device classification.
+- Sample downloaded to `rf/blebeacon_sample/` (10K checkin + 10K RSSI records in CSV format).
 
 ## Device Intelligence Databases (Already Maintained)
 
-| Database | Location | Size | Updated |
-|----------|----------|------|---------|
-| IEEE OUI (MA-L) | tritium-edge/sdcard_data/oui.db | 1.3 MB | 2026-03-14 (39,029 entries) |
-| Apple Continuity Types | tritium-lib/data/apple_continuity_types.json | 8 KB | 2026-03-14 |
-| BLE Appearance Values | tritium-lib/data/ble_appearance_values.json | 22 KB | 2026-03-14 |
-| BLE Company IDs | tritium-lib/data/ble_company_ids.json | 11 KB | 2026-03-14 |
-| BLE Fingerprints | tritium-lib/data/ble_fingerprints.json | 21 KB | 2026-03-14 |
-| BLE Name Patterns | tritium-lib/data/ble_name_patterns.json | 24 KB | 2026-03-14 |
-| BLE Service UUIDs | tritium-lib/data/ble_service_uuids.json | 8 KB | 2026-03-14 |
-| Device Classification Rules | tritium-lib/data/device_classification_rules.json | 6 KB | 2026-03-14 |
-| OUI Device Types | tritium-lib/data/oui_device_types.json | 50 KB | 2026-03-14 |
-| WiFi SSID Patterns | tritium-lib/data/wifi_ssid_patterns.json | 10 KB | 2026-03-14 |
-| WiFi Vendor Fingerprints | tritium-lib/data/wifi_vendor_fingerprints.json | 12 KB | 2026-03-14 |
+| Database | Location | Size | Entries | Updated | Freshness |
+|----------|----------|------|---------|---------|-----------|
+| IEEE OUI (MA-L) | tritium-edge/sdcard_data/oui.db | 1.5 MB | 39,029 | 2026-03-14 | OK — re-scrape quarterly |
+| Apple Continuity Types | tritium-lib/data/apple_continuity_types.json | 8 KB | ~30 types | 2026-03-14 | STALE RISK — no auto-update for new iOS releases |
+| BLE Appearance Values | tritium-lib/data/ble_appearance_values.json | 22 KB | ~200 | 2026-03-14 | OK — BT SIG updates infrequently |
+| BLE Company IDs | tritium-lib/data/ble_company_ids.json | 11 KB | 130 | 2026-03-14 | INCOMPLETE — BT SIG has 3,000+ assigned IDs |
+| BLE Fingerprints | tritium-lib/data/ble_fingerprints.json | 21 KB | ~100 | 2026-03-14 | OK — curated |
+| BLE Name Patterns | tritium-lib/data/ble_name_patterns.json | 24 KB | ~150 | 2026-03-14 | OK — curated |
+| BLE Service UUIDs | tritium-lib/data/ble_service_uuids.json | 8 KB | ~60 | 2026-03-14 | INCOMPLETE — BT SIG has 200+ standard UUIDs |
+| Device Classification Rules | tritium-lib/data/device_classification_rules.json | 6 KB | ~40 | 2026-03-14 | OK — curated |
+| OUI Device Types | tritium-lib/data/oui_device_types.json | 50 KB | ~500 | 2026-03-14 | OK — curated |
+| WiFi SSID Patterns | tritium-lib/data/wifi_ssid_patterns.json | 10 KB | ~80 | 2026-03-14 | OK — curated |
+| WiFi Vendor Fingerprints | tritium-lib/data/wifi_vendor_fingerprints.json | 12 KB | ~90 | 2026-03-14 | OK — curated |
+
+### BLE Manufacturer Database — Gaps and Sources
+
+**Bluetooth SIG Company Identifiers** (https://www.bluetooth.com/specifications/assigned-numbers/):
+- Official registry has 3,000+ assigned company IDs
+- Our `ble_company_ids.json` has only 130 entries (top manufacturers + common IoT vendors)
+- The full list is available at https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml
+- Also available via NordicSemiconductor/bluetooth-numbers-database on GitHub
+- **Action needed**: Expand from 130 to at least 500+ entries covering all major consumer electronics, wearables, and IoT manufacturers
+
+**IEEE OUI Registry** (https://standards-oui.ieee.org/):
+- Our `oui.db` has 39,029 entries — this is comprehensive and current
+- IEEE publishes the full MA-L (OUI) list as a CSV at https://standards-oui.ieee.org/oui/oui.csv
+- **Action needed**: Set up quarterly refresh script (last updated 2026-03-14)
+
+**Apple Continuity Message Types**:
+- Apple uses undocumented BLE advertisement subtypes for AirDrop, FindMy, Handoff, etc.
+- Community-maintained lists at https://github.com/furiousMAC/continuity (may be stale)
+- New types appear with each major iOS release
+- **Action needed**: Cross-reference with latest reverse-engineering efforts; current list may miss iOS 19+ types
 
 ## Priority Download Queue
 

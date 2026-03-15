@@ -1,6 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "last_updated": "2026-03-15",
+  "audit_wave": 155,
   "datasets": [
     {
       "name": "ESC-50",
@@ -21,15 +22,16 @@
     {
       "name": "BLEBeacon Dataset (sample)",
       "category": "rf",
-      "path": "rf/blebeacon-sample",
+      "path": "rf/blebeacon_sample",
       "size_bytes": 942080,
       "size_human": "920 KB",
       "license": "Research",
       "source_url": "https://github.com/dimisik/BLEBeacon-Dataset",
       "downloaded": true,
       "download_date": "2026-03-14",
-      "description": "BLE beacon RSSI traces from university building - sample only",
+      "description": "BLE beacon RSSI traces from university building - 10K checkin + 10K RSSI CSV samples",
       "relevance": 0.7,
+      "files": 2,
       "use_case": "ble_tracker"
     }
   ],
@@ -60,6 +62,63 @@
       "source_url": "https://zenodo.org/records/7004819",
       "relevance": 0.8,
       "use_case": "threat_acoustic"
+    }
+  ],
+  "device_intelligence": {
+    "description": "Lookup databases maintained in tritium-lib and tritium-edge, not in data/library",
+    "databases": [
+      {
+        "name": "IEEE OUI (MA-L)",
+        "location": "tritium-edge/sdcard_data/oui.db",
+        "entries": 39029,
+        "updated": "2026-03-14",
+        "freshness": "ok",
+        "refresh_interval": "quarterly"
+      },
+      {
+        "name": "BLE Company IDs",
+        "location": "tritium-lib/src/tritium_lib/data/ble_company_ids.json",
+        "entries": 130,
+        "updated": "2026-03-14",
+        "freshness": "incomplete",
+        "note": "BT SIG has 3000+ assigned IDs; we cover top 130"
+      },
+      {
+        "name": "BLE Service UUIDs",
+        "location": "tritium-lib/src/tritium_lib/data/ble_service_uuids.json",
+        "entries": 60,
+        "updated": "2026-03-14",
+        "freshness": "incomplete",
+        "note": "BT SIG has 200+ standard UUIDs"
+      },
+      {
+        "name": "Apple Continuity Types",
+        "location": "tritium-lib/src/tritium_lib/data/apple_continuity_types.json",
+        "entries": 30,
+        "updated": "2026-03-14",
+        "freshness": "stale_risk",
+        "note": "No auto-update; may miss iOS 19+ types"
+      }
+    ]
+  },
+  "data_gaps": [
+    {
+      "name": "WiFi BSSID Geolocation DB",
+      "severity": "high",
+      "description": "No local WiFi geolocation database. MLS shut down 2024. WiGLE API requires key.",
+      "recommended_action": "Build local SQLite cache via WiGLE API + self-collected wardriving data"
+    },
+    {
+      "name": "WiFi Probe Request Fingerprints",
+      "severity": "high",
+      "description": "No database mapping probe request patterns to device types/OS versions",
+      "recommended_action": "Research Satori (p0f-like for WiFi) and build fingerprint DB"
+    },
+    {
+      "name": "BLE Company IDs Expansion",
+      "severity": "medium",
+      "description": "130 of 3000+ BT SIG company IDs mapped",
+      "recommended_action": "Import from bluetooth-SIG assigned_numbers YAML or NordicSemiconductor DB"
     }
   ]
 }
