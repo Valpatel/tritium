@@ -2,6 +2,22 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 136 (2026-03-15): Maintenance — STATUS Update + Plugin Audit + Agent Refiner
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated through Wave 135 with accurate codebase counts | Complete |
+| Plugin audit: all 22 plugins discoverable (20 loaders + npc_thoughts + built-in npc_intelligence) | File audit verified |
+| Documented: ESC-50 acoustic 21.2% accuracy, LPR as 22nd plugin, RL at 55% with 10 features | Documented |
+| Agent refiner: agent-refiner.md and maintenance-agent.md updated to Wave 136 counts | Verified |
+| Lib pytest: 2,394 passing (up from 2,361) | pytest verified |
+| Codebase audit: 99 app routers, 18 plugin routes, 85 panels, 152 JS, 693 SC tests, 124 lib tests, 89 model files | File counts verified |
+| Disk: 70% used (604G/916G) — safe | df verified |
+| Waves 137-141 planned | Planned |
+
+---
+
 ## Wave 135 (2026-03-15): LPR Plugin, Graph Edge Labels, ESC-50 Benchmark, RL Export
 
 ### Changes
