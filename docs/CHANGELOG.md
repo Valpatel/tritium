@@ -2,6 +2,32 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 95 (2026-03-14): Security + Confidence Decay + Amy Curiosity
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| models/confidence.py — ConfidenceModel with exponential decay, configurable half-lives per source type | Unit Tested (15 tests) |
+| tests/models/test_confidence.py — 15 tests covering decay, staleness, serialization, source fallback | All passing |
+| Wave 94 lib tests verified — test_analytics_dashboard.py 9/9 passing | Verified |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| TargetTracker confidence decay — exponential decay via _initial_confidence + effective_confidence property | Unit Tested (874 tactical tests passing) |
+| WebSocket chat sanitization — HTML tag stripping + escape on WS chat_message handler | Code reviewed |
+| WebSocket drawing sanitization — input bounds, point limit, HTML escape on text/names | Code reviewed |
+| Amy curiosity system — Sensorium.curiosity_targets() + curiosity_context() for unknown BLE investigation | Unit Tested |
+| Curiosity wired into rich_narrative() for Amy's thinking loop | Code reviewed |
+
+### Security audit
+| Finding | Status |
+|---------|--------|
+| Collaboration REST endpoints have _sanitize() on all user input | Adequate |
+| WebSocket chat handler was missing HTML sanitization — FIXED | Fixed |
+| WebSocket drawing handler had unbounded points + no text escape — FIXED | Fixed |
+| DELETE /workspaces/{id} has no auth check (open by design for LAN) | Noted |
+
 ## Wave 94 (2026-03-14): Analytics Dashboard Widgets
 
 ### tritium-lib
