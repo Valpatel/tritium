@@ -2,6 +2,30 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 89 (2026-03-14): Forensic Replay + Diagnostics
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| models/forensics.py — ForensicReconstruction, IncidentReport, GeoBounds, TimeRange, EvidenceItem, TargetTimeline, SensorCoverage, IncidentFinding, IncidentRecommendation | 15 tests passing |
+| Registered in models/__init__.py with full __all__ exports | Import test passing |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| ForensicReconstructor engine — reconstruct events in time/area window, extract target timelines, build evidence chains, compute sensor coverage | 12 tests passing |
+| Forensics API router — POST /api/forensics/reconstruct, GET /api/forensics/{id}, GET /api/forensics, POST /api/forensics/report | Router import verified |
+| Incident report generator — auto-classification, findings, recommendations, timeline summary from reconstruction | 4 tests passing |
+| Map replay controls panel — video-player UI with play/pause/speed/seek/loop, SSE-based event replay, target trails | Code review |
+| Router registered in main.py | Verified |
+
+### tritium-edge
+| Change | Verification |
+|--------|-------------|
+| hal_diag_dump — full diagnostic dump on MQTT cmd/dump: heap, tasks, stack watermarks, WiFi, system, HAL statuses | Code review |
+| Integrated into mqtt_sc_bridge command handler — auto-publishes to tritium/{device_id}/diagnostics | Code review |
+| Simulator stub for hal_diag_dump | Code review |
+
 ## Wave 88 (2026-03-14): Collaboration + Edge Autonomy
 
 ### tritium-lib
