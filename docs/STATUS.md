@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-15 (Wave 124 — Maintenance + Agent Refiner).
+Current state of all components as of 2026-03-15 (Wave 127 — Maintenance + Dossier Enrichment).
 
 ## Component Health
 
@@ -9,12 +9,12 @@ Current state of all components as of 2026-03-15 (Wave 124 — Maintenance + Age
 | **tritium-edge firmware** | Building | 49.9% RAM, 29.4% Flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 2,283 tests passing |
+| **tritium-lib** | Stable | 2,305 tests passing |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds, diagnostics |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler wired in Wave 105) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
-| **Intelligence pipeline** | Active | 7 modules, all learners using BaseLearner ABC |
-| **RL pipeline** | Trained | Model trained at 76.7% accuracy (logistic regression); 61,908 observations, 188 confirmed, 60 training examples; auto-retrain scheduler active |
+| **Intelligence pipeline** | Active | 7 modules, all learners using BaseLearner ABC, 10-feature model |
+| **RL pipeline** | Trained | 10-feature model (expanded Wave 126); auto-retrain scheduler active |
 | **Plugin system** | Active | 21 plugins (including AmyCommanderPlugin), auto-discovery with boot report |
 | **Collaboration** | Active | Shared workspaces, map drawing, operator chat, WebSocket broadcast |
 | **Forensics** | Active | Event reconstruction, incident reports, map replay |
@@ -23,19 +23,39 @@ Current state of all components as of 2026-03-15 (Wave 124 — Maintenance + Age
 | **Dwell tracking** | Active | Monitors stationary targets >5min, severity classification |
 | **Command history** | Active | Fleet command audit log with timeout detection |
 
-## Wave 124 (Maintenance + Agent Refiner)
+## Wave 127 (Maintenance + Dossier Enrichment)
 
 | Feature | Component | Tests | Status |
 |---------|-----------|-------|--------|
-| STATUS.md updated through Wave 124 | docs | - | Complete |
-| All 13 agent files updated with current counts (97 routers, 83 panels, 2,283 lib tests, RL model trained) | .claude/agents/ | - | Complete |
-| gb10-02 synced from Wave 116 to Wave 123 | infra | - | Complete |
-| Correlator 5-strategy balance verified: spatial=0.35, temporal=0.18, signal_pattern=0.17, dossier=0.15, learned=0.15 | tritium-sc | - | Verified |
-| RL model trained at 76.7% accuracy documented as milestone | docs | - | Complete |
-| Static fallback still active when model=None (correct behavior) | tritium-sc | - | Verified |
-| Lib pytest: 2,283 passing (up from 2,272) | tritium-lib | 2,283 | Verified |
+| STATUS.md updated through Wave 126 | docs | - | Complete |
+| WiFi probe dossier auto-enrichment — BLE dossiers enriched with probed SSIDs from same observer | tritium-sc | 4 tests | Complete |
+| DossierManager handles fleet.wifi_presence events for cross-sensor enrichment | tritium-sc | 38 total | Verified |
+| 6-strategy correlator weights verified balanced: sum=1.00 (spatial=0.30, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13, wifi_probe=0.15) | tritium-sc | - | Verified |
+| Feature engineering library in lib: 5 functions (device_type_match, co_movement_score, time_similarity, source_diversity, wifi_probe_temporal_correlation) | tritium-lib | 34 tests | Verified |
+| RL model expanded to 10 features (Wave 126) for better correlation accuracy | tritium-sc | - | Verified |
+| Lib pytest: 2,305 passing (up from 2,283) | tritium-lib | 2,305 | Verified |
 | Edge build: 49.9% RAM, 29.4% Flash, SUCCESS | tritium-edge | - | Verified |
 | Changelogs updated | all | - | Complete |
+
+## Wave 126 (Feature: RL Feature Expansion + WiFi Probe Correlation)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| WiFiProbeStrategy — 6th correlation strategy for BLE+WiFi probe temporal matching | tritium-sc | 65 tests | Complete |
+| CorrelationLearner expanded from 6 to 10 features | tritium-sc | 12 tests | Complete |
+| Feature engineering library — 5 reusable ML feature functions | tritium-lib | 34 tests | Complete |
+| DEFAULT_WEIGHTS rebalanced for 6 strategies | tritium-sc | - | Verified |
+| Edge WiFi probe timestamps (microsecond + epoch) for SC-side correlation | tritium-edge | - | Build verified |
+
+## Wave 125 (Feature: Acoustic TDoA + RL Prediction Cones)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| Acoustic plugin TDoA endpoint with NTP-synced timestamps | tritium-sc/edge | 16 tests | Complete |
+| Target prediction cones scaled by RL confidence | tritium-sc | - | Complete |
+| RL accuracy dropped to 50.5% — identified as overfitting on small dataset | tritium-sc | - | Analyzed |
+
+## Wave 124 (Maintenance + Agent Refiner)
 
 ## Wave 123 (Feature)
 
@@ -142,12 +162,12 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
 | WebSocket stress test (10/50/100 concurrent connections) | 111 | tritium-sc | Complete |
 | Demo mode RL training generator (100+ examples in 5 min) | 111 | tritium-sc | Complete |
 
-## Codebase Metrics (Wave 124)
+## Codebase Metrics (Wave 127)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 124 |
-| **Total features shipped** | 330+ |
+| **Total waves completed** | 127 |
+| **Total features shipped** | 340+ |
 | **Active plugins** | 21 (including AmyCommanderPlugin) |
 | **API routers** | 97 |
 | **Frontend panels** | 83 |
@@ -156,37 +176,35 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
 | **JS test files** | 97 |
 | **Lib model files** | 85 |
 | **Lib Pydantic classes** | 242+ |
-| **Lib tests** | 2,283 |
+| **Lib tests** | 2,305 |
 | **HAL libraries** | 64 |
-| **Correlation strategies** | 5 (spatial=0.35, temporal=0.18, signal_pattern=0.17, dossier=0.15, learned=0.15) |
+| **Correlation strategies** | 6 (spatial=0.30, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13, wifi_probe=0.15) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
-| **RL model accuracy** | 76.7% (logistic regression, 60 training examples) |
+| **RL features** | 10 (expanded from 6 in Wave 126) |
 
-## Test Results (Wave 124)
+## Test Results (Wave 127)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib | 2,283 tests | All passing |
+| tritium-lib | 2,305 tests | All passing |
 | tritium-sc | 97 router files, 83 panel JS files | Passing |
 | tritium-edge build | 49.9% RAM, 29.4% Flash | 0 warnings, SUCCESS |
 | Total test files | 818 (623 SC + 116 lib + others) | |
 
-## RL Pipeline Status (Wave 124 — TRAINED)
+## RL Pipeline Status (Wave 127 — 10-Feature Model)
 
 | Metric | Value |
 |--------|-------|
 | **TrainingStore DB** | data/training.db |
-| **Correlation observations** | 61,908 total |
-| **Confirmed decisions** | 188 |
-| **Training examples** | 60 (used for model fitting) |
-| **Model accuracy** | 76.7% (logistic regression, cross-validated) |
 | **Model path** | data/models/correlation_model.pkl |
+| **Feature count** | 10 (expanded from 6 in Wave 126) |
+| **Features** | distance, rssi_delta, co_movement, device_type_match, time_gap, signal_pattern, co_movement_duration, time_of_day_similarity, source_diversity_score, wifi_probe_correlation |
 | **Static fallback** | Active when model=None (graceful degradation) |
 | **Auto-retrain scheduler** | Every 6 hours or 50 new feedback entries |
 | **Training threshold** | 10+ confirmed correlation examples needed |
 | **Security** | POST /api/feedback requires authentication (Wave 112) |
-| **5-strategy weights** | spatial=0.35, temporal=0.18, signal_pattern=0.17, dossier=0.15, learned=0.15 |
-| **Status** | TRAINED — learned model is 5th correlation strategy. Static weights serve as fallback when model unavailable. Both paths verified. |
+| **6-strategy weights** | spatial=0.30, wifi_probe=0.15, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13 (sum=1.00) |
+| **Status** | 10-feature model with WiFiProbeStrategy as 6th correlation strategy. Feature engineering library in tritium-lib provides reusable ML feature functions. |
 
 ## Architecture
 

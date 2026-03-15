@@ -2,6 +2,17 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 127 (2026-03-15): Maintenance + Dossier Enrichment
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| tritium-sc: WiFi probe dossier auto-enrichment — DossierManager handles fleet.wifi_presence events, enriches BLE dossiers with probed SSIDs from same observer node | 4 tests passing (38 total) |
+| tritium-sc: 6-strategy correlator weights verified balanced: spatial=0.30, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13, wifi_probe=0.15 (sum=1.00) | Code review |
+| STATUS.md updated through Wave 126 with 6 strategies, 10-feature RL model, feature engineering library | Complete |
+| Lib pytest: 2,305 passing (up from 2,283) | pytest |
+| Edge build: 49.9% RAM, 29.4% Flash, SUCCESS | Build verified |
+
 ## Wave 126 (2026-03-15): RL Feature Expansion + WiFi Probe Correlation
 
 ### Changes
