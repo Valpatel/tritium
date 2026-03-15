@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-15 (Wave 130 — Maintenance).
+Current state of all components as of 2026-03-15 (Wave 133 — Maintenance + Security).
 
 ## Component Health
 
@@ -9,7 +9,7 @@ Current state of all components as of 2026-03-15 (Wave 130 — Maintenance).
 | **tritium-edge firmware** | Building | 49.9% RAM, 29.4% Flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 2,361 tests passing |
+| **tritium-lib** | Stable | 2,381 tests passing |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds, diagnostics |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler wired in Wave 105) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
@@ -22,6 +22,37 @@ Current state of all components as of 2026-03-15 (Wave 130 — Maintenance).
 | **Intelligence packages** | Active | Portable inter-site intelligence sharing with chain of custody |
 | **Dwell tracking** | Active | Monitors stationary targets >5min, severity classification |
 | **Command history** | Active | Fleet command audit log with timeout detection |
+
+## Wave 133 (Maintenance + Security)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| **CRITICAL FIX: BLE target node position auto-registration** — demo trilateration generator sends node_lat/node_lon but edge tracker never stored them; now auto-registers positions from event data so trilateration engine can compute BLE positions | tritium-sc | 8 tests | Complete |
+| **GEOFENCE BLE FIX VALIDATED**: Geofence engine correctly fires enter/exit events for BLE targets with lat/lon positions (Wave 132 fix + Wave 133 node registration fix) | tritium-sc | 8 tests | Unit Tested |
+| Security audit: added optional_auth to /api/wifi-fingerprint/proximity and /proximity/{mac}/closest | tritium-sc | - | Complete |
+| Security: input validation bounds on limit params (ge=1, le=1000/2000) for proximity, BLE history, WiFi history endpoints | tritium-sc | - | Complete |
+| Security: MAC address length validation (max 40 chars) on proximity closest-node endpoint | tritium-sc | - | Complete |
+| Lib pytest: 2,381 passing (up from 2,361) | tritium-lib | 2,381 | Verified |
+| STATUS.md updated through Wave 132 | docs | - | Complete |
+| Codebase counts: 122 APIRouter files, 84 JS panels, 154 JS/HTML frontend files, 2,381 lib tests | all | - | Verified |
+
+## Wave 132 (Feature: Indoor-Outdoor Transitions, Probe Proximity, Geofence Fix)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| Indoor-outdoor transition detector — detects BLE targets moving between GPS and WiFi-only positioning | tritium-sc | 12 tests | Complete |
+| WiFi probe multi-node proximity estimator — ranks closest edge node from probe timing + RSSI | tritium-sc | 14 tests | Complete |
+| Geofence end-to-end fix: edge tracker now calls GeofenceEngine.check() on BLE targets with positions | tritium-sc | 7 tests | Complete |
+| **NOTE**: Geofence fix was incomplete — node positions were never auto-registered from event data (fixed in Wave 133) | tritium-sc | - | Fixed in Wave 133 |
+
+## Wave 131 (Feature: Target Groups, Annotation Persistence, Kalman Filter)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| /api/target-groups CRUD — create named groups of targets, persist in SQLite | tritium-sc | 9 tests | Complete |
+| Annotations persisted to SQLite — survive server restarts | tritium-sc | 9 tests | Complete |
+| GeoJSON import/export for annotations | tritium-sc | - | Complete |
+| Kalman filter predictor — position + velocity + acceleration tracking | tritium-sc | 12 tests | Complete |
 
 ## Wave 130 (Maintenance)
 
