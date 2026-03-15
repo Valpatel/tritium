@@ -2,6 +2,19 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 131 (2026-03-15): Target Groups, Annotation Persistence, Kalman Filter, BLE History
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| tritium-lib: TargetGroup + TargetGroupSummary models | 7 tests passing |
+| tritium-sc: /api/target-groups CRUD with SQLite persistence | 9 tests passing |
+| tritium-sc: Annotations persisted to SQLite + GeoJSON import/export | 9 tests passing |
+| tritium-sc: Kalman filter predictor replacing linear extrapolation | 12 tests passing |
+| tritium-edge: hal_ble_history — NVS persistence for BLE device tracking across reboots | Code review |
+
+---
+
 ## Wave 130 (2026-03-15): Maintenance — STATUS Update + Agent Refiner + Count Audit
 
 ### Changes
