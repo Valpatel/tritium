@@ -2,6 +2,43 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 92 (2026-03-14): Security Hardening + Threat Model + API Scoping
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| intelligence/threat_model.py — ThreatModel unified threat assessment engine combining behavioral patterns, threat feeds, device classification, zone violations, operator feedback into composite scores with time decay | Unit Tested (29 tests) |
+| ThreatLevel enum (GREEN/YELLOW/ORANGE/RED/CRITICAL), ThreatSignal with TTL expiry, ThreatAssessment with sub-scores and top signals | Unit Tested |
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| Per-user rate limiting — when auth enabled, rate limits by user identity instead of IP. Role-based limits: admin=unlimited, operator=100/min, observer=30/min | Unit Tested (13 tests) |
+| API key scoping — keys can be created with scope: "full", "read-only", or "admin". Read-only keys blocked from POST/PUT/DELETE/PATCH | Unit Tested (26 tests) |
+| Swarm coordination routes now require auth (create, delete, command, add/remove members) | Code Review |
+| Edge autonomy routes now require auth (submit/confirm/override decisions) | Code Review |
+| Automation routes now require auth (create/update/delete/enable/disable rules, import) | Code Review |
+| Regex ReDoS mitigation — automation rule regex conditions now validate pattern length (<200 chars) and catch compile errors | Code Review |
+| Edge autonomy confidence clamping — prevents injection of confidence >= 0.9 to auto-confirm decisions | Code Review |
+
+### security audit
+| Finding | Severity | Status |
+|---------|----------|--------|
+| Plugin routes (swarm, automation, edge_autonomy) had no auth — any unauthenticated user could issue robot commands | HIGH | FIXED |
+| Automation regex operator used unsanitized user input in re.search() — ReDoS possible | MEDIUM | FIXED |
+| Edge autonomy auto-confirms decisions with confidence >= 0.9 — a malicious MQTT message could set confidence=1.0 | MEDIUM | MITIGATED (confidence clamped) |
+| All API keys have full access regardless of purpose | LOW | FIXED (scope support added) |
+| Rate limiting is IP-based only — multiple users behind same NAT share limits | LOW | FIXED (user-based when auth enabled) |
+
+### test audit (5 random files)
+| Test File | Verdict |
+|-----------|---------|
+| test_target_search.py — 18 tests with proper assertions, real mock data, edge cases (empty query, no tracker) | GOOD |
+| test_picture_of_day.py — 7 tests with assertions on response structure and data content | GOOD |
+| test_scenarios_router.py — 14 tests with tempdir isolation, proper library setup, validates request models | GOOD |
+| test_annotations.py — 8 tests but only test Pydantic model creation, never hit the actual API endpoints | WEAK — models-only, no HTTP tests |
+| test_app_main.py — 26 tests, thorough coverage of app creation, routing, CORS, middleware, subsystem lifecycle | GOOD |
+
 ## Wave 91 (2026-03-14): Swarm Intelligence + Edge Autonomy
 
 ### tritium-lib
