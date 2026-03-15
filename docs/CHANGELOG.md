@@ -2,6 +2,19 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 129 (2026-03-15): RL Model Reset + Vehicle Tracking + ESC-50 Acoustic Tests
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| RL MODEL RESET: Deleted old 6-feature correlation_model.pkl (51.3% coin flip accuracy) — learner now starts fresh with 10-feature extractor | Verified: model deleted, 10 features confirmed |
+| NEW: Vehicle tracking enhancement — speed/heading from consecutive YOLO frames, suspicious scoring (loitering, unusual location, slow crawling) | 21 tests passing |
+| NEW: tritium-lib VehicleTrack model — Pydantic model with compute_speed_mph, compute_heading, compute_suspicious_score, heading_to_label | 27 tests passing |
+| NEW: ESC-50 acoustic classifier tests — real WAV file feature extraction and MFCC KNN classification against ground truth labels | 12 tests passing |
+| VISUAL: Server + demo verified: 35 targets, dossier store functional, RL 10-feature training data generating, ESC-50 dataset accessible | Visual verification doc |
+
+---
+
 ## Wave 128 (2026-03-15): Security Audit + OWASP Pass + ESC-50 Dataset
 
 ### Changes
