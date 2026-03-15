@@ -2,6 +2,24 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 83 (2026-03-14): Event Store Persistence, History Analytics, Pattern Learning, Morning Briefing
+
+### tritium-sc
+| Change | Verification |
+|--------|-------------|
+| `engine/tactical/event_store.py` — TacticalEventStore wraps tritium-lib EventStore with EventBus auto-subscription, persists ALL tactical events (sightings, correlations, geofence, alerts, acoustic, escalation) | Unit tested (20 tests) |
+| `/api/analytics/history` — aggregate statistics for time periods: event counts by type/severity/source, busiest hours, top targets, correlation success rate | Unit tested (11 tests) |
+| Amy morning briefing auto-trigger — background task generates daily briefing at configurable hour (default 8 AM), cached for operator login | Unit tested (8 tests) |
+| `/api/amy/briefing/config` GET/POST — configure morning briefing hour and enable/disable | Unit tested |
+| History analytics router registered in main.py | Verified |
+| npc_thoughts tests verified passing (35/35) | Verified |
+
+### tritium-lib
+| Change | Verification |
+|--------|-------------|
+| `intelligence/pattern_learning.py` — PatternLearner: lightweight logistic regression for behavioral pattern threat prediction, train/predict/save/load, feature normalization, Bayesian priors | Unit tested (21 tests) |
+| PatternLearner, PredictionResult, TrainingExample, PATTERN_FEATURES exported from intelligence package | Verified |
+
 ## Wave 82 (2026-03-14): Dossier Enrichment, Weather, EventStore, ESP-NOW Classification
 
 ### tritium-sc
