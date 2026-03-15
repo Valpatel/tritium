@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-15 (Wave 136 — Maintenance).
+Current state of all components as of 2026-03-15 (Wave 139 — Maintenance).
 
 ## Component Health
 
@@ -9,7 +9,7 @@ Current state of all components as of 2026-03-15 (Wave 136 — Maintenance).
 | **tritium-edge firmware** | Building | 49.9% RAM, 29.4% Flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 2,394 tests passing |
+| **tritium-lib** | Stable | 2,416 tests passing |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds, diagnostics |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler wired in Wave 105) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
@@ -22,6 +22,38 @@ Current state of all components as of 2026-03-15 (Wave 136 — Maintenance).
 | **Intelligence packages** | Active | Portable inter-site intelligence sharing with chain of custody |
 | **Dwell tracking** | Active | Monitors stationary targets >5min, severity classification |
 | **Command history** | Active | Fleet command audit log with timeout detection |
+
+## Wave 139 (Maintenance)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| STATUS.md updated through Wave 138 | docs | - | Complete |
+| Lib pytest: 2,416 passing (up from 2,394) | tritium-lib | 2,416 | Verified |
+| Edge build: 49.9% RAM, 29.4% Flash, SUCCESS | tritium-edge | - | Verified |
+| Orphan panel audit: 7 panel files not registered in main.js (edge-diagnostics, fusion-dashboard, operator-activity, operator-cursors, swarm-coordination, training-dashboard, weather-overlay) — none use PanelDef pattern, pre-panel-manager legacy | tritium-sc | - | Identified |
+| Agent refiner: updated counts in agent-refiner.md and maintenance-agent.md | agents | - | Complete |
+| Codebase counts: 100 app routers, 18 plugin routes, 87 panels (78 registered), 154 JS files, 700 SC tests, 123 lib tests, 65 HALs | all | - | Verified |
+| gb10-02 not reachable via Tailscale | infra | - | Checked |
+| Changelogs updated through Wave 138 | docs | - | Complete |
+
+## Wave 138 (Feature: LPR Auth Security, Acoustic WAV Hardening, LPR Panel, ReID Matches Panel)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| LPR auth security audit — endpoint hardening | tritium-sc | - | Complete |
+| Acoustic WAV classifier hardening | tritium-sc | - | Complete |
+| LPR panel — frontend panel for license plate recognition | tritium-sc | - | Complete |
+| ReID matches panel — cross-camera re-identification UI | tritium-sc | - | Complete |
+
+## Wave 137 (Feature: WAV Acoustic Training, Vehicle Awareness, GeoJSON Trails, Auto-Gain)
+
+| Feature | Component | Tests | Status |
+|---------|-----------|-------|--------|
+| WAV-based acoustic classifier training — train_from_wavs(), ESC-50 category map, MFCCClassifier v2 | tritium-sc | 16 tests | Complete |
+| Amy vehicle behavior awareness — instinct layer polls VehicleTrackingManager | tritium-sc | 13 tests | Complete |
+| GeoJSON trail export — /targets/{id}/trail/export?format=geojson | tritium-sc | - | Complete |
+| AcousticTrainingSet model — structured audio ML training data | tritium-lib | 22 tests | Complete |
+| Microphone auto-gain control — EMA-smoothed RMS, clipping detection | tritium-edge | - | Build verified |
 
 ## Wave 136 (Maintenance)
 
@@ -259,39 +291,39 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
 | WebSocket stress test (10/50/100 concurrent connections) | 111 | tritium-sc | Complete |
 | Demo mode RL training generator (100+ examples in 5 min) | 111 | tritium-sc | Complete |
 
-## Codebase Metrics (Wave 136)
+## Codebase Metrics (Wave 139)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 136 |
-| **Total features shipped** | 370+ |
+| **Total waves completed** | 139 |
+| **Total features shipped** | 380+ |
 | **Active plugins** | 22 (20 dirs + npc_thoughts + built-in npc_intelligence) |
-| **App routers** | 99 |
+| **App routers** | 100 |
 | **Plugin route files** | 18 |
-| **Total routers** | 118 (99 app + 18 plugin + amy) |
+| **Total routers** | 119 (100 app + 18 plugin + amy) |
 | **Route decorators** | 760+ |
-| **Frontend panels** | 85 |
-| **Frontend JS files** | 152 |
-| **Test files total** | 835 (693 SC + 124 lib + others) |
+| **Frontend panels** | 87 (78 registered + 7 legacy orphans + map-screenshot + operator-cursors) |
+| **Frontend JS files** | 154 |
+| **Test files total** | 835 (700 SC + 123 lib + others) |
 | **Lib model files** | 89 |
 | **Lib Pydantic classes** | 250+ |
-| **Lib tests** | 2,394 |
-| **HAL libraries** | 64 |
+| **Lib tests** | 2,416 |
+| **HAL libraries** | 65 |
 | **Correlation strategies** | 6 (spatial=0.30, temporal=0.15, signal_pattern=0.14, dossier=0.13, learned=0.13, wifi_probe=0.15) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
 | **RL features** | 10 (expanded from 6 in Wave 126, model reset Wave 129, E2E verified at 55% in Wave 134) |
 | **ESC-50 dataset** | 2,000 clips, 50 sound classes, 1.4 GB, 21.2% accuracy benchmark |
 
-## Test Results (Wave 136)
+## Test Results (Wave 139)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib | 2,394 tests | All passing |
-| tritium-sc | 118 router files, 85 panel JS files | Passing |
+| tritium-lib | 2,416 tests | All passing |
+| tritium-sc | 119 router files, 87 panel JS files | Passing |
 | tritium-edge build | 49.9% RAM, 29.4% Flash | 0 warnings, SUCCESS |
-| Total test files | 835 (693 SC + 124 lib + others) | |
+| Total test files | 835 (700 SC + 123 lib + others) | |
 
-## RL Pipeline Status (Wave 136 — 10-Feature Model, 55% E2E Verified)
+## RL Pipeline Status (Wave 139 — 10-Feature Model, 55% E2E Verified)
 
 | Metric | Value |
 |--------|-------|
@@ -313,12 +345,12 @@ Previously completed waves — feature + maintenance cycles continuing autonomou
   ==================       =====================       ===================
   ESP32-S3 firmware        FastAPI :8000               89 model files
   6 board types            22 plugins                  250+ Pydantic classes
-  64 HAL libraries         118 routers                 2,394 tests
+  65 HAL libraries         119 routers                 2,416 tests
   MQTT, BLE, WiFi          AI Commander Amy (plugin)   Graph DB, Auth
   LoRa, ESP-NOW            YOLO, WebSocket             Events, MQTT topics
   hal_ble_features         Canvas 2D/3D map            Geo, Notifications
   hal_tinyml, hal_voice    7 intelligence modules      Classifier, COT
-  hal_scan_optimizer       85 frontend panels          BaseLearner ABC
+  hal_scan_optimizer       87 frontend panels          BaseLearner ABC
   hal_radio_scheduler      Forensics + Collaboration   Intel Packages
   hal_tamper_detect        Operator chat + drawing
   hal_diag_dump            Swarm coordination

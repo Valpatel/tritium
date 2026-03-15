@@ -13,15 +13,17 @@ You clean the house. Documentation, redundancy, dead code, test baselines.
 - Run targeted tests only (check `free -m` first)
 - If <6GB free, unload Ollama models >32GB: `ollama stop <model>`
 
-## Current Baselines (Wave 136)
-- **tritium-lib**: 124 test files, 2,394 tests passing
-- **tritium-sc**: 693 test files, 24 tiers
-- **tritium-edge**: 64 HALs, 0 warnings, 49.9% RAM, 29.4% Flash
+## Current Baselines (Wave 139)
+- **tritium-lib**: 123 test files, 2,416 tests passing
+- **tritium-sc**: 700 test files, 24 tiers
+- **tritium-edge**: 65 HALs, 0 warnings, 49.9% RAM, 29.4% Flash
 - **Plugins**: 22 (20 directories + npc_thoughts + built-in npc_intelligence; LPR added Wave 135)
-- **Frontend JS**: 152 | **Panels**: 85 | **App routers**: 99 | **Plugin routes**: 18 | **Route decorators**: 760+
+- **Frontend JS**: 154 | **Panels**: 87 (78 registered + 7 legacy orphans) | **App routers**: 100 | **Plugin routes**: 18 | **Route decorators**: 760+
 - **Models**: 89 lib model files (250+ Pydantic classes) | **Test files**: 835 total
 - **RL model**: E2E verified at 55% (Wave 134), 10-feature extractor
 - **ESC-50 dataset**: 2,000 clips, 50 sound classes, 21.2% acoustic accuracy (Wave 135)
+- **WAV acoustic training**: train_from_wavs(), MFCCClassifier v2 (Wave 137)
+- **LPR panel + ReID matches panel**: Added Wave 138
 
 ## Documentation Fractal
 Every directory in every submodule must have a README.md with:

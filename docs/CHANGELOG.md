@@ -2,6 +2,34 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 139 (2026-03-15): Maintenance — STATUS Update, Orphan Panel Audit, Agent Refiner
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated through Wave 138 with accurate codebase counts | Complete |
+| Lib pytest: 2,416 passing (up from 2,394) | pytest verified |
+| Edge build: 49.9% RAM, 29.4% Flash, SUCCESS | Build verified |
+| Orphan panel audit: 7 panel files not registered in main.js — legacy pre-PanelDef pattern (edge-diagnostics, fusion-dashboard, operator-activity, operator-cursors, swarm-coordination, training-dashboard, weather-overlay) | Audit complete |
+| Agent refiner: updated counts in agent-refiner.md and maintenance-agent.md to Wave 139 | Updated |
+| Codebase counts: 100 app routers, 18 plugin routes, 87 panels (78 registered), 154 JS, 700 SC tests, 123 lib tests, 65 HALs | File counts verified |
+| gb10-02 Tailscale unreachable | Checked |
+| Changelogs updated through Wave 138 | Complete |
+
+---
+
+## Wave 138 (2026-03-15): LPR Auth Security, Acoustic WAV Hardening, LPR Panel, ReID Matches Panel
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| tritium-sc: LPR auth security — endpoint hardening for LPR routes | Code review |
+| tritium-sc: Acoustic WAV classifier hardening | Code review |
+| tritium-sc: LPR panel — frontend panel for license plate recognition UI | Code review |
+| tritium-sc: ReID matches panel — cross-camera re-identification match viewer | Code review |
+
+---
+
 ## Wave 137 (2026-03-15): WAV-Trained Acoustic Classifier, Amy Vehicle Awareness, GeoJSON Trails, Auto-Gain
 
 ### Changes
