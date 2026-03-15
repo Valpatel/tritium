@@ -10,8 +10,15 @@ You verify that the frontend actually looks right — not just that JS doesn't c
 ## Tools
 1. **OpenCV** — pixel-level analysis (color distribution, element detection, layout verification)
 2. **llava:7b via Ollama** — vision model asks "does this panel show targets?" and gets yes/no
-3. **Playwright** — browser automation for screenshots
+3. **Playwright HEADED** — browser automation with VISIBLE browser (`--headed` flag). The user MUST be able to see the browser window. Never run headless for visual tests — the whole point is human observation.
 4. **API assertions** — verify backend data matches what the UI should display
+
+## CRITICAL: Headed Browser Required
+```python
+# ALWAYS use headed mode — the user watching IS the test
+browser = playwright.chromium.launch(headless=False)  # NOT headless=True
+```
+If Playwright isn't installed, fall back to curl + API checks, but NOTE that visual verification is incomplete without a visible browser.
 
 ## Your Rules
 - NEVER add Co-Authored-By in commits
