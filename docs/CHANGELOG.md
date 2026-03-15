@@ -2,6 +2,26 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 97 (2026-03-14): Sensor Fusion Improvements
+
+### Features
+| Change | Verification |
+|--------|-------------|
+| Multi-source confidence boosting — targets confirmed by multiple sensors (BLE+camera+RF) get multiplicative 1.3x confidence boost per additional source | Unit Tested (895 tactical tests passing) |
+| Sensor health monitoring — per-sensor sighting rate tracking with EMA baseline learning, deviation detection, and alerts via EventBus | Unit Tested (11 tests) |
+| Target velocity consistency check — flags targets as suspicious when implied speed exceeds 50 m/s (teleportation detection for GPS glitches, MAC rotation, spoofing) | Unit Tested (4 tests) |
+| SensorHealthMetrics model in tritium-lib — SensorHealthMetrics, SensorArrayHealth, SensorBaseline, SensorAlert, classify_sensor_health() | Unit Tested (20 tests) |
+| Edge sensor self-test — hourly WiFi scan, BLE scan, heap health checks included in heartbeat JSON | Code Review |
+| Sensor sighting-rate health API at /api/edge/ble/sensor-health | Code Review |
+
+### Test Results
+| Suite | Count | Status |
+|-------|-------|--------|
+| tritium-sc tactical | 895 passed, 3 skipped | All passing (43s) |
+| tritium-lib sensor_health | 20 passed | All passing |
+| tritium-sc sensor_health_monitor | 11 passed | All passing |
+| tritium-sc multisource_velocity | 10 passed | All passing |
+
 ## Wave 96 (2026-03-14): Maintenance
 
 ### Infrastructure
