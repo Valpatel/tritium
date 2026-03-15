@@ -2,6 +2,19 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 122 (2026-03-15): Camera-Target Linking, Reappearance Notifications, Investigation Timeline, BLE Scan Stats
+
+### Changes
+| Change | Verification |
+|--------|-------------|
+| tritium-lib: CameraDetectionLink model (detection_id, camera_id, target_id, position_in_frame, confidence) | 11 tests passing |
+| tritium-sc: CameraTargetLinker — auto-links YOLO detections to cameras via FOV cone geometry (bearing + range) | 15 tests passing |
+| tritium-sc: TargetReappearanceMonitor — detects returning targets after stale/pruned, notifies operators with absence duration | 15 tests passing |
+| tritium-sc: TargetTracker integration — prune_stale records departures, update_from_ble checks reappearances | 977 tactical tests passing |
+| tritium-sc: Investigation timeline endpoint — GET /api/investigations/{id}/timeline with chronological events, entity icons, colors | 4 tests passing |
+| tritium-edge: BLE ScanStats struct — total scans, unique devices, avg per scan, success rate, last scan duration | Code review |
+| tritium-edge: BLE scan statistics included in heartbeat payload as ble_scan_stats | Code review |
+
 ## Wave 121 (2026-03-15): Multi-Node Trilateration Demo + Target Handoff Visualization
 
 ### Changes
