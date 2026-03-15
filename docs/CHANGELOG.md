@@ -2,6 +2,25 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 98 (2026-03-14): Fleet Management & Amy Plugin Architecture
+
+### Features
+| Change | Verification |
+|--------|-------------|
+| Fleet health summary API — GET /api/fleet/health-summary aggregates total devices, online/offline/stale counts, avg battery, low battery count, avg sighting rate, sensor health summary, lifecycle distribution | Unit Tested (4 tests) |
+| Device lifecycle management — state machine (provisioning/active/maintenance/retired/error) with validated transitions, history tracking, and REST API (GET/POST lifecycle, state transitions) | Unit Tested (10 tests) |
+| Amy-as-plugin refactor phase 1 — plugins/amy/ directory with AmyCommanderPlugin shell wrapping existing src/amy/ code via PluginInterface, discoverable by PluginManager | Unit Tested (10 tests) |
+| DeviceState/DeviceLifecycleEvent/DeviceProvisioningConfig models in tritium-lib — standardized lifecycle contracts shared across edge and SC | Unit Tested (14 tests) |
+| Edge lifecycle state reporting — hal_heartbeat stores/loads lifecycle_state from NVS, included in MQTT heartbeat JSON, changeable via MQTT set_lifecycle_state command | Build Verified (49.7% RAM, 29.3% Flash) |
+
+### Test Results
+| Suite | Count | Status |
+|-------|-------|--------|
+| tritium-sc fleet_dashboard | 38 passed | All passing |
+| tritium-sc amy_plugin | 10 passed | All passing |
+| tritium-lib device_lifecycle | 14 passed | All passing |
+| tritium-edge build | 1 passed | 49.7% RAM, 29.3% Flash |
+
 ## Wave 97 (2026-03-14): Sensor Fusion Improvements
 
 ### Features
