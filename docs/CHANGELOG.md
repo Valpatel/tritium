@@ -2,6 +2,26 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 104 (2026-03-14): Threat Level Calculator + GPX Export + Amy Phase 4
+
+### Features
+| Change | Verification |
+|--------|-------------|
+| System-wide real-time threat level calculator (hostile count, geofence, investigations, threat feeds, behavioral anomalies) | 17 tests passing |
+| GET /api/threat-level endpoint + system_threat_level WebSocket broadcast | Unit Tested |
+| GPX 1.1 export for target trails (GET /api/targets/{id}/trail/export?format=gpx) | Unit Tested |
+| GPX models in tritium-lib (GPXDocument, GPXTrack, GPXRoute, GPXWaypoint) | 17 tests passing |
+| Amy Commander Plugin Phase 4 — EventBus bridge + WarAnnouncer fully plugin-owned | Unit Tested |
+
+### Edge HAL Discovery (5 HALs audited)
+| HAL | Integrated | Tests | Notes |
+|-----|-----------|-------|-------|
+| hal_cot | Yes (main.cpp) | No tests | CoT XML generation for TAK, has README |
+| hal_tamper_detect | No | No tests | WiFi/BLE silence detection, well-structured |
+| hal_ollama | No | No tests | Stub for on-device LLM queries via HTTP |
+| hal_radio_scheduler | No | No tests | BLE/WiFi time-division multiplexing, has README |
+| hal_tinyml | Yes (main.cpp) | No tests | TFLite Micro inference from SD card models |
+
 ## Wave 103 (2026-03-14): Maintenance + Intelligence Packages + Remote Diagnostics
 
 ### Features
