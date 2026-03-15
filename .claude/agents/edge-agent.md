@@ -28,8 +28,9 @@ tritium-edge/
 │   ├── hal_power_saver/  # Battery management
 │   ├── hal_config_sync/  # Remote config from SC
 │   ├── hal_ota/          # OTA firmware push via MQTT
-│   ├── hal_tinyml/       # TinyML inference (TFLite Micro stub)
-│   └── ...               # 130+ more HALs
+│   ├── hal_tinyml/       # TinyML inference (TFLite Micro stub) — wired in main.cpp
+│   ├── hal_voice/        # Voice command detection (VAD + keyword spotting)
+│   └── ...               # 50 HALs total
 ├── include/boards/       # Per-board pin definitions
 ├── apps/                 # App implementations
 └── platformio.ini        # Build config

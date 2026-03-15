@@ -2,6 +2,28 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 87 (2026-03-14): Maintenance — HAL Wiring, Agent Updates, Test Baselines
+
+### tritium-edge
+| Change | Verification |
+|--------|-------------|
+| hal_tinyml wired into main.cpp with `#if defined(HAS_TINYML)` conditional — init in services_init(), loads models from SD | Code review |
+| hal_voice wired into main.cpp with `#if defined(HAS_VOICE)` conditional — init with 4 default commands, tick in services_tick() | Code review |
+
+### docs
+| Change | Verification |
+|--------|-------------|
+| STATUS.md updated to Wave 87: 1990 lib tests, 97 SC tiers, 75 panels, 81 routers | Verified |
+| CHANGELOG.md updated with Wave 87 entries | Verified |
+| Iteration queue: Waves 83-86 marked DONE, Waves 88-92 planned | Verified |
+| Agent files (sc, lib, edge, feature) updated with current counts | Verified |
+
+### infrastructure
+| Change | Verification |
+|--------|-------------|
+| gb10-02: git pulled latest, PyJWT upgraded 2.7.0 -> 2.12.1, tritium-lib installed | 1974 tests passing |
+| Test baselines: lib 1990, SC 97 tiers (0 failures, 404s) | Verified |
+
 ## Wave 85 (2026-03-14): Security Audit + Geofence Intelligence + Fusion Dashboard
 
 ### Security

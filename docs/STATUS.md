@@ -1,6 +1,6 @@
 # Tritium System Status
 
-Current state of all components as of 2026-03-14 (Wave 84 — Maintenance).
+Current state of all components as of 2026-03-14 (Wave 87 — Maintenance).
 
 ## Component Health
 
@@ -9,43 +9,43 @@ Current state of all components as of 2026-03-14 (Wave 84 — Maintenance).
 | **tritium-edge firmware** | Building | 49.6% RAM, 29.2% flash (within budget) |
 | **tritium-edge fleet server** | Running | :8080, device provisioning + OTA |
 | **tritium-sc command center** | Running | :8000, full tactical intelligence platform |
-| **tritium-lib** | Stable | 1,957 tests passing, 0 failures |
+| **tritium-lib** | Stable | 1,990 tests passing, 0 failures |
 | **MQTT bridge** | Active | Heartbeat, sighting, chat, commands, camera feeds |
 | **BLE scanner** | Disabled | WiFi/BLE coexistence conflict (radio scheduler HAL ready) |
 | **Graph database** | Active | KuzuDB ontology with 10 entity types, 12 relationships |
 | **Intelligence pipeline** | Active | 7 modules, all learners using BaseLearner ABC |
 | **Plugin system** | Active | 17 plugins (16 directory + 1 built-in), auto-discovery with boot report |
 
-## Wave 81-83 Features
+## Wave 85-86 Features
 
 | Feature | Component | Tests | Status |
 |---------|-----------|-------|--------|
-| History analytics API | tritium-sc | Unit tested | Complete |
-| Weather overlay API | tritium-sc | Unit tested | Complete |
-| AR export API | tritium-sc | Unit tested | Complete |
-| Amy briefing API | tritium-sc | Unit tested | Complete |
-| Movement analytics API | tritium-sc | Unit tested | Complete |
-| Ollama health endpoint | tritium-sc | Unit tested | Complete |
-| Nearby targets API | tritium-sc | Unit tested | Complete |
-| Picture of day API | tritium-sc | Unit tested | Complete |
+| Geofence intelligence auto-investigations | tritium-sc | Unit tested (8 tests) | Complete |
+| Fusion dashboard (status/strategies/pairs/weights) | tritium-sc | Server tested | Complete |
+| FusionMetrics thread-safe tracking | tritium-lib | Unit tested (17 tests) | Complete |
+| Security: auth on unified events + audit APIs | tritium-sc | Verified | Complete |
+| Security: IP address redaction in event feed | tritium-sc | Verified | Complete |
+| Cross-sensor fusion improvements | tritium-sc | Unit tested | Complete |
+| Camera-BLE auto-correlation | tritium-sc | Unit tested | Complete |
 
-## Wave 84 Features (Maintenance + Operational Readiness)
+## Wave 87 Features (Maintenance)
 
 | Feature | Component | Tests | Status |
 |---------|-----------|-------|--------|
-| CorrelationLearner refactored to extend BaseLearner | tritium-sc | 10 tests | Complete |
-| BLEClassificationLearner refactored to extend BaseLearner | tritium-sc | 10 tests | Complete |
-| Operational readiness checklist (`/api/system/readiness`) | tritium-sc | 10 tests | Complete |
-| Unified event feed (`/api/events/unified`) | tritium-sc | 10 tests | Complete |
-| STATUS.md updated to Wave 84 state | docs | -- | Complete |
+| hal_tinyml + hal_voice wired into main.cpp | tritium-edge | Conditional compilation | Complete |
+| Agent files updated to Wave 87 counts | docs | -- | Complete |
+| STATUS.md, CHANGELOG.md comprehensive update | docs | -- | Complete |
+| Iteration queue Waves 83-86 marked DONE, 88-92 planned | docs | -- | Complete |
+| gb10-02 self-preservation: pulled, PyJWT upgraded, 1974 lib tests passing | infra | -- | Complete |
+| SC test baseline: 97 tiers passing, 0 failures | tests | -- | Complete |
+| Lib test baseline: 1,990 passing | tests | -- | Complete |
 
-## Codebase Metrics (Wave 84 Baseline)
+## Codebase Metrics (Wave 87 Baseline)
 
 | Metric | Value |
 |--------|-------|
-| **Total waves completed** | 84 |
-| **Total features shipped** | 195+ |
-| **Total lines of code** | ~619,000 across 3 repos |
+| **Total waves completed** | 87 |
+| **Total features shipped** | 210+ |
 | **SC Python source** | ~101,800 lines |
 | **SC Python tests** | ~254,600 lines |
 | **SC JS (frontend)** | ~72,100 lines |
@@ -54,26 +54,25 @@ Current state of all components as of 2026-03-14 (Wave 84 — Maintenance).
 | **Lib Python tests** | ~19,800 lines |
 | **Edge C++/H** | ~62,500 lines (222 project files) |
 | **Frontend JS files** | 139 |
-| **Frontend panels** | 74 registered |
+| **Frontend panels** | 75 registered |
 | **Active plugins** | 17 (16 directory + 1 built-in NPC Intelligence) |
 | **API routers** | 81 router files |
-| **API routes** | 501+ |
+| **API routes** | 500+ |
 | **Lib model files** | 66 |
 | **HALs** | 50 |
 | **Correlation strategies** | 5 (spatial, temporal, signal_pattern, dossier, learned) |
 | **Intelligence modules** | 7 (all using BaseLearner ABC) |
-| **Total test files** | 880 (743 SC + 97 lib + 39 edge) |
+| **Total test files** | 880+ (743 SC + 97 lib + 39 edge) |
 
-## Test Results (Wave 84 Baseline)
+## Test Results (Wave 87 Baseline)
 
 | Suite | Count | Status |
 |-------|-------|--------|
-| tritium-lib pytest | 1,957 passed | All passing |
-| tritium-sc new tests (Wave 84) | 30 passed | All passing |
-| tritium-sc test files | 743 (644 py + 99 js) | -- |
-| tritium-lib test files | 97 | -- |
+| tritium-lib pytest | 1,990 passed | All passing |
+| tritium-sc test.sh fast | 97 tiers passed | All passing (404s) |
+| tritium-lib on gb10-02 | 1,974 passed | All passing |
 | tritium-edge build | 49.6% RAM, 29.2% Flash | 0 warnings, SUCCESS |
-| **Total test files** | **880** across all repos | -- |
+| **Total test files** | **880+** across all repos | -- |
 
 ## Architecture
 
@@ -83,12 +82,12 @@ Current state of all components as of 2026-03-14 (Wave 84 — Maintenance).
   ESP32-S3 firmware        FastAPI :8000               66 model files
   6 board types            17 plugins                  340+ dataclasses
   222 source files         81 routers                  97 test files
-  50 HALs                  501+ routes                 Graph DB, Auth
+  50 HALs                  500+ routes                 Graph DB, Auth
   MQTT, BLE, WiFi          AI Commander Amy            Events, MQTT topics
   LoRa, ESP-NOW            YOLO, WebSocket             Geo, Notifications
   hal_ble_features         Canvas 2D/3D map            Classifier, COT
-  Fleet server :8080       7 intelligence modules      BaseLearner ABC
-  Intelligence pipeline    74 frontend panels          1,957 tests
+  hal_tinyml, hal_voice    7 intelligence modules      BaseLearner ABC
+  Fleet server :8080       75 frontend panels          1,990 tests
 ```
 
 ## Plugins (17 active)
@@ -137,6 +136,7 @@ Current state of all components as of 2026-03-14 (Wave 84 — Maintenance).
 | Plugin auto-discovery with boot report | Working |
 | Operational readiness checklist | Working |
 | Unified event feed | Working |
+| Fusion dashboard + metrics | Working |
 
 ## Known Blockers
 
