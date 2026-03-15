@@ -2,6 +2,25 @@
 
 Changes tracked with verification status. All changes on `dev` branch.
 
+## Wave 103 (2026-03-14): Maintenance + Intelligence Packages + Remote Diagnostics
+
+### Features
+| Change | Verification |
+|--------|-------------|
+| IntelligencePackage model in tritium-lib (portable inter-site intel sharing) | 32 tests passing |
+| Intelligence package export/import API (7 new routes in federation plugin) | 18 tests passing |
+| Edge device remote diagnostics (3 new routes in fleet_dashboard plugin) | 11 tests passing |
+| Edge diagnostics frontend panel (JS) | Created |
+| STATUS.md updated to Wave 103 (715+ routes, 77 model files, 145 JS files) | Updated |
+
+### Codebase Metrics (Wave 103)
+| Metric | Value |
+|--------|-------|
+| API routes | 715+ |
+| Lib model files | 77 |
+| Frontend JS files | 145 |
+| New tests this wave | 61 (32 lib + 29 SC) |
+
 ## Wave 100 (2026-03-14): MILESTONE — Unified Operating Picture
 
 ### Milestone Report
